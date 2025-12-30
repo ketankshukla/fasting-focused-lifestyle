@@ -1,4 +1,5 @@
 import React from "react";
+import { getLocalDateKey } from "../../utils/calculations";
 
 const StreakCounter = ({ dailyLogs }) => {
   const calculateStreaks = () => {
@@ -14,10 +15,12 @@ const StreakCounter = ({ dailyLogs }) => {
     let longestStreak = 0;
     let tempStreak = 1;
 
-    const today = new Date().toISOString().split("T")[0];
-    const yesterday = new Date(Date.now() - 86400000)
-      .toISOString()
-      .split("T")[0];
+    const today = getLocalDateKey();
+    const yesterdayDate = new Date();
+    yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+    const yesterday = `${yesterdayDate.getFullYear()}-${String(
+      yesterdayDate.getMonth() + 1
+    ).padStart(2, "0")}-${String(yesterdayDate.getDate()).padStart(2, "0")}`;
 
     for (let i = 1; i < loggedDates.length; i++) {
       const prevDate = new Date(loggedDates[i - 1]);

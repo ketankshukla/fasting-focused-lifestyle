@@ -1,10 +1,10 @@
 import React from "react";
 import { colors } from "../../data";
-import { getDayData } from "../../utils/calculations";
+import { getDayData, getLocalDateKey } from "../../utils/calculations";
 
 const CalendarDay = ({ dateKey, dayNum, isDecember2025, hasLog, onClick }) => {
   const dayData = getDayData(dateKey);
-  const today = new Date().toISOString().split("T")[0];
+  const today = getLocalDateKey();
   const isToday = dateKey === today;
 
   return (

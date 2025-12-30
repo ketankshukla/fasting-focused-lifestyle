@@ -1,7 +1,8 @@
 import React from "react";
+import { getLocalDateKey } from "../../utils/calculations";
 
 const QuickLogButton = ({ onLogToday }) => {
-  const today = new Date().toISOString().split("T")[0];
+  const today = getLocalDateKey();
 
   return (
     <button
