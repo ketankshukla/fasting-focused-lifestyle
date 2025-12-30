@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { defaultProfile } from "../data";
 import { useFastingStorage } from "../hooks/useLocalStorage";
 import { usePhotoStorage } from "../hooks/useIndexedDB";
+import { useNotifications } from "../hooks/useNotifications";
 import { getProgressStats, getScheduleStats } from "../utils/calculations";
 
 import { Header } from "./Header";
@@ -13,6 +14,7 @@ import {
   ProgressCharts,
   PhotoProgress,
   FastingTimer,
+  NotificationSettings,
 } from "./Dashboard";
 import { MonthView, YearView } from "./Calendar";
 import { LogModal, ProfileModal } from "./Modals";
@@ -23,6 +25,8 @@ const FastingTracker = () => {
     useFastingStorage(defaultProfile);
   const { photos, savePhoto, deletePhoto, getAllPhotoDates } =
     usePhotoStorage();
+  const { permission, isSupported, requestPermission, scheduleReminder } =
+    useNotifications();
 
   const [selectedDay, setSelectedDay] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(0);
@@ -63,6 +67,13 @@ const FastingTracker = () => {
           onSavePhoto={savePhoto}
           onDeletePhoto={deletePhoto}
           getAllPhotoDates={getAllPhotoDates}
+        />
+
+        <NotificationSettings
+          permission={permission}
+          isSupported={isSupported}
+          onRequestPermission={requestPermission}
+          onScheduleReminder={scheduleReminder}
         />
 
         <FastTypeStats scheduleStats={scheduleStats} />

@@ -5,3 +5,4 @@ export { default as MonthNavigation } from "./MonthNavigation";
 export { default as ProgressCharts } from "./ProgressCharts";
 export { default as PhotoProgress } from "./PhotoProgress";
 export { default as FastingTimer } from "./FastingTimer";
+export { default as NotificationSettings } from "./NotificationSettings";
