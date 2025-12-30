@@ -16,6 +16,9 @@ const LogModal = ({ selectedDay, dailyLogs, onSave, onClose }) => {
       notes: existingLog.notes || "",
       energy: existingLog.energy || 5,
       mood: existingLog.mood || 5,
+      bloodPressureSys: existingLog.bloodPressureSys || "",
+      bloodPressureDia: existingLog.bloodPressureDia || "",
+      glucose: existingLog.glucose || "",
     };
   });
 
@@ -35,6 +38,13 @@ const LogModal = ({ selectedDay, dailyLogs, onSave, onClose }) => {
       notes: logForm.notes,
       energy: logForm.energy,
       mood: logForm.mood,
+      bloodPressureSys: logForm.bloodPressureSys
+        ? parseInt(logForm.bloodPressureSys)
+        : null,
+      bloodPressureDia: logForm.bloodPressureDia
+        ? parseInt(logForm.bloodPressureDia)
+        : null,
+      glucose: logForm.glucose ? parseInt(logForm.glucose) : null,
     });
     onClose();
   };
@@ -149,6 +159,57 @@ const LogModal = ({ selectedDay, dailyLogs, onSave, onClose }) => {
                     }
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
                     placeholder="40.5"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2">
+                <div>
+                  <label className="block text-xs font-medium text-gray-700 mb-1">
+                    BP Systolic
+                  </label>
+                  <input
+                    type="number"
+                    value={logForm.bloodPressureSys}
+                    onChange={(e) =>
+                      setLogForm({
+                        ...logForm,
+                        bloodPressureSys: e.target.value,
+                      })
+                    }
+                    className="w-full px-2 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                    placeholder="120"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-gray-700 mb-1">
+                    BP Diastolic
+                  </label>
+                  <input
+                    type="number"
+                    value={logForm.bloodPressureDia}
+                    onChange={(e) =>
+                      setLogForm({
+                        ...logForm,
+                        bloodPressureDia: e.target.value,
+                      })
+                    }
+                    className="w-full px-2 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                    placeholder="80"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-gray-700 mb-1">
+                    Glucose
+                  </label>
+                  <input
+                    type="number"
+                    value={logForm.glucose}
+                    onChange={(e) =>
+                      setLogForm({ ...logForm, glucose: e.target.value })
+                    }
+                    className="w-full px-2 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                    placeholder="95"
                   />
                 </div>
               </div>
