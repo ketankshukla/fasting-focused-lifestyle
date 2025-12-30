@@ -59,9 +59,16 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
       waist: log.waist || null,
     }));
 
-  // Wellness chart data - entries with energy OR mood
+  // Wellness chart data - entries with energy OR mood (must be actual values, not defaults)
   const wellnessChartData = Object.entries(dailyLogs)
-    .filter(([_, log]) => log && (log.energy || log.mood))
+    .filter(([_, log]) => {
+      if (!log) return false;
+      // Only include if energy or mood is a real number > 0
+      const hasEnergy =
+        log.energy && typeof log.energy === "number" && log.energy > 0;
+      const hasMood = log.mood && typeof log.mood === "number" && log.mood > 0;
+      return hasEnergy || hasMood;
+    })
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([date, log]) => ({
       date: parseLocalDate(date).toLocaleDateString("en-US", {

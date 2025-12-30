@@ -6,6 +6,10 @@ import {
   formatDate,
 } from "../../utils/calculations";
 
+// First and last days of the program
+const FIRST_DAY = "2025-12-29";
+const LAST_DAY = "2026-12-31";
+
 const DayInfoModal = ({ selectedDay, dailyLogs, onClose, onNavigate }) => {
   const dayData = getDayData(selectedDay);
   const info = dayData ? getPhysiologyInfo(dayData.type, dayData.day) : null;
@@ -16,6 +20,10 @@ const DayInfoModal = ({ selectedDay, dailyLogs, onClose, onNavigate }) => {
   const isRefeedDay =
     dayData && (dayData.type === "1r" || dayData.type === "fr");
   const hasMeals = info && info.meals;
+
+  // Check if we're on the first or last day
+  const isFirstDay = selectedDay === FIRST_DAY;
+  const isLastDay = selectedDay === LAST_DAY;
 
   const navigateDay = (direction) => {
     const currentDate = new Date(selectedDay + "T00:00:00");
@@ -39,13 +47,17 @@ const DayInfoModal = ({ selectedDay, dailyLogs, onClose, onNavigate }) => {
           style={{ backgroundColor: color.light }}
         >
           <div className="flex items-center justify-between">
-            <button
-              onClick={() => navigateDay(-1)}
-              className="p-2 rounded-full hover:bg-white/50 transition-all"
-              style={{ color: color.text }}
-            >
-              ◀
-            </button>
+            {!isFirstDay ? (
+              <button
+                onClick={() => navigateDay(-1)}
+                className="p-2 rounded-full hover:bg-white/50 transition-all"
+                style={{ color: color.text }}
+              >
+                ◀
+              </button>
+            ) : (
+              <div className="w-9" />
+            )}
             <div className="text-center">
               <p className="text-xs font-medium" style={{ color: color.text }}>
                 {dateStr}
@@ -64,13 +76,17 @@ const DayInfoModal = ({ selectedDay, dailyLogs, onClose, onNavigate }) => {
                 )}
               </div>
             </div>
-            <button
-              onClick={() => navigateDay(1)}
-              className="p-2 rounded-full hover:bg-white/50 transition-all"
-              style={{ color: color.text }}
-            >
-              ▶
-            </button>
+            {!isLastDay ? (
+              <button
+                onClick={() => navigateDay(1)}
+                className="p-2 rounded-full hover:bg-white/50 transition-all"
+                style={{ color: color.text }}
+              >
+                ▶
+              </button>
+            ) : (
+              <div className="w-9" />
+            )}
           </div>
         </div>
 
