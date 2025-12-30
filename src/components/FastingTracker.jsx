@@ -17,6 +17,7 @@ import {
   NotificationSettings,
   StreakCounter,
   AchievementBadges,
+  MotivationalQuotes,
 } from "./Dashboard";
 import { MonthView, YearView } from "./Calendar";
 import { LogModal, ProfileModal } from "./Modals";
@@ -59,6 +60,8 @@ const FastingTracker = () => {
         />
 
         <ProgressDashboard stats={stats} profile={profile} />
+
+        <MotivationalQuotes />
 
         <FastingTimer />
 
