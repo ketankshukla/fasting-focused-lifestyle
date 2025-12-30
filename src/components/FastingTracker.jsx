@@ -51,6 +51,33 @@ const FastingTracker = () => {
     return localStorage.getItem("activeSection") || "dashboard";
   });
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isOwnerMode, setIsOwnerMode] = useState(false);
+  const [showPinModal, setShowPinModal] = useState(false);
+  const [pinInput, setPinInput] = useState("");
+  const [pinError, setPinError] = useState("");
+
+  const OWNER_PIN = "1234"; // Simple PIN for owner access
+
+  const handleProfileButtonClick = () => {
+    if (isOwnerMode) {
+      setShowProfileModal(true);
+    } else {
+      setShowPinModal(true);
+      setPinInput("");
+      setPinError("");
+    }
+  };
+
+  const handlePinSubmit = () => {
+    if (pinInput === OWNER_PIN) {
+      setIsOwnerMode(true);
+      setShowPinModal(false);
+      setShowProfileModal(true);
+    } else {
+      setPinError("Incorrect PIN");
+      setPinInput("");
+    }
+  };
 
   // Persist active section to localStorage
   const handleSectionChange = (section) => {
@@ -214,13 +241,23 @@ const FastingTracker = () => {
                 {getSectionTitle()}
               </h2>
             </div>
-            <button
-              onClick={() => setShowProfileModal(true)}
-              className="flex items-center gap-2 px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white text-sm rounded-full transition-all"
-            >
-              <span>⚙️</span>
-              <span className="hidden sm:inline">Profile</span>
-            </button>
+            <div className="flex items-center gap-2">
+              {isOwnerMode && (
+                <button
+                  onClick={() => setIsOwnerMode(false)}
+                  className="px-2 py-1 bg-green-500/30 text-green-300 text-xs rounded-full hover:bg-green-500/40 transition-colors"
+                >
+                  ✓ Owner
+                </button>
+              )}
+              <button
+                onClick={handleProfileButtonClick}
+                className="flex items-center gap-2 px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white text-sm rounded-full transition-all"
+              >
+                <span>{isOwnerMode ? "⚙️" : "🔒"}</span>
+                <span className="hidden sm:inline">Profile</span>
+              </button>
+            </div>
           </div>
         </header>
 
@@ -263,6 +300,58 @@ const FastingTracker = () => {
           onSave={saveProfile}
           onClose={() => setShowProfileModal(false)}
         />
+      )}
+
+      {/* PIN Modal for Owner Access */}
+      {showPinModal && (
+        <div
+          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4"
+          onClick={() => setShowPinModal(false)}
+        >
+          <div
+            className="bg-gray-800 rounded-2xl shadow-2xl max-w-sm w-full max-h-[90vh] overflow-y-auto p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-xl font-bold text-white mb-2">
+              🔐 Owner Access
+            </h3>
+            <p className="text-gray-400 text-sm mb-4">
+              Enter PIN to edit profile settings
+            </p>
+
+            <input
+              type="password"
+              value={pinInput}
+              onChange={(e) => setPinInput(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handlePinSubmit()}
+              placeholder="Enter PIN"
+              className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white text-center text-2xl tracking-widest focus:outline-none focus:border-purple-500"
+              maxLength={4}
+              autoFocus
+            />
+
+            {pinError && (
+              <p className="text-red-400 text-sm mt-2 text-center">
+                {pinError}
+              </p>
+            )}
+
+            <div className="flex gap-2 mt-4">
+              <button
+                onClick={() => setShowPinModal(false)}
+                className="flex-1 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-all"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handlePinSubmit}
+                className="flex-1 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all"
+              >
+                Unlock
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Quick Log Button */}

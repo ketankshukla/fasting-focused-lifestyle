@@ -55,7 +55,7 @@ const Sidebar = ({ activeSection, onSectionChange, isOpen, onClose }) => {
           <div className="p-4 border-b border-white/10">
             <div className="flex items-center justify-between">
               <h1 className="text-xl font-bold text-white">
-                🔥 Fasting Tracker
+                🔥 Ketan's Tracker
               </h1>
               <button
                 onClick={onClose}
@@ -65,7 +65,7 @@ const Sidebar = ({ activeSection, onSectionChange, isOpen, onClose }) => {
               </button>
             </div>
             <p className="text-xs text-gray-400 mt-1">
-              Your health journey dashboard
+              Ketan Shukla's Fasting Journey
             </p>
           </div>
 

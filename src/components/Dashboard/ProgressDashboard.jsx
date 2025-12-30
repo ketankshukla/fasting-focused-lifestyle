@@ -3,7 +3,7 @@ import React from "react";
 const ProgressDashboard = ({ stats, profile }) => {
   return (
     <div className="bg-white/10 backdrop-blur rounded-2xl p-4 sm:p-6">
-      <h3 className="text-lg font-bold text-white mb-4">📈 Your Progress</h3>
+      <h3 className="text-lg font-bold text-white mb-4">📈 Ketan's Progress</h3>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
         <div className="bg-white/10 rounded-xl p-3 text-center">
