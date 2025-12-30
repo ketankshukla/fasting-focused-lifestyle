@@ -25,6 +25,9 @@ export const useSupabaseStorage = (defaultProfile) => {
           startingWeight: data.starting_weight || defaultProfile.startingWeight,
           goalWeight: data.goal_weight || defaultProfile.goalWeight,
           height: data.height || defaultProfile.height,
+          startingWaist:
+            data.starting_waist || defaultProfile.startingWaist || 0,
+          goalWaist: data.goal_waist || defaultProfile.goalWaist || 0,
         });
       } else {
         // Create default profile if none exists
@@ -33,6 +36,8 @@ export const useSupabaseStorage = (defaultProfile) => {
           starting_weight: defaultProfile.startingWeight,
           goal_weight: defaultProfile.goalWeight,
           height: defaultProfile.height,
+          starting_waist: defaultProfile.startingWaist || 0,
+          goal_waist: defaultProfile.goalWaist || 0,
         });
       }
     } catch (err) {
@@ -104,6 +109,8 @@ export const useSupabaseStorage = (defaultProfile) => {
           starting_weight: newProfile.startingWeight,
           goal_weight: newProfile.goalWeight,
           height: newProfile.height,
+          starting_waist: newProfile.startingWaist || 0,
+          goal_waist: newProfile.goalWaist || 0,
           updated_at: new Date().toISOString(),
         },
         { onConflict: "user_id" }
