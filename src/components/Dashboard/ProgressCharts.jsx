@@ -39,17 +39,15 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
 
   // Count only days that have actual weight data logged
   const daysWithWeight = Object.entries(dailyLogs).filter(
-    ([_, log]) => log.weight
+    ([_, log]) => log && log.weight && log.weight > 0
   ).length;
 
-  // Filter to ONLY include entries where weight is actually logged (not null/undefined/0)
-  const chartData = Object.entries(dailyLogs)
-    .filter(([_, log]) => {
-      // Only include if weight is a real positive number
-      return (
+  // Weight chart data - only entries with actual weight
+  const weightChartData = Object.entries(dailyLogs)
+    .filter(
+      ([_, log]) =>
         log && log.weight && typeof log.weight === "number" && log.weight > 0
-      );
-    })
+    )
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([date, log]) => ({
       date: parseLocalDate(date).toLocaleDateString("en-US", {
@@ -59,50 +57,57 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
       fullDate: date,
       weight: log.weight,
       waist: log.waist || null,
+    }));
+
+  // Wellness chart data - entries with energy OR mood
+  const wellnessChartData = Object.entries(dailyLogs)
+    .filter(([_, log]) => log && (log.energy || log.mood))
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([date, log]) => ({
+      date: parseLocalDate(date).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      }),
+      fullDate: date,
       energy: log.energy || null,
       mood: log.mood || null,
-      glucose: log.glucose || null,
-      bloodPressureSys: log.bloodPressureSys || null,
-      bloodPressureDia: log.bloodPressureDia || null,
-      sleepHours: log.sleepHours || null,
-      sleepQuality: log.sleepQuality || null,
-      ketones: log.ketones || null,
-      waterIntake: log.waterIntake || null,
+    }));
+
+  // Combined chart data for comparison view
+  const chartData = Object.entries(dailyLogs)
+    .filter(([_, log]) => log && (log.weight > 0 || log.waist > 0))
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([date, log]) => ({
+      date: parseLocalDate(date).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      }),
+      fullDate: date,
+      weight: log.weight || null,
+      waist: log.waist || null,
     }));
 
   // Data for pie/radial charts - progress overview
+  const currentWeight =
+    weightChartData[weightChartData.length - 1]?.weight ||
+    profile.startingWeight;
   const progressData = [
     {
       name: "Lost",
-      value:
-        profile.startingWeight -
-        (chartData[chartData.length - 1]?.weight || profile.startingWeight),
+      value: Math.max(0, profile.startingWeight - currentWeight),
       fill: "#10B981",
     },
     {
       name: "Remaining",
-      value: Math.max(
-        0,
-        (chartData[chartData.length - 1]?.weight || profile.startingWeight) -
-          profile.goalWeight
-      ),
+      value: Math.max(0, currentWeight - profile.goalWeight),
       fill: "#374151",
     },
   ];
 
-  // Average wellness data for pie chart
-  const avgEnergy =
-    chartData.length > 0
-      ? chartData.reduce((sum, d) => sum + (d.energy || 0), 0) /
-          chartData.filter((d) => d.energy).length || 0
-      : 0;
-  const avgMood =
-    chartData.length > 0
-      ? chartData.reduce((sum, d) => sum + (d.mood || 0), 0) /
-          chartData.filter((d) => d.mood).length || 0
-      : 0;
+  // Check if we have ANY data to show
+  const hasAnyData = weightChartData.length > 0 || wellnessChartData.length > 0;
 
-  if (chartData.length < 1) {
+  if (!hasAnyData) {
     return (
       <div className="bg-white/10 backdrop-blur rounded-2xl p-4 sm:p-6">
         <h3 className="text-lg font-bold text-white mb-4">
@@ -182,18 +187,19 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
         <ResponsiveContainer width="100%" height="100%">
           {chartType === "weight" ? (
             // BAR CHART for weight
-            <BarChart data={chartData} margin={{ bottom: 5, left: 10 }}>
+            <BarChart
+              data={weightChartData}
+              margin={{ bottom: 5, left: 10, right: 10 }}
+            >
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
               <XAxis
                 dataKey="date"
                 type="category"
-                scale="point"
                 stroke="#9CA3AF"
                 fontSize={12}
                 tick={{ fill: "#9CA3AF" }}
                 tickLine={false}
                 axisLine={{ stroke: "#374151" }}
-                allowDuplicatedCategory={false}
               />
               <YAxis
                 stroke="#9CA3AF"
@@ -214,6 +220,7 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
                 name="Weight"
                 fill="#10B981"
                 radius={[4, 4, 0, 0]}
+                barSize={weightChartData.length === 1 ? 60 : undefined}
               />
             </BarChart>
           ) : chartType === "progress" ? (
@@ -252,18 +259,19 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
             </PieChart>
           ) : chartType === "wellness" ? (
             // BAR CHART for wellness (energy & mood)
-            <BarChart data={chartData} margin={{ bottom: 5, left: 10 }}>
+            <BarChart
+              data={wellnessChartData}
+              margin={{ bottom: 5, left: 10, right: 10 }}
+            >
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
               <XAxis
                 dataKey="date"
                 type="category"
-                scale="point"
                 stroke="#9CA3AF"
                 fontSize={12}
                 tick={{ fill: "#9CA3AF" }}
                 tickLine={false}
                 axisLine={{ stroke: "#374151" }}
-                allowDuplicatedCategory={false}
               />
               <YAxis
                 stroke="#9CA3AF"
@@ -295,18 +303,19 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
             </BarChart>
           ) : (
             // LINE CHART for comparison (weight trend)
-            <LineChart data={chartData} margin={{ bottom: 5, left: 10 }}>
+            <LineChart
+              data={chartData}
+              margin={{ bottom: 5, left: 10, right: 10 }}
+            >
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
               <XAxis
                 dataKey="date"
                 type="category"
-                scale="point"
                 stroke="#9CA3AF"
                 fontSize={12}
                 tick={{ fill: "#9CA3AF" }}
                 tickLine={false}
                 axisLine={{ stroke: "#374151" }}
-                allowDuplicatedCategory={false}
               />
               <YAxis
                 stroke="#9CA3AF"
@@ -358,7 +367,13 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
 
       {/* Debug: Show actual dates in data */}
       <div className="mt-1 text-center text-xs text-cyan-400">
-        Data dates: {chartData.map((d) => d.date).join(", ") || "No data"}
+        Data dates:{" "}
+        {chartType === "weight"
+          ? weightChartData.map((d) => d.date).join(", ") || "No weight data"
+          : chartType === "wellness"
+          ? wellnessChartData.map((d) => d.date).join(", ") ||
+            "No wellness data"
+          : chartData.map((d) => d.date).join(", ") || "No data"}
       </div>
 
       <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
@@ -371,18 +386,18 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
         <div className="bg-white/5 rounded-lg p-2">
           <p className="text-xs text-gray-400">Current</p>
           <p className="text-sm font-bold text-green-400">
-            {chartData[chartData.length - 1]?.weight
-              ? `${chartData[chartData.length - 1].weight} lbs`
+            {weightChartData[weightChartData.length - 1]?.weight
+              ? `${weightChartData[weightChartData.length - 1].weight} lbs`
               : "--"}
           </p>
         </div>
         <div className="bg-white/5 rounded-lg p-2">
           <p className="text-xs text-gray-400">Lost So Far</p>
           <p className="text-sm font-bold text-emerald-400">
-            {chartData[chartData.length - 1]?.weight
+            {weightChartData[weightChartData.length - 1]?.weight
               ? `${(
                   profile.startingWeight -
-                  chartData[chartData.length - 1].weight
+                  weightChartData[weightChartData.length - 1].weight
                 ).toFixed(1)} lbs`
               : "--"}
           </p>
