@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { defaultProfile } from "../data";
 import { useSupabaseStorage } from "../hooks/useSupabaseStorage";
 import { useSupabasePhotos } from "../hooks/useSupabasePhotos";
-import { useNotifications } from "../hooks/useNotifications";
 import { getProgressStats, getScheduleStats } from "../utils/calculations";
 
 import { Sidebar } from "./Layout";
@@ -15,7 +14,6 @@ import {
   ProgressCharts,
   PhotoProgress,
   FastingTimer,
-  NotificationSettings,
   StreakCounter,
   AchievementBadges,
   MotivationalQuotes,
@@ -43,13 +41,6 @@ const FastingTracker = () => {
     getAllPhotoDates,
     loading: photosLoading,
   } = useSupabasePhotos();
-  const {
-    permission,
-    isSupported,
-    requestPermission,
-    scheduleReminder,
-    testNotification,
-  } = useNotifications();
 
   const [selectedDay, setSelectedDay] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(0);
@@ -86,33 +77,32 @@ const FastingTracker = () => {
       case "dashboard":
         return (
           <div className="space-y-6">
+            {/* Fasting Timer */}
+            <FastingTimer />
+
+            {/* Calendar */}
+            <div className="space-y-4">
+              <MonthNavigation
+                selectedMonth={selectedMonth}
+                showYearView={showYearView}
+                onMonthSelect={handleMonthSelect}
+                onYearViewToggle={() => setShowYearView(!showYearView)}
+              />
+              <Legend />
+              {showYearView ? (
+                <YearView onMonthSelect={handleMonthSelect} />
+              ) : (
+                <MonthView
+                  monthIndex={selectedMonth}
+                  dailyLogs={dailyLogs}
+                  onDayClick={handleDayClick}
+                />
+              )}
+            </div>
+
+            {/* Progress Cards */}
             <ProgressDashboard stats={stats} profile={profile} />
             <FastTypeStats scheduleStats={scheduleStats} />
-          </div>
-        );
-
-      case "timer":
-        return <FastingTimer />;
-
-      case "calendar":
-        return (
-          <div className="space-y-6">
-            <MonthNavigation
-              selectedMonth={selectedMonth}
-              showYearView={showYearView}
-              onMonthSelect={handleMonthSelect}
-              onYearViewToggle={() => setShowYearView(!showYearView)}
-            />
-            <Legend />
-            {showYearView ? (
-              <YearView onMonthSelect={handleMonthSelect} />
-            ) : (
-              <MonthView
-                monthIndex={selectedMonth}
-                dailyLogs={dailyLogs}
-                onDayClick={handleDayClick}
-              />
-            )}
           </div>
         );
 
@@ -147,17 +137,6 @@ const FastingTracker = () => {
       case "quotes":
         return <MotivationalQuotes />;
 
-      case "notifications":
-        return (
-          <NotificationSettings
-            permission={permission}
-            isSupported={isSupported}
-            onRequestPermission={requestPermission}
-            onScheduleReminder={scheduleReminder}
-            onTestNotification={testNotification}
-          />
-        );
-
       case "export":
         return (
           <ExportData dailyLogs={dailyLogs} profile={profile} stats={stats} />
@@ -177,15 +156,12 @@ const FastingTracker = () => {
   const getSectionTitle = () => {
     const titles = {
       dashboard: "📊 Dashboard",
-      timer: "⏱️ Fasting Timer",
-      calendar: "📅 Calendar",
       charts: "📈 Progress Charts",
       photos: "📸 Photo Progress",
       journal: "📔 Journal",
       streaks: "🔥 Streaks",
       badges: "🏅 Achievements",
       quotes: "💫 Daily Motivation",
-      notifications: "🔔 Notifications",
       export: "📤 Export Data",
       share: "📱 Share Progress",
       backup: "💾 Backup & Restore",

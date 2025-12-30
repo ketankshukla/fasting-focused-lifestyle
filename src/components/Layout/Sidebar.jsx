@@ -2,20 +2,12 @@ import React from "react";
 
 const menuItems = [
   { id: "dashboard", icon: "📊", label: "Dashboard", section: "overview" },
-  { id: "timer", icon: "⏱️", label: "Fasting Timer", section: "overview" },
-  { id: "calendar", icon: "📅", label: "Calendar", section: "tracking" },
   { id: "charts", icon: "📈", label: "Progress Charts", section: "tracking" },
   { id: "photos", icon: "📸", label: "Photo Progress", section: "tracking" },
   { id: "journal", icon: "📔", label: "Journal", section: "tracking" },
   { id: "streaks", icon: "🔥", label: "Streaks", section: "gamification" },
   { id: "badges", icon: "🏅", label: "Achievements", section: "gamification" },
   { id: "quotes", icon: "💫", label: "Motivation", section: "gamification" },
-  {
-    id: "notifications",
-    icon: "🔔",
-    label: "Notifications",
-    section: "settings",
-  },
   { id: "export", icon: "📤", label: "Export Data", section: "settings" },
   { id: "share", icon: "📱", label: "Share Progress", section: "settings" },
   { id: "backup", icon: "💾", label: "Backup & Restore", section: "settings" },
