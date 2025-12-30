@@ -14,6 +14,12 @@ const menuItems = [
     label: "Water Fasting Course",
     section: "overview",
   },
+  {
+    id: "faq",
+    icon: "❓",
+    label: "FAQ",
+    section: "overview",
+  },
   { id: "charts", icon: "📈", label: "Progress Charts", section: "tracking" },
   { id: "photos", icon: "📸", label: "Photo Progress", section: "tracking" },
   { id: "journal", icon: "📔", label: "Journal", section: "tracking" },
