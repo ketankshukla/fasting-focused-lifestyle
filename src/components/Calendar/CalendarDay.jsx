@@ -6,6 +6,13 @@ const CalendarDay = ({ dateKey, dayNum, isDecember2025, hasLog, onClick }) => {
   const dayData = getDayData(dateKey);
   const today = getLocalDateKey();
   const isToday = dateKey === today;
+  const isPast = dateKey < today;
+
+  const getBackgroundColor = () => {
+    if (!dayData) return "#F3F4F6";
+    if (isPast) return "#9CA3AF";
+    return colors[dayData.type].bg;
+  };
 
   return (
     <div
@@ -25,7 +32,7 @@ const CalendarDay = ({ dateKey, dayNum, isDecember2025, hasLog, onClick }) => {
         }
       `}
       style={{
-        backgroundColor: dayData ? colors[dayData.type].bg : "#F3F4F6",
+        backgroundColor: getBackgroundColor(),
       }}
     >
       <div className="absolute inset-0 flex flex-col items-center justify-center text-white">

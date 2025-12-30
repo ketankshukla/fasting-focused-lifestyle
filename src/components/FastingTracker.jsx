@@ -24,7 +24,7 @@ import {
   QuickLogButton,
 } from "./Dashboard";
 import { MonthView, YearView } from "./Calendar";
-import { LogModal, ProfileModal } from "./Modals";
+import { LogModal, ProfileModal, DayInfoModal } from "./Modals";
 
 const FastingTracker = () => {
   const {
@@ -47,6 +47,7 @@ const FastingTracker = () => {
   const [showYearView, setShowYearView] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [showLogModal, setShowLogModal] = useState(false);
+  const [showInfoModal, setShowInfoModal] = useState(false);
   const [activeSection, setActiveSection] = useState(() => {
     return localStorage.getItem("activeSection") || "dashboard";
   });
@@ -100,6 +101,11 @@ const FastingTracker = () => {
   const isLoading = dataLoading || photosLoading;
 
   const handleDayClick = (dateKey) => {
+    setSelectedDay(dateKey);
+    setShowInfoModal(true);
+  };
+
+  const handleQuickLog = (dateKey) => {
     requireOwnerAccess(() => {
       setSelectedDay(dateKey);
       setShowLogModal(true);
@@ -361,8 +367,17 @@ const FastingTracker = () => {
         </div>
       )}
 
+      {/* Day Info Modal */}
+      {showInfoModal && selectedDay && (
+        <DayInfoModal
+          selectedDay={selectedDay}
+          dailyLogs={dailyLogs}
+          onClose={() => setShowInfoModal(false)}
+        />
+      )}
+
       {/* Quick Log Button */}
-      <QuickLogButton onLogToday={handleDayClick} />
+      <QuickLogButton onLogToday={handleQuickLog} />
     </div>
   );
 };
