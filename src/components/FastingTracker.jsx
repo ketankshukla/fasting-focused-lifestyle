@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { defaultProfile } from "../data";
-import { useFastingStorage } from "../hooks/useLocalStorage";
-import { usePhotoStorage } from "../hooks/useIndexedDB";
+import { useSupabaseStorage } from "../hooks/useSupabaseStorage";
+import { useSupabasePhotos } from "../hooks/useSupabasePhotos";
 import { useNotifications } from "../hooks/useNotifications";
 import { getProgressStats, getScheduleStats } from "../utils/calculations";
 
@@ -29,10 +29,20 @@ import { MonthView, YearView } from "./Calendar";
 import { LogModal, ProfileModal } from "./Modals";
 
 const FastingTracker = () => {
-  const { profile, dailyLogs, saveLog, saveProfile } =
-    useFastingStorage(defaultProfile);
-  const { photos, savePhoto, deletePhoto, getAllPhotoDates } =
-    usePhotoStorage();
+  const {
+    profile,
+    dailyLogs,
+    saveLog,
+    saveProfile,
+    loading: dataLoading,
+  } = useSupabaseStorage(defaultProfile);
+  const {
+    photos,
+    savePhoto,
+    deletePhoto,
+    getAllPhotoDates,
+    loading: photosLoading,
+  } = useSupabasePhotos();
   const { permission, isSupported, requestPermission, scheduleReminder } =
     useNotifications();
 
@@ -46,6 +56,7 @@ const FastingTracker = () => {
 
   const stats = getProgressStats(profile, dailyLogs);
   const scheduleStats = getScheduleStats();
+  const isLoading = dataLoading || photosLoading;
 
   const handleDayClick = (dateKey) => {
     setSelectedDay(dateKey);
@@ -167,6 +178,18 @@ const FastingTracker = () => {
     };
     return titles[activeSection] || "Dashboard";
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-white text-lg">Loading your data...</p>
+          <p className="text-gray-400 text-sm mt-1">Syncing with cloud</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex">
