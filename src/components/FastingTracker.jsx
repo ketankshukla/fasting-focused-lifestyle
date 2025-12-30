@@ -78,17 +78,27 @@ const FastingTracker = () => {
     requireOwnerAccess(() => setShowProfileModal(true));
   };
 
-  const handlePinSubmit = () => {
-    if (pinInput === OWNER_PIN) {
+  const handlePinSubmit = (pinValue = pinInput) => {
+    if (pinValue === OWNER_PIN) {
       setIsOwnerMode(true);
       setShowPinModal(false);
       if (pendingAction) {
         pendingAction();
         setPendingAction(null);
       }
-    } else {
+    } else if (pinValue.length === OWNER_PIN.length) {
       setPinError("Incorrect PIN");
       setPinInput("");
+    }
+  };
+
+  const handlePinChange = (e) => {
+    const value = e.target.value;
+    setPinInput(value);
+    setPinError("");
+    // Auto-submit when PIN length matches
+    if (value.length === OWNER_PIN.length) {
+      handlePinSubmit(value);
     }
   };
 
@@ -363,7 +373,7 @@ const FastingTracker = () => {
             <input
               type="password"
               value={pinInput}
-              onChange={(e) => setPinInput(e.target.value)}
+              onChange={handlePinChange}
               onKeyDown={(e) => e.key === "Enter" && handlePinSubmit()}
               placeholder="Enter PIN"
               className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white text-center text-2xl tracking-widest focus:outline-none focus:border-purple-500"
