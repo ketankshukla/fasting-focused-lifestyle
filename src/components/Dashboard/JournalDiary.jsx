@@ -175,13 +175,6 @@ const JournalDiary = ({ dailyLogs }) => {
                 {selectedEntry.notes}
               </p>
             </div>
-
-            <button
-              onClick={() => setShowModal(false)}
-              className="w-full mt-4 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-all"
-            >
-              Close
-            </button>
           </div>
         </div>
       )}

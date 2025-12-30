@@ -89,12 +89,6 @@ const LogModal = ({ selectedDay, dailyLogs, onSave, onClose }) => {
               )}
             </div>
           </div>
-          <button
-            onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center rounded-full bg-white/50 hover:bg-white text-gray-600 hover:text-gray-800 text-xl leading-none"
-          >
-            ×
-          </button>
         </div>
 
         {/* Tabs */}

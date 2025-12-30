@@ -197,13 +197,6 @@ ${stats.bmi ? `📐 BMI: ${stats.bmi}` : ""}
                 ⬇️ Download Image
               </button>
             </div>
-
-            <button
-              onClick={() => setShowModal(false)}
-              className="w-full py-2 bg-white/10 text-gray-300 rounded-lg hover:bg-white/20 transition-all"
-            >
-              Close
-            </button>
           </div>
         </div>
       )}

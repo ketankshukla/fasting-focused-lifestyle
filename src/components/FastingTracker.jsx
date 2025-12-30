@@ -141,7 +141,10 @@ const FastingTracker = () => {
 
             {/* Progress Cards */}
             <ProgressDashboard stats={stats} profile={profile} />
-            <FastTypeStats scheduleStats={scheduleStats} />
+            <FastTypeStats
+              scheduleStats={scheduleStats}
+              dailyLogs={dailyLogs}
+            />
           </div>
         );
 
@@ -348,20 +351,12 @@ const FastingTracker = () => {
               </p>
             )}
 
-            <div className="flex gap-2 mt-4">
-              <button
-                onClick={() => setShowPinModal(false)}
-                className="flex-1 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-all"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handlePinSubmit}
-                className="flex-1 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all"
-              >
-                Unlock
-              </button>
-            </div>
+            <button
+              onClick={handlePinSubmit}
+              className="w-full mt-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all"
+            >
+              Unlock
+            </button>
           </div>
         </div>
       )}

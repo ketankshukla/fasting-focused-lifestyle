@@ -181,12 +181,6 @@ const PhotoProgress = ({
               alt={`Progress ${selectedDates[0]}`}
               className="max-h-64 mx-auto rounded-lg"
             />
-            <button
-              onClick={() => setSelectedDates([])}
-              className="mt-2 text-xs text-gray-400 hover:text-white"
-            >
-              Close
-            </button>
           </div>
         </div>
       )}
@@ -238,18 +232,9 @@ const PhotoProgress = ({
 
               <div className="flex gap-2">
                 <button
-                  onClick={() => {
-                    setShowModal(false);
-                    setPreviewImage(null);
-                  }}
-                  className="flex-1 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-all"
-                >
-                  Cancel
-                </button>
-                <button
                   onClick={handleSavePhoto}
                   disabled={!previewImage}
-                  className={`flex-1 py-2 rounded-lg font-medium transition-all ${
+                  className={`w-full py-2 rounded-lg font-medium transition-all ${
                     previewImage
                       ? "bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:from-green-600 hover:to-emerald-700"
                       : "bg-gray-600 text-gray-400 cursor-not-allowed"
