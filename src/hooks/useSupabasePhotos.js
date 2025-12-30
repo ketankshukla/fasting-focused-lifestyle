@@ -51,18 +51,28 @@ export const useSupabasePhotos = () => {
       const base64Response = await fetch(base64Data);
       const blob = await base64Response.blob();
 
-      // Create unique filename
-      const fileName = `${DEFAULT_USER_ID}/${dateKey}-${Date.now()}.jpg`;
+      // Create unique filename with timestamp to allow multiple photos
+      const timestamp = Date.now();
+      const uniqueKey = `${dateKey}_${timestamp}`;
+      const fileName = `${DEFAULT_USER_ID}/${uniqueKey}.jpg`;
+
+      console.log("Uploading photo to:", fileName);
 
       // Upload to Supabase Storage
-      const { error: uploadError } = await supabase.storage
+      const { data: uploadData, error: uploadError } = await supabase.storage
         .from(STORAGE_BUCKET)
         .upload(fileName, blob, {
-          contentType: "image/jpeg",
-          upsert: true,
+          contentType: blob.type || "image/jpeg",
+          cacheControl: "3600",
+          upsert: false,
         });
 
-      if (uploadError) throw uploadError;
+      if (uploadError) {
+        console.error("Upload error:", uploadError);
+        throw uploadError;
+      }
+
+      console.log("Upload successful:", uploadData);
 
       // Get public URL
       const { data: urlData } = supabase.storage
@@ -74,22 +84,28 @@ export const useSupabasePhotos = () => {
         .from("photos")
         .insert({
           user_id: DEFAULT_USER_ID,
-          date_key: dateKey,
+          date_key: uniqueKey,
           storage_path: fileName,
         })
         .select()
         .single();
 
-      if (dbError) throw dbError;
+      if (dbError) {
+        console.error("Database error:", dbError);
+        throw dbError;
+      }
+
+      console.log("Photo record saved:", photoRecord);
+      console.log("Public URL:", urlData.publicUrl);
 
       // Update local state
       setPhotos((prev) => ({
         ...prev,
-        [dateKey]: {
+        [uniqueKey]: {
           id: photoRecord.id,
           data: urlData.publicUrl,
           storagePath: fileName,
-          date: dateKey,
+          date: uniqueKey,
         },
       }));
 

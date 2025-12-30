@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { getLocalDateKey } from "../../utils/calculations";
 
 const PhotoProgress = ({
   photos,
@@ -27,7 +28,7 @@ const PhotoProgress = ({
 
   const handleSavePhoto = async () => {
     if (previewImage) {
-      const today = new Date().toISOString().split("T")[0];
+      const today = getLocalDateKey();
       await onSavePhoto(today, previewImage);
       setPreviewImage(null);
       setShowModal(false);
@@ -124,7 +125,7 @@ const PhotoProgress = ({
                     {idx === 0 ? "Before" : "After"}: {formatDate(date)}
                   </p>
                   <img
-                    src={photos[date]?.imageData}
+                    src={photos[date]?.data || photos[date]?.imageData}
                     alt={`Progress ${date}`}
                     className="w-full h-48 sm:h-64 object-cover rounded-lg"
                   />
@@ -138,7 +139,7 @@ const PhotoProgress = ({
           {photoDates.slice(-12).map((date) => (
             <div key={date} className="relative group">
               <img
-                src={photos[date]?.imageData}
+                src={photos[date]?.data || photos[date]?.imageData}
                 alt={`Progress ${date}`}
                 className="w-full h-20 sm:h-24 object-cover rounded-lg cursor-pointer hover:opacity-80 transition-opacity"
                 onClick={() => {
@@ -170,7 +171,10 @@ const PhotoProgress = ({
               {formatDate(selectedDates[0])}
             </p>
             <img
-              src={photos[selectedDates[0]]?.imageData}
+              src={
+                photos[selectedDates[0]]?.data ||
+                photos[selectedDates[0]]?.imageData
+              }
               alt={`Progress ${selectedDates[0]}`}
               className="max-h-64 mx-auto rounded-lg"
             />
