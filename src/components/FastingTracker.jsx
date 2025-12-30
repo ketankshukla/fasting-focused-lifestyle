@@ -55,24 +55,34 @@ const FastingTracker = () => {
   const [showPinModal, setShowPinModal] = useState(false);
   const [pinInput, setPinInput] = useState("");
   const [pinError, setPinError] = useState("");
+  const [pendingAction, setPendingAction] = useState(null);
 
-  const OWNER_PIN = "1234"; // Simple PIN for owner access
+  const OWNER_PIN = import.meta.env.VITE_OWNER_PIN || "55378008";
 
-  const handleProfileButtonClick = () => {
+  // Generic function to require PIN before any action
+  const requireOwnerAccess = (action) => {
     if (isOwnerMode) {
-      setShowProfileModal(true);
+      action();
     } else {
+      setPendingAction(() => action);
       setShowPinModal(true);
       setPinInput("");
       setPinError("");
     }
   };
 
+  const handleProfileButtonClick = () => {
+    requireOwnerAccess(() => setShowProfileModal(true));
+  };
+
   const handlePinSubmit = () => {
     if (pinInput === OWNER_PIN) {
       setIsOwnerMode(true);
       setShowPinModal(false);
-      setShowProfileModal(true);
+      if (pendingAction) {
+        pendingAction();
+        setPendingAction(null);
+      }
     } else {
       setPinError("Incorrect PIN");
       setPinInput("");
@@ -90,8 +100,10 @@ const FastingTracker = () => {
   const isLoading = dataLoading || photosLoading;
 
   const handleDayClick = (dateKey) => {
-    setSelectedDay(dateKey);
-    setShowLogModal(true);
+    requireOwnerAccess(() => {
+      setSelectedDay(dateKey);
+      setShowLogModal(true);
+    });
   };
 
   const handleMonthSelect = (idx) => {
