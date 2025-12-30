@@ -5,11 +5,13 @@ const menuItems = [
   { id: "charts", icon: "📈", label: "Progress Charts", section: "tracking" },
   { id: "photos", icon: "📸", label: "Photo Progress", section: "tracking" },
   { id: "journal", icon: "📔", label: "Journal", section: "tracking" },
-  { id: "streaks", icon: "🔥", label: "Streaks", section: "gamification" },
-  { id: "badges", icon: "🏅", label: "Achievements", section: "gamification" },
-  { id: "quotes", icon: "💫", label: "Motivation", section: "gamification" },
+  {
+    id: "rewards",
+    icon: "🏆",
+    label: "Rewards & Goals",
+    section: "gamification",
+  },
   { id: "export", icon: "📤", label: "Export Data", section: "settings" },
-  { id: "share", icon: "📱", label: "Share Progress", section: "settings" },
   { id: "backup", icon: "💾", label: "Backup & Restore", section: "settings" },
 ];
 

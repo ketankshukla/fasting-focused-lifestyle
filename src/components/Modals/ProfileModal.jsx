@@ -14,7 +14,7 @@ const ProfileModal = ({ profile, onSave, onClose }) => {
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6"
+        className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6"
         onClick={(e) => e.stopPropagation()}
       >
         <h3 className="text-xl font-bold text-gray-800 mb-4">

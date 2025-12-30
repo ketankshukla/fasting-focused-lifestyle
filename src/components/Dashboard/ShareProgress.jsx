@@ -166,7 +166,7 @@ ${stats.bmi ? `📐 BMI: ${stats.bmi}` : ""}
           onClick={() => setShowModal(false)}
         >
           <div
-            className="bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-6"
+            className="bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6"
             onClick={(e) => e.stopPropagation()}
           >
             <h3 className="text-xl font-bold text-white mb-4">

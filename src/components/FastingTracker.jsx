@@ -107,7 +107,12 @@ const FastingTracker = () => {
         );
 
       case "charts":
-        return <ProgressCharts dailyLogs={dailyLogs} profile={profile} />;
+        return (
+          <div className="space-y-6">
+            <ProgressCharts dailyLogs={dailyLogs} profile={profile} />
+            <ShareProgress stats={stats} profile={profile} />
+          </div>
+        );
 
       case "photos":
         return (
@@ -122,28 +127,23 @@ const FastingTracker = () => {
       case "journal":
         return <JournalDiary dailyLogs={dailyLogs} />;
 
-      case "streaks":
-        return <StreakCounter dailyLogs={dailyLogs} />;
-
-      case "badges":
+      case "rewards":
         return (
-          <AchievementBadges
-            dailyLogs={dailyLogs}
-            profile={profile}
-            stats={stats}
-          />
+          <div className="space-y-6">
+            <StreakCounter dailyLogs={dailyLogs} />
+            <AchievementBadges
+              dailyLogs={dailyLogs}
+              profile={profile}
+              stats={stats}
+            />
+            <MotivationalQuotes />
+          </div>
         );
-
-      case "quotes":
-        return <MotivationalQuotes />;
 
       case "export":
         return (
           <ExportData dailyLogs={dailyLogs} profile={profile} stats={stats} />
         );
-
-      case "share":
-        return <ShareProgress stats={stats} profile={profile} />;
 
       case "backup":
         return <BackupRestore dailyLogs={dailyLogs} profile={profile} />;
@@ -159,11 +159,8 @@ const FastingTracker = () => {
       charts: "📈 Progress Charts",
       photos: "📸 Photo Progress",
       journal: "📔 Journal",
-      streaks: "🔥 Streaks",
-      badges: "🏅 Achievements",
-      quotes: "💫 Daily Motivation",
+      rewards: "🏆 Rewards & Goals",
       export: "📤 Export Data",
-      share: "📱 Share Progress",
       backup: "💾 Backup & Restore",
     };
     return titles[activeSection] || "Dashboard";

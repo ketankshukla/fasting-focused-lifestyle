@@ -132,7 +132,7 @@ const JournalDiary = ({ dailyLogs }) => {
           onClick={() => setShowModal(false)}
         >
           <div
-            className="bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-6"
+            className="bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-4">
