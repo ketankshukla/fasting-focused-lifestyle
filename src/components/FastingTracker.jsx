@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { defaultProfile } from "../data";
 import { useFastingStorage } from "../hooks/useLocalStorage";
+import { usePhotoStorage } from "../hooks/useIndexedDB";
 import { getProgressStats, getScheduleStats } from "../utils/calculations";
 
 import { Header } from "./Header";
@@ -10,6 +11,7 @@ import {
   Legend,
   MonthNavigation,
   ProgressCharts,
+  PhotoProgress,
 } from "./Dashboard";
 import { MonthView, YearView } from "./Calendar";
 import { LogModal, ProfileModal } from "./Modals";
@@ -18,6 +20,8 @@ import Footer from "./Footer";
 const FastingTracker = () => {
   const { profile, dailyLogs, saveLog, saveProfile } =
     useFastingStorage(defaultProfile);
+  const { photos, savePhoto, deletePhoto, getAllPhotoDates } =
+    usePhotoStorage();
 
   const [selectedDay, setSelectedDay] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(0);
@@ -50,6 +54,13 @@ const FastingTracker = () => {
         <ProgressDashboard stats={stats} profile={profile} />
 
         <ProgressCharts dailyLogs={dailyLogs} profile={profile} />
+
+        <PhotoProgress
+          photos={photos}
+          onSavePhoto={savePhoto}
+          onDeletePhoto={deletePhoto}
+          getAllPhotoDates={getAllPhotoDates}
+        />
 
         <FastTypeStats scheduleStats={scheduleStats} />
 

@@ -3,3 +3,4 @@ export { default as FastTypeStats } from "./FastTypeStats";
 export { default as Legend } from "./Legend";
 export { default as MonthNavigation } from "./MonthNavigation";
 export { default as ProgressCharts } from "./ProgressCharts";
+export { default as PhotoProgress } from "./PhotoProgress";
