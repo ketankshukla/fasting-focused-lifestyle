@@ -6,7 +6,7 @@ import {
   formatDate,
 } from "../../utils/calculations";
 
-const DayInfoModal = ({ selectedDay, dailyLogs, onClose }) => {
+const DayInfoModal = ({ selectedDay, dailyLogs, onClose, onNavigate }) => {
   const dayData = getDayData(selectedDay);
   const info = dayData ? getPhysiologyInfo(dayData.type, dayData.day) : null;
   const color = dayData ? colors[dayData.type] : defaultColor;
@@ -16,6 +16,13 @@ const DayInfoModal = ({ selectedDay, dailyLogs, onClose }) => {
   const isRefeedDay =
     dayData && (dayData.type === "1r" || dayData.type === "fr");
   const hasMeals = info && info.meals;
+
+  const navigateDay = (direction) => {
+    const currentDate = new Date(selectedDay + "T00:00:00");
+    currentDate.setDate(currentDate.getDate() + direction);
+    const newDateKey = currentDate.toISOString().split("T")[0];
+    onNavigate(newDateKey);
+  };
 
   return (
     <div
@@ -31,25 +38,55 @@ const DayInfoModal = ({ selectedDay, dailyLogs, onClose }) => {
           className="p-4 rounded-t-2xl"
           style={{ backgroundColor: color.light }}
         >
-          <p className="text-xs font-medium" style={{ color: color.text }}>
-            {dateStr}
-          </p>
-          <div className="flex items-center gap-2 mt-1">
-            <h3 className="text-lg font-bold" style={{ color: color.text }}>
-              {color.name}
-            </h3>
-            {dayData && (
-              <span
-                className="px-2 py-0.5 rounded-full text-white text-xs font-bold"
-                style={{ backgroundColor: color.bg }}
-              >
-                Day {dayData.day}
-              </span>
-            )}
+          <div className="flex items-center justify-between">
+            <button
+              onClick={() => navigateDay(-1)}
+              className="p-2 rounded-full hover:bg-white/50 transition-all"
+              style={{ color: color.text }}
+            >
+              ◀
+            </button>
+            <div className="text-center">
+              <p className="text-xs font-medium" style={{ color: color.text }}>
+                {dateStr}
+              </p>
+              <div className="flex items-center justify-center gap-2 mt-1">
+                <h3 className="text-lg font-bold" style={{ color: color.text }}>
+                  {color.name}
+                </h3>
+                {dayData && (
+                  <span
+                    className="px-2 py-0.5 rounded-full text-white text-xs font-bold"
+                    style={{ backgroundColor: color.bg }}
+                  >
+                    Day {dayData.day}
+                  </span>
+                )}
+              </div>
+            </div>
+            <button
+              onClick={() => navigateDay(1)}
+              className="p-2 rounded-full hover:bg-white/50 transition-all"
+              style={{ color: color.text }}
+            >
+              ▶
+            </button>
           </div>
         </div>
 
         <div className="p-4 space-y-4">
+          {/* Title and Expected Loss */}
+          {info && (
+            <div className="text-center">
+              <h4 className="font-bold text-gray-800">{info.title}</h4>
+              {info.expectedLoss && (
+                <p className="text-sm text-green-600 font-medium">
+                  Expected: {info.expectedLoss}
+                </p>
+              )}
+            </div>
+          )}
+
           {/* Logged Data Summary */}
           {existingLog.weight && (
             <div className="bg-gray-50 rounded-lg p-3">
@@ -88,25 +125,38 @@ const DayInfoModal = ({ selectedDay, dailyLogs, onClose }) => {
           {/* Physiology Info */}
           {info && (
             <div className="space-y-3">
+              {/* What's Happening */}
               <div className="bg-purple-50 rounded-lg p-3">
-                <h4 className="text-sm font-semibold text-purple-800 mb-1">
-                  🧬 What's Happening
+                <h4 className="text-sm font-semibold text-purple-800 mb-2">
+                  🧬 What's Happening In Your Body
                 </h4>
-                <p className="text-sm text-purple-700">{info.physiology}</p>
+                <p className="text-sm text-purple-700 mb-2">
+                  {info.whatHappens}
+                </p>
+                {info.symptoms && (
+                  <div className="mt-2 pt-2 border-t border-purple-200">
+                    <p className="text-xs font-medium text-purple-600">
+                      Common symptoms:
+                    </p>
+                    <p className="text-xs text-purple-600">{info.symptoms}</p>
+                  </div>
+                )}
               </div>
 
+              {/* Benefits / Focus */}
+              <div className="bg-amber-50 rounded-lg p-3">
+                <h4 className="text-sm font-semibold text-amber-800 mb-2">
+                  🎯 Benefits & Focus
+                </h4>
+                <p className="text-sm text-amber-700">{info.benefits}</p>
+              </div>
+
+              {/* Tips */}
               <div className="bg-blue-50 rounded-lg p-3">
-                <h4 className="text-sm font-semibold text-blue-800 mb-1">
-                  💡 Tips
+                <h4 className="text-sm font-semibold text-blue-800 mb-2">
+                  💡 Tips & Recommendations
                 </h4>
                 <p className="text-sm text-blue-700">{info.tips}</p>
-              </div>
-
-              <div className="bg-amber-50 rounded-lg p-3">
-                <h4 className="text-sm font-semibold text-amber-800 mb-1">
-                  🎯 Focus
-                </h4>
-                <p className="text-sm text-amber-700">{info.focus}</p>
               </div>
             </div>
           )}

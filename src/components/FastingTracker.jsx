@@ -373,6 +373,7 @@ const FastingTracker = () => {
           selectedDay={selectedDay}
           dailyLogs={dailyLogs}
           onClose={() => setShowInfoModal(false)}
+          onNavigate={(newDay) => setSelectedDay(newDay)}
         />
       )}
 

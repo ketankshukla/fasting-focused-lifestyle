@@ -335,8 +335,8 @@ const LogModal = ({ selectedDay, dailyLogs, onSave, onClose }) => {
                     setLogForm({ ...logForm, notes: e.target.value })
                   }
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-                  rows={2}
-                  placeholder="How are you feeling?"
+                  rows={6}
+                  placeholder="How are you feeling? Write your thoughts, experiences, challenges, or wins for today..."
                 />
               </div>
 
