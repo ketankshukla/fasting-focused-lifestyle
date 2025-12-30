@@ -2,6 +2,12 @@ import React from "react";
 
 const menuItems = [
   { id: "dashboard", icon: "📊", label: "Dashboard", section: "overview" },
+  {
+    id: "course",
+    icon: "🔥",
+    label: "Dry Fasting Course",
+    section: "overview",
+  },
   { id: "charts", icon: "📈", label: "Progress Charts", section: "tracking" },
   { id: "photos", icon: "📸", label: "Photo Progress", section: "tracking" },
   { id: "journal", icon: "📔", label: "Journal", section: "tracking" },

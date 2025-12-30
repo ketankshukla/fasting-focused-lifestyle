@@ -25,6 +25,7 @@ import {
 } from "./Dashboard";
 import { MonthView, YearView } from "./Calendar";
 import { LogModal, ProfileModal, DayInfoModal } from "./Modals";
+import { DryFastingCourse } from "./Course";
 
 const FastingTracker = () => {
   const {
@@ -196,6 +197,9 @@ const FastingTracker = () => {
       case "backup":
         return <BackupRestore dailyLogs={dailyLogs} profile={profile} />;
 
+      case "course":
+        return <DryFastingCourse />;
+
       default:
         return <ProgressDashboard stats={stats} profile={profile} />;
     }
@@ -204,6 +208,7 @@ const FastingTracker = () => {
   const getSectionTitle = () => {
     const titles = {
       dashboard: "📊 Dashboard",
+      course: "🔥 Dry Fasting Course",
       charts: "📈 Progress Charts",
       photos: "📸 Photo Progress",
       journal: "📔 Journal",

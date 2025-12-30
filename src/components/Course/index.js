@@ -1,0 +1,10 @@
+export { default as DryFastingCourse } from "./DryFastingCourse";
+export { default as Module1 } from "./Module1";
+export { default as Module2 } from "./Module2";
+export { default as Module3 } from "./Module3";
+export { default as Module4 } from "./Module4";
+export { default as Module5 } from "./Module5";
+export { default as Module6 } from "./Module6";
+export { default as Module7 } from "./Module7";
+export { default as Module8 } from "./Module8";
+export { default as Module9 } from "./Module9";
