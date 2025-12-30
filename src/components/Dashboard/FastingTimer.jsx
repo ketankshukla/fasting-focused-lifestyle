@@ -180,26 +180,24 @@ const FastingTimer = () => {
     );
   }
 
+  // Calculate seconds until next log for precise countdown
+  const getSecondsUntilNextLog = () => {
+    const nextLog = new Date(now);
+    nextLog.setHours(DAILY_LOG_HOUR, 0, 0, 0);
+    if (now >= nextLog) {
+      nextLog.setDate(nextLog.getDate() + 1);
+    }
+    const diff = nextLog - now;
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    return { hours, minutes, seconds };
+  };
+
+  const countdownTime = getSecondsUntilNextLog();
+
   return (
     <div className="bg-white/10 backdrop-blur rounded-2xl p-4 sm:p-6">
-      {/* Daily Log Time Indicator */}
-      <div className="bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 rounded-lg p-3 mb-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-lg">📝</span>
-            <span className="text-amber-300 text-sm font-medium">
-              Daily Log Time: 9:00 PM PST
-            </span>
-          </div>
-          <div className="text-right">
-            <span className="text-xs text-gray-400">Next log in </span>
-            <span className="text-amber-400 font-bold">
-              {timeUntilLog.hours}h {timeUntilLog.minutes}m
-            </span>
-          </div>
-        </div>
-      </div>
-
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-bold text-white">⏱️ Fasting Timer</h3>
         <div
@@ -210,7 +208,8 @@ const FastingTimer = () => {
         </div>
       </div>
 
-      <div className="text-center mb-6">
+      {/* Main Timer Display */}
+      <div className="text-center mb-4">
         <div className="flex justify-center items-baseline gap-1 text-white">
           <span className="text-5xl sm:text-6xl font-black tabular-nums">
             {formatTime(timeElapsed?.hours || 0)}
@@ -228,18 +227,40 @@ const FastingTimer = () => {
             {formatTime(timeElapsed?.seconds || 0)}
           </span>
         </div>
-        <p className="text-gray-400 text-sm mt-2">Hours : Minutes : Seconds</p>
+        <p className="text-gray-500 text-xs mt-1">Fasting Duration</p>
+      </div>
+
+      {/* Next Log Countdown - Same size, contrasting color */}
+      <div className="text-center mb-6">
+        <div className="flex justify-center items-baseline gap-1 text-cyan-400">
+          <span className="text-5xl sm:text-6xl font-black tabular-nums">
+            {formatTime(countdownTime.hours)}
+          </span>
+          <span className="text-2xl sm:text-3xl font-bold animate-pulse">
+            :
+          </span>
+          <span className="text-5xl sm:text-6xl font-black tabular-nums">
+            {formatTime(countdownTime.minutes)}
+          </span>
+          <span className="text-2xl sm:text-3xl font-bold animate-pulse">
+            :
+          </span>
+          <span className="text-5xl sm:text-6xl font-black tabular-nums">
+            {formatTime(countdownTime.seconds)}
+          </span>
+        </div>
+        <p className="text-gray-500 text-xs mt-1">Next Log In</p>
       </div>
 
       <div className="mb-4">
         <div className="flex justify-between text-xs text-gray-400 mb-1">
           <span>0h</span>
-          <span>{Math.round(progress)}% Complete</span>
+          <span className="font-mono">{progress.toFixed(6)}%</span>
           <span>{expectedDuration}h</span>
         </div>
         <div className="h-3 bg-gray-700 rounded-full overflow-hidden">
           <div
-            className="h-full transition-all duration-1000 rounded-full"
+            className="h-full rounded-full"
             style={{
               width: `${progress}%`,
               backgroundColor: currentFast.color.bg,
@@ -252,7 +273,7 @@ const FastingTimer = () => {
         <p className="text-sm text-gray-300">{getMotivationalMessage()}</p>
       </div>
 
-      <div className="grid grid-cols-4 gap-2 mt-4 text-center">
+      <div className="grid grid-cols-5 gap-2 mt-4 text-center">
         <div className="bg-white/5 rounded-lg p-2">
           <p className="text-xs text-gray-400">Total Hours</p>
           <p className="text-lg font-bold text-white">
@@ -268,7 +289,7 @@ const FastingTimer = () => {
         <div className="bg-white/5 rounded-lg p-2">
           <p className="text-xs text-gray-400">Current Day</p>
           <p className="text-lg font-bold text-purple-400">
-            {timeElapsed?.currentDayHours || 0}h/{24}h
+            {timeElapsed?.currentDayHours || 0}h
           </p>
         </div>
         <div className="bg-white/5 rounded-lg p-2">
@@ -276,6 +297,10 @@ const FastingTimer = () => {
           <p className="text-lg font-bold text-green-400">
             {Math.max(0, expectedDuration - (timeElapsed?.hours || 0))}
           </p>
+        </div>
+        <div className="bg-white/5 rounded-lg p-2">
+          <p className="text-xs text-gray-400">Log Time</p>
+          <p className="text-lg font-bold text-cyan-400">9PM</p>
         </div>
       </div>
     </div>

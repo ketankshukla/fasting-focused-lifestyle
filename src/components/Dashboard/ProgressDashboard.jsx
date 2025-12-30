@@ -35,12 +35,12 @@ const ProgressDashboard = ({ stats, profile }) => {
       <div className="mb-2">
         <div className="flex justify-between text-sm text-gray-300 mb-1">
           <span>{profile.startingWeight} lbs</span>
-          <span>{stats.progressPercent.toFixed(1)}% Complete</span>
+          <span className="font-mono">{stats.progressPercent.toFixed(6)}%</span>
           <span>{profile.goalWeight} lbs</span>
         </div>
         <div className="h-4 bg-gray-700 rounded-full overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-green-500 to-emerald-400 transition-all duration-500"
+            className="h-full bg-gradient-to-r from-green-500 to-emerald-400"
             style={{ width: `${stats.progressPercent}%` }}
           />
         </div>
