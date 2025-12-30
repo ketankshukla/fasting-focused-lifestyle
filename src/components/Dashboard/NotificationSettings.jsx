@@ -5,6 +5,7 @@ const NotificationSettings = ({
   isSupported,
   onRequestPermission,
   onScheduleReminder,
+  onTestNotification,
 }) => {
   const [reminders, setReminders] = useState({
     dailyLog: false,
@@ -35,7 +36,9 @@ const NotificationSettings = ({
   };
 
   const handleTestNotification = () => {
-    if (permission === "granted") {
+    if (onTestNotification) {
+      onTestNotification();
+    } else if (permission === "granted") {
       onScheduleReminder("motivation", 100);
     }
   };

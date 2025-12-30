@@ -43,8 +43,13 @@ const FastingTracker = () => {
     getAllPhotoDates,
     loading: photosLoading,
   } = useSupabasePhotos();
-  const { permission, isSupported, requestPermission, scheduleReminder } =
-    useNotifications();
+  const {
+    permission,
+    isSupported,
+    requestPermission,
+    scheduleReminder,
+    testNotification,
+  } = useNotifications();
 
   const [selectedDay, setSelectedDay] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(0);
@@ -149,6 +154,7 @@ const FastingTracker = () => {
             isSupported={isSupported}
             onRequestPermission={requestPermission}
             onScheduleReminder={scheduleReminder}
+            onTestNotification={testNotification}
           />
         );
 

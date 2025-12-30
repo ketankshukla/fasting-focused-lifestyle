@@ -83,11 +83,48 @@ export const useNotifications = () => {
     [permission, sendNotification]
   );
 
+  const testNotification = useCallback(() => {
+    if (!isSupported) {
+      console.log("Notifications not supported");
+      alert("Notifications are not supported in this browser");
+      return false;
+    }
+
+    if (permission !== "granted") {
+      console.log("Notification permission not granted:", permission);
+      alert(
+        'Please enable notifications first by clicking "Enable Notifications"'
+      );
+      return false;
+    }
+
+    try {
+      const notification = new Notification("🔔 Test Notification", {
+        body: "Notifications are working! You'll receive reminders here.",
+        icon: "/favicon.svg",
+        requireInteraction: false,
+      });
+
+      notification.onclick = () => {
+        window.focus();
+        notification.close();
+      };
+
+      console.log("Test notification sent successfully");
+      return true;
+    } catch (error) {
+      console.error("Error sending test notification:", error);
+      alert("Error sending notification: " + error.message);
+      return false;
+    }
+  }, [isSupported, permission]);
+
   return {
     permission,
     isSupported,
     requestPermission,
     sendNotification,
     scheduleReminder,
+    testNotification,
   };
 };
