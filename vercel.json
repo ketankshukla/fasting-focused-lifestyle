@@ -1,7 +1,3 @@
 {
-  "rewrites": [
-    { "source": "/fasting/(.*)", "destination": "/$1" },
-    { "source": "/fasting", "destination": "/index.html" }
-  ],
   "trailingSlash": false
 }

@@ -473,10 +473,6 @@ const requireOwnerAccess = (action) => {
 
 ```json
 {
-  "rewrites": [
-    { "source": "/fasting/(.*)", "destination": "/$1" },
-    { "source": "/fasting", "destination": "/index.html" }
-  ],
   "trailingSlash": false
 }
 ```
@@ -486,7 +482,6 @@ const requireOwnerAccess = (action) => {
 ```javascript
 export default defineConfig({
   plugins: [react()],
-  base: "/fasting/",
 });
 ```
 
@@ -632,4 +627,4 @@ For issues or questions, please open an issue on the GitHub repository.
 
 **Repository:** https://github.com/ketankshukla/fasting-focused-lifestyle
 
-**Live Site:** https://fasting.ketanshukla.com or https://ketanshukla.com/fasting
+**Live Site:** https://fasting.ketanshukla.com

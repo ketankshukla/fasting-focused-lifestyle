@@ -26,7 +26,7 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:5173/fasting/ in your browser.
+Open http://localhost:5173/ in your browser.
 
 ### Production Build
 
@@ -66,7 +66,6 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/fasting/",
 });
 ```
 
@@ -84,10 +83,6 @@ export default {
 
 ```json
 {
-  "rewrites": [
-    { "source": "/fasting/(.*)", "destination": "/$1" },
-    { "source": "/fasting", "destination": "/index.html" }
-  ],
   "trailingSlash": false
 }
 ```
