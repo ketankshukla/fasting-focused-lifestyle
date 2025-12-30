@@ -21,6 +21,8 @@ const LogModal = ({ selectedDay, dailyLogs, onSave, onClose }) => {
       glucose: existingLog.glucose || "",
       sleepHours: existingLog.sleepHours || "",
       sleepQuality: existingLog.sleepQuality || 5,
+      ketones: existingLog.ketones || "",
+      waterIntake: existingLog.waterIntake || "",
     };
   });
 
@@ -49,6 +51,8 @@ const LogModal = ({ selectedDay, dailyLogs, onSave, onClose }) => {
       glucose: logForm.glucose ? parseInt(logForm.glucose) : null,
       sleepHours: logForm.sleepHours ? parseFloat(logForm.sleepHours) : null,
       sleepQuality: logForm.sleepQuality,
+      ketones: logForm.ketones ? parseFloat(logForm.ketones) : null,
+      waterIntake: logForm.waterIntake ? parseFloat(logForm.waterIntake) : null,
     });
     onClose();
   };
@@ -214,6 +218,41 @@ const LogModal = ({ selectedDay, dailyLogs, onSave, onClose }) => {
                     }
                     className="w-full px-2 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
                     placeholder="95"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-medium text-gray-700 mb-1">
+                    Ketones (mmol/L)
+                  </label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    min="0"
+                    value={logForm.ketones}
+                    onChange={(e) =>
+                      setLogForm({ ...logForm, ketones: e.target.value })
+                    }
+                    className="w-full px-2 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                    placeholder="1.5"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-gray-700 mb-1">
+                    Water (oz)
+                  </label>
+                  <input
+                    type="number"
+                    step="1"
+                    min="0"
+                    value={logForm.waterIntake}
+                    onChange={(e) =>
+                      setLogForm({ ...logForm, waterIntake: e.target.value })
+                    }
+                    className="w-full px-2 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                    placeholder="64"
                   />
                 </div>
               </div>
