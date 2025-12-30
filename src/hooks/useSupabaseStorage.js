@@ -86,7 +86,7 @@ export const useSupabaseStorage = (defaultProfile) => {
     }
   }, []);
 
-  // Initial load
+  // Initial load and realtime subscriptions
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
@@ -94,6 +94,81 @@ export const useSupabaseStorage = (defaultProfile) => {
       setLoading(false);
     };
     loadData();
+
+    // Subscribe to realtime changes on profiles
+    const profileSubscription = supabase
+      .channel("profiles-changes")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "profiles",
+          filter: `user_id=eq.${DEFAULT_USER_ID}`,
+        },
+        (payload) => {
+          console.log("Profile changed:", payload);
+          if (payload.new) {
+            setProfile({
+              startingWeight: payload.new.starting_weight,
+              goalWeight: payload.new.goal_weight,
+              height: payload.new.height,
+              startingWaist: payload.new.starting_waist || 0,
+              goalWaist: payload.new.goal_waist || 0,
+            });
+          }
+        }
+      )
+      .subscribe();
+
+    // Subscribe to realtime changes on daily_logs
+    const logsSubscription = supabase
+      .channel("daily-logs-changes")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "daily_logs",
+          filter: `user_id=eq.${DEFAULT_USER_ID}`,
+        },
+        (payload) => {
+          console.log("Daily log changed:", payload);
+          if (payload.eventType === "DELETE") {
+            setDailyLogs((prev) => {
+              const newLogs = { ...prev };
+              delete newLogs[payload.old.date_key];
+              return newLogs;
+            });
+          } else if (payload.new) {
+            const log = payload.new;
+            setDailyLogs((prev) => ({
+              ...prev,
+              [log.date_key]: {
+                weight: log.weight,
+                waist: log.waist,
+                notes: log.notes,
+                energy: log.energy,
+                mood: log.mood,
+                bloodPressureSys: log.systolic,
+                bloodPressureDia: log.diastolic,
+                glucose: log.glucose,
+                sleepHours: log.sleep_hours,
+                sleepQuality: log.sleep_quality,
+                ketones: log.ketones,
+                waterIntake: log.water_intake,
+              },
+            }));
+          }
+        }
+      )
+      .subscribe();
+
+    // Cleanup subscriptions on unmount
+    return () => {
+      supabase.removeChannel(profileSubscription);
+      supabase.removeChannel(logsSubscription);
+    };
   }, [loadProfile, loadDailyLogs]);
 
   // Save profile to Supabase

@@ -39,9 +39,58 @@ export const useSupabasePhotos = () => {
     }
   }, []);
 
-  // Initial load
+  // Initial load and realtime subscription
   useEffect(() => {
     loadPhotos();
+
+    // Subscribe to realtime changes on photos
+    const photosSubscription = supabase
+      .channel("photos-changes")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "photos",
+          filter: `user_id=eq.${DEFAULT_USER_ID}`,
+        },
+        async (payload) => {
+          console.log("Photo changed:", payload);
+          if (payload.eventType === "DELETE") {
+            setPhotos((prev) => {
+              const newPhotos = { ...prev };
+              // Find and delete by id
+              Object.keys(newPhotos).forEach((key) => {
+                if (newPhotos[key].id === payload.old.id) {
+                  delete newPhotos[key];
+                }
+              });
+              return newPhotos;
+            });
+          } else if (payload.eventType === "INSERT" && payload.new) {
+            const photo = payload.new;
+            const { data: urlData } = supabase.storage
+              .from(STORAGE_BUCKET)
+              .getPublicUrl(photo.storage_path);
+
+            setPhotos((prev) => ({
+              ...prev,
+              [photo.date_key]: {
+                id: photo.id,
+                data: urlData.publicUrl,
+                storagePath: photo.storage_path,
+                date: photo.date_key,
+              },
+            }));
+          }
+        }
+      )
+      .subscribe();
+
+    // Cleanup subscription on unmount
+    return () => {
+      supabase.removeChannel(photosSubscription);
+    };
   }, [loadPhotos]);
 
   // Save photo to Supabase Storage
