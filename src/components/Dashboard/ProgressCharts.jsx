@@ -356,6 +356,11 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
           "📈 Weight & waist trends over time (line chart)"}
       </div>
 
+      {/* Debug: Show actual dates in data */}
+      <div className="mt-1 text-center text-xs text-cyan-400">
+        Data dates: {chartData.map((d) => d.date).join(", ") || "No data"}
+      </div>
+
       <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
         <div className="bg-white/5 rounded-lg p-2">
           <p className="text-xs text-gray-400">Start Weight</p>
