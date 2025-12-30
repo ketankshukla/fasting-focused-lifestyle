@@ -42,9 +42,14 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
     ([_, log]) => log.weight
   ).length;
 
-  // Filter to only include entries with actual data
+  // Filter to ONLY include entries where weight is actually logged (not null/undefined/0)
   const chartData = Object.entries(dailyLogs)
-    .filter(([_, log]) => log.weight || log.waist || log.energy || log.mood)
+    .filter(([_, log]) => {
+      // Only include if weight is a real positive number
+      return (
+        log && log.weight && typeof log.weight === "number" && log.weight > 0
+      );
+    })
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([date, log]) => ({
       date: parseLocalDate(date).toLocaleDateString("en-US", {
@@ -52,7 +57,7 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
         day: "numeric",
       }),
       fullDate: date,
-      weight: log.weight || null,
+      weight: log.weight,
       waist: log.waist || null,
       energy: log.energy || null,
       mood: log.mood || null,
