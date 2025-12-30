@@ -25,7 +25,7 @@ import {
 } from "./Dashboard";
 import { MonthView, YearView } from "./Calendar";
 import { LogModal, ProfileModal, DayInfoModal } from "./Modals";
-import { DryFastingCourse } from "./Course";
+import { DryFastingCourse } from "./DryFastingCourse";
 import { WaterFastingCourse } from "./WaterFastingCourse";
 
 const FastingTracker = () => {
