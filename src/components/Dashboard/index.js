@@ -11,3 +11,4 @@ export { default as AchievementBadges } from "./AchievementBadges";
 export { default as MotivationalQuotes } from "./MotivationalQuotes";
 export { default as JournalDiary } from "./JournalDiary";
 export { default as ExportData } from "./ExportData";
+export { default as ShareProgress } from "./ShareProgress";

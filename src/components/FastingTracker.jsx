@@ -20,6 +20,7 @@ import {
   MotivationalQuotes,
   JournalDiary,
   ExportData,
+  ShareProgress,
 } from "./Dashboard";
 import { MonthView, YearView } from "./Calendar";
 import { LogModal, ProfileModal } from "./Modals";
@@ -94,6 +95,8 @@ const FastingTracker = () => {
         <JournalDiary dailyLogs={dailyLogs} />
 
         <ExportData dailyLogs={dailyLogs} profile={profile} stats={stats} />
+
+        <ShareProgress stats={stats} profile={profile} />
 
         <FastTypeStats scheduleStats={scheduleStats} />
 
