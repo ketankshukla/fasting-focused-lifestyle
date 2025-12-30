@@ -92,10 +92,20 @@ const FastingTracker = () => {
     }
   };
 
+  // Sections that require PIN access
+  const protectedSections = ["photos"];
+
   // Persist active section to localStorage
   const handleSectionChange = (section) => {
-    setActiveSection(section);
-    localStorage.setItem("activeSection", section);
+    if (protectedSections.includes(section)) {
+      requireOwnerAccess(() => {
+        setActiveSection(section);
+        localStorage.setItem("activeSection", section);
+      });
+    } else {
+      setActiveSection(section);
+      localStorage.setItem("activeSection", section);
+    }
   };
 
   const stats = getProgressStats(profile, dailyLogs);
@@ -347,7 +357,7 @@ const FastingTracker = () => {
               🔐 Owner Access
             </h3>
             <p className="text-gray-400 text-sm mb-4">
-              Enter PIN to edit profile settings
+              Enter PIN to access protected content
             </p>
 
             <input
