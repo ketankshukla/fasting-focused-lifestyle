@@ -56,12 +56,21 @@ export const useSupabasePhotos = () => {
         },
         async (payload) => {
           console.log("Photo changed:", payload);
-          if (payload.eventType === "DELETE") {
+          if (payload.eventType === "DELETE" && payload.old) {
+            const oldId = payload.old.id;
+            const oldDateKey = payload.old.date_key;
+            console.log(
+              "Deleting photo with id:",
+              oldId,
+              "date_key:",
+              oldDateKey
+            );
             setPhotos((prev) => {
               const newPhotos = { ...prev };
-              // Find and delete by id
+              // Find and delete by id or date_key
               Object.keys(newPhotos).forEach((key) => {
-                if (newPhotos[key].id === payload.old.id) {
+                if (newPhotos[key].id === oldId || key === oldDateKey) {
+                  console.log("Removing photo:", key);
                   delete newPhotos[key];
                 }
               });
