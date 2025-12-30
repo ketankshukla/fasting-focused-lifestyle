@@ -1,0 +1,235 @@
+import React, { useState } from "react";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Legend,
+  AreaChart,
+  Area,
+} from "recharts";
+
+const ProgressCharts = ({ dailyLogs, profile }) => {
+  const [chartType, setChartType] = useState("weight");
+
+  const chartData = Object.entries(dailyLogs)
+    .filter(([_, log]) => log.weight || log.waist)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([date, log]) => ({
+      date: new Date(date).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      }),
+      fullDate: date,
+      weight: log.weight || null,
+      waist: log.waist || null,
+      energy: log.energy || null,
+      mood: log.mood || null,
+    }));
+
+  if (chartData.length < 2) {
+    return (
+      <div className="bg-white/10 backdrop-blur rounded-2xl p-4 sm:p-6">
+        <h3 className="text-lg font-bold text-white mb-4">
+          📊 Progress Charts
+        </h3>
+        <div className="text-center py-8 text-gray-400">
+          <p className="text-4xl mb-2">📈</p>
+          <p>Log at least 2 days of data to see your progress charts!</p>
+        </div>
+      </div>
+    );
+  }
+
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-gray-900 border border-gray-700 rounded-lg p-3 shadow-xl">
+          <p className="text-white font-medium mb-1">{label}</p>
+          {payload.map((entry, index) => (
+            <p key={index} style={{ color: entry.color }} className="text-sm">
+              {entry.name}: {entry.value}
+              {entry.name === "Weight"
+                ? " lbs"
+                : entry.name === "Waist"
+                ? '"'
+                : "/10"}
+            </p>
+          ))}
+        </div>
+      );
+    }
+    return null;
+  };
+
+  return (
+    <div className="bg-white/10 backdrop-blur rounded-2xl p-4 sm:p-6">
+      <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+        <h3 className="text-lg font-bold text-white">📊 Progress Charts</h3>
+        <div className="flex gap-2">
+          {["weight", "waist", "wellness"].map((type) => (
+            <button
+              key={type}
+              onClick={() => setChartType(type)}
+              className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+                chartType === type
+                  ? "bg-white text-gray-900"
+                  : "bg-white/20 text-white hover:bg-white/30"
+              }`}
+            >
+              {type === "weight"
+                ? "⚖️ Weight"
+                : type === "waist"
+                ? "📏 Waist"
+                : "💚 Wellness"}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="h-64 sm:h-80">
+        <ResponsiveContainer width="100%" height="100%">
+          {chartType === "weight" ? (
+            <AreaChart data={chartData}>
+              <defs>
+                <linearGradient id="weightGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#10B981" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#10B981" stopOpacity={0.1} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+              <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12} />
+              <YAxis
+                stroke="#9CA3AF"
+                fontSize={12}
+                domain={[profile.goalWeight - 10, "dataMax + 5"]}
+                tickFormatter={(val) => `${val}`}
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Area
+                type="monotone"
+                dataKey="weight"
+                name="Weight"
+                stroke="#10B981"
+                fill="url(#weightGradient)"
+                strokeWidth={2}
+                dot={{ fill: "#10B981", strokeWidth: 2, r: 4 }}
+                activeDot={{ r: 6, fill: "#10B981" }}
+                connectNulls
+              />
+              {/* Goal line */}
+              <Line
+                type="monotone"
+                dataKey={() => profile.goalWeight}
+                name="Goal"
+                stroke="#F59E0B"
+                strokeDasharray="5 5"
+                strokeWidth={2}
+                dot={false}
+              />
+            </AreaChart>
+          ) : chartType === "waist" ? (
+            <AreaChart data={chartData}>
+              <defs>
+                <linearGradient id="waistGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#8B5CF6" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#8B5CF6" stopOpacity={0.1} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+              <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12} />
+              <YAxis
+                stroke="#9CA3AF"
+                fontSize={12}
+                domain={[profile.goalWaist - 2, "dataMax + 2"]}
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Area
+                type="monotone"
+                dataKey="waist"
+                name="Waist"
+                stroke="#8B5CF6"
+                fill="url(#waistGradient)"
+                strokeWidth={2}
+                dot={{ fill: "#8B5CF6", strokeWidth: 2, r: 4 }}
+                activeDot={{ r: 6, fill: "#8B5CF6" }}
+                connectNulls
+              />
+              <Line
+                type="monotone"
+                dataKey={() => profile.goalWaist}
+                name="Goal"
+                stroke="#F59E0B"
+                strokeDasharray="5 5"
+                strokeWidth={2}
+                dot={false}
+              />
+            </AreaChart>
+          ) : (
+            <LineChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+              <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12} />
+              <YAxis stroke="#9CA3AF" fontSize={12} domain={[0, 10]} />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend />
+              <Line
+                type="monotone"
+                dataKey="energy"
+                name="Energy"
+                stroke="#F59E0B"
+                strokeWidth={2}
+                dot={{ fill: "#F59E0B", strokeWidth: 2, r: 4 }}
+                connectNulls
+              />
+              <Line
+                type="monotone"
+                dataKey="mood"
+                name="Mood"
+                stroke="#EC4899"
+                strokeWidth={2}
+                dot={{ fill: "#EC4899", strokeWidth: 2, r: 4 }}
+                connectNulls
+              />
+            </LineChart>
+          )}
+        </ResponsiveContainer>
+      </div>
+
+      <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
+        <div className="bg-white/5 rounded-lg p-2">
+          <p className="text-xs text-gray-400">First Log</p>
+          <p className="text-sm font-bold text-white">
+            {chartData[0]?.weight ? `${chartData[0].weight} lbs` : "--"}
+          </p>
+        </div>
+        <div className="bg-white/5 rounded-lg p-2">
+          <p className="text-xs text-gray-400">Latest</p>
+          <p className="text-sm font-bold text-green-400">
+            {chartData[chartData.length - 1]?.weight
+              ? `${chartData[chartData.length - 1].weight} lbs`
+              : "--"}
+          </p>
+        </div>
+        <div className="bg-white/5 rounded-lg p-2">
+          <p className="text-xs text-gray-400">Change</p>
+          <p className="text-sm font-bold text-emerald-400">
+            {chartData[0]?.weight && chartData[chartData.length - 1]?.weight
+              ? `${(
+                  chartData[0].weight - chartData[chartData.length - 1].weight
+                ).toFixed(1)} lbs`
+              : "--"}
+          </p>
+        </div>
+        <div className="bg-white/5 rounded-lg p-2">
+          <p className="text-xs text-gray-400">Days Logged</p>
+          <p className="text-sm font-bold text-amber-400">{chartData.length}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProgressCharts;

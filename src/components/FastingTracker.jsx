@@ -9,6 +9,7 @@ import {
   FastTypeStats,
   Legend,
   MonthNavigation,
+  ProgressCharts,
 } from "./Dashboard";
 import { MonthView, YearView } from "./Calendar";
 import { LogModal, ProfileModal } from "./Modals";
@@ -47,6 +48,8 @@ const FastingTracker = () => {
         />
 
         <ProgressDashboard stats={stats} profile={profile} />
+
+        <ProgressCharts dailyLogs={dailyLogs} profile={profile} />
 
         <FastTypeStats scheduleStats={scheduleStats} />
 
