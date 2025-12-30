@@ -338,7 +338,7 @@ const FastingTracker = () => {
               onKeyDown={(e) => e.key === "Enter" && handlePinSubmit()}
               placeholder="Enter PIN"
               className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white text-center text-2xl tracking-widest focus:outline-none focus:border-purple-500"
-              maxLength={4}
+              maxLength={8}
               autoFocus
             />
 
