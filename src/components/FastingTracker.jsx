@@ -21,6 +21,7 @@ import {
   JournalDiary,
   ExportData,
   ShareProgress,
+  BackupRestore,
 } from "./Dashboard";
 import { MonthView, YearView } from "./Calendar";
 import { LogModal, ProfileModal } from "./Modals";
@@ -97,6 +98,8 @@ const FastingTracker = () => {
         <ExportData dailyLogs={dailyLogs} profile={profile} stats={stats} />
 
         <ShareProgress stats={stats} profile={profile} />
+
+        <BackupRestore dailyLogs={dailyLogs} profile={profile} />
 
         <FastTypeStats scheduleStats={scheduleStats} />
 
