@@ -15,6 +15,7 @@ import {
   PhotoProgress,
   FastingTimer,
   NotificationSettings,
+  StreakCounter,
 } from "./Dashboard";
 import { MonthView, YearView } from "./Calendar";
 import { LogModal, ProfileModal } from "./Modals";
@@ -75,6 +76,8 @@ const FastingTracker = () => {
           onRequestPermission={requestPermission}
           onScheduleReminder={scheduleReminder}
         />
+
+        <StreakCounter dailyLogs={dailyLogs} />
 
         <FastTypeStats scheduleStats={scheduleStats} />
 
