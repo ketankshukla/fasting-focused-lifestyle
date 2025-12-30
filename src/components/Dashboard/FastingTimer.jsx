@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import { schedule } from "../../data";
 import { colors } from "../../data";
 
+// Daily log time is 9 PM PST (21:00)
+const DAILY_LOG_HOUR = 21;
+const FAST_START_HOUR = 21; // 9 PM PST
+
 const FastingTimer = () => {
   const [now, setNow] = useState(new Date());
   const [customStartTime, setCustomStartTime] = useState(null);
@@ -12,6 +16,21 @@ const FastingTimer = () => {
     }, 1000);
     return () => clearInterval(interval);
   }, []);
+
+  // Calculate time until next 9 PM log time
+  const getTimeUntilNextLog = () => {
+    const nextLog = new Date(now);
+    nextLog.setHours(DAILY_LOG_HOUR, 0, 0, 0);
+    if (now >= nextLog) {
+      nextLog.setDate(nextLog.getDate() + 1);
+    }
+    const diff = nextLog - now;
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    return { hours, minutes };
+  };
+
+  const timeUntilLog = getTimeUntilNextLog();
 
   const getTodayKey = () => {
     const today = new Date();
@@ -56,20 +75,42 @@ const FastingTimer = () => {
   const calculateTimeElapsed = () => {
     if (!currentFast) return null;
 
+    // Start time is 9 PM (21:00) on the fast start date
     const startTime = customStartTime
       ? new Date(customStartTime)
-      : new Date(currentFast.startDate + "T22:00:00");
+      : new Date(
+          currentFast.startDate +
+            `T${String(FAST_START_HOUR).padStart(2, "0")}:00:00`
+        );
 
     const diff = now - startTime;
 
-    if (diff < 0) return { hours: 0, minutes: 0, seconds: 0, totalHours: 0 };
+    if (diff < 0)
+      return {
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+        totalHours: 0,
+        daysCompleted: 0,
+      };
 
     const totalSeconds = Math.floor(diff / 1000);
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
 
-    return { hours, minutes, seconds, totalHours: hours + minutes / 60 };
+    // Calculate actual 24-hour days completed (not calendar days)
+    const daysCompleted = Math.floor(hours / 24);
+    const currentDayHours = hours % 24;
+
+    return {
+      hours,
+      minutes,
+      seconds,
+      totalHours: hours + minutes / 60,
+      daysCompleted,
+      currentDayHours,
+    };
   };
 
   const timeElapsed = calculateTimeElapsed();
@@ -141,13 +182,31 @@ const FastingTimer = () => {
 
   return (
     <div className="bg-white/10 backdrop-blur rounded-2xl p-4 sm:p-6">
+      {/* Daily Log Time Indicator */}
+      <div className="bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 rounded-lg p-3 mb-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="text-lg">📝</span>
+            <span className="text-amber-300 text-sm font-medium">
+              Daily Log Time: 9:00 PM PST
+            </span>
+          </div>
+          <div className="text-right">
+            <span className="text-xs text-gray-400">Next log in </span>
+            <span className="text-amber-400 font-bold">
+              {timeUntilLog.hours}h {timeUntilLog.minutes}m
+            </span>
+          </div>
+        </div>
+      </div>
+
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-bold text-white">⏱️ Fasting Timer</h3>
         <div
           className="px-3 py-1 rounded-full text-xs font-bold text-white"
           style={{ backgroundColor: currentFast.color.bg }}
         >
-          {currentFast.color.name} - Day {currentFast.day}
+          {currentFast.color.name} - Day {(timeElapsed?.daysCompleted || 0) + 1}
         </div>
       </div>
 
@@ -193,7 +252,7 @@ const FastingTimer = () => {
         <p className="text-sm text-gray-300">{getMotivationalMessage()}</p>
       </div>
 
-      <div className="grid grid-cols-3 gap-2 mt-4 text-center">
+      <div className="grid grid-cols-4 gap-2 mt-4 text-center">
         <div className="bg-white/5 rounded-lg p-2">
           <p className="text-xs text-gray-400">Total Hours</p>
           <p className="text-lg font-bold text-white">
@@ -201,8 +260,16 @@ const FastingTimer = () => {
           </p>
         </div>
         <div className="bg-white/5 rounded-lg p-2">
-          <p className="text-xs text-gray-400">Days In</p>
-          <p className="text-lg font-bold text-amber-400">{currentFast.day}</p>
+          <p className="text-xs text-gray-400">Full Days</p>
+          <p className="text-lg font-bold text-amber-400">
+            {timeElapsed?.daysCompleted || 0}
+          </p>
+        </div>
+        <div className="bg-white/5 rounded-lg p-2">
+          <p className="text-xs text-gray-400">Current Day</p>
+          <p className="text-lg font-bold text-purple-400">
+            {timeElapsed?.currentDayHours || 0}h/{24}h
+          </p>
         </div>
         <div className="bg-white/5 rounded-lg p-2">
           <p className="text-xs text-gray-400">Hours Left</p>
