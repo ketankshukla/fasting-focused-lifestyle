@@ -187,11 +187,13 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
               <XAxis
                 dataKey="date"
                 type="category"
+                scale="point"
                 stroke="#9CA3AF"
                 fontSize={12}
                 tick={{ fill: "#9CA3AF" }}
                 tickLine={false}
                 axisLine={{ stroke: "#374151" }}
+                allowDuplicatedCategory={false}
               />
               <YAxis
                 stroke="#9CA3AF"
@@ -255,11 +257,13 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
               <XAxis
                 dataKey="date"
                 type="category"
+                scale="point"
                 stroke="#9CA3AF"
                 fontSize={12}
                 tick={{ fill: "#9CA3AF" }}
                 tickLine={false}
                 axisLine={{ stroke: "#374151" }}
+                allowDuplicatedCategory={false}
               />
               <YAxis
                 stroke="#9CA3AF"
@@ -296,11 +300,13 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
               <XAxis
                 dataKey="date"
                 type="category"
+                scale="point"
                 stroke="#9CA3AF"
                 fontSize={12}
                 tick={{ fill: "#9CA3AF" }}
                 tickLine={false}
                 axisLine={{ stroke: "#374151" }}
+                allowDuplicatedCategory={false}
               />
               <YAxis
                 stroke="#9CA3AF"
