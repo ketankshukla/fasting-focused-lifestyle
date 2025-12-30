@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import WFModule1 from "./WFModule1";
 import WFModule2 from "./WFModule2";
 import WFModule3 from "./WFModule3";
@@ -77,6 +77,11 @@ const modules = [
 
 const WaterFastingCourse = () => {
   const [activeModule, setActiveModule] = useState(null);
+
+  // Scroll to top when module changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [activeModule]);
   const [completedModules, setCompletedModules] = useState(() => {
     try {
       const saved = localStorage.getItem("completedWaterFastingModules");

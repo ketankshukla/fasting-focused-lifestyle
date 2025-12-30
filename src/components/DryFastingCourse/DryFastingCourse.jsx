@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Module1 from "./Module1";
 import Module2 from "./Module2";
 import Module3 from "./Module3";
@@ -77,6 +77,11 @@ const modules = [
 
 const DryFastingCourse = () => {
   const [activeModule, setActiveModule] = useState(null);
+
+  // Scroll to top when module changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [activeModule]);
   const [completedModules, setCompletedModules] = useState(() => {
     try {
       const saved = localStorage.getItem("completedCourseModules");
