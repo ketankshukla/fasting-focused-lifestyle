@@ -19,6 +19,8 @@ const LogModal = ({ selectedDay, dailyLogs, onSave, onClose }) => {
       bloodPressureSys: existingLog.bloodPressureSys || "",
       bloodPressureDia: existingLog.bloodPressureDia || "",
       glucose: existingLog.glucose || "",
+      sleepHours: existingLog.sleepHours || "",
+      sleepQuality: existingLog.sleepQuality || 5,
     };
   });
 
@@ -45,6 +47,8 @@ const LogModal = ({ selectedDay, dailyLogs, onSave, onClose }) => {
         ? parseInt(logForm.bloodPressureDia)
         : null,
       glucose: logForm.glucose ? parseInt(logForm.glucose) : null,
+      sleepHours: logForm.sleepHours ? parseFloat(logForm.sleepHours) : null,
+      sleepQuality: logForm.sleepQuality,
     });
     onClose();
   };
@@ -210,6 +214,44 @@ const LogModal = ({ selectedDay, dailyLogs, onSave, onClose }) => {
                     }
                     className="w-full px-2 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
                     placeholder="95"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-medium text-gray-700 mb-1">
+                    Sleep Hours
+                  </label>
+                  <input
+                    type="number"
+                    step="0.5"
+                    min="0"
+                    max="24"
+                    value={logForm.sleepHours}
+                    onChange={(e) =>
+                      setLogForm({ ...logForm, sleepHours: e.target.value })
+                    }
+                    className="w-full px-2 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                    placeholder="7.5"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-gray-700 mb-1">
+                    Sleep Quality: {logForm.sleepQuality}/10
+                  </label>
+                  <input
+                    type="range"
+                    min="1"
+                    max="10"
+                    value={logForm.sleepQuality}
+                    onChange={(e) =>
+                      setLogForm({
+                        ...logForm,
+                        sleepQuality: parseInt(e.target.value),
+                      })
+                    }
+                    className="w-full"
                   />
                 </div>
               </div>
