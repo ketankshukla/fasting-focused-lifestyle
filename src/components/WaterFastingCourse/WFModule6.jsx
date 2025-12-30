@@ -30,7 +30,7 @@ const WFModule6 = () => {
                 </p>
               </div>
               <div className="p-5 space-y-4">
-                <div className="grid md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {[
                     {
                       day: "Day 1",
@@ -106,7 +106,7 @@ const WFModule6 = () => {
                 </p>
               </div>
               <div className="p-5 space-y-4">
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
                     {
                       period: "Days 4-5",
@@ -173,7 +173,7 @@ const WFModule6 = () => {
                 </p>
               </div>
               <div className="p-5 space-y-4">
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
                     {
                       period: "Days 8-10",
@@ -343,7 +343,7 @@ const WFModule6 = () => {
           What Changes Throughout Your Fast
         </h2>
         <div className="bg-gradient-to-br from-teal-900/30 to-cyan-900/30 rounded-2xl p-6 border border-teal-500/30">
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="bg-white/5 rounded-xl p-5 border border-white/10">
               <h3 className="text-lg font-semibold text-teal-400 mb-4">
                 ⚖️ Weight Loss Pattern

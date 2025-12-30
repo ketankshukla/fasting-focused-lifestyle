@@ -18,7 +18,7 @@ const Module6 = () => {
             through available pathways.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-blue-400">
                 👅 Tongue Coating Progression
@@ -109,7 +109,7 @@ const Module6 = () => {
             color and concentration change as your body conserves water.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="bg-white/5 rounded-xl p-5 border border-white/10">
               <h3 className="text-lg font-semibold text-amber-400 mb-4">
                 🎨 Urine Color Guide
@@ -209,7 +209,7 @@ const Module6 = () => {
             need less sleep yet feel more rested.
           </p>
 
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               {
                 icon: "🌙",
@@ -279,7 +279,7 @@ const Module6 = () => {
             comfortable.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="bg-white/5 rounded-xl p-5 border border-white/10">
               <h3 className="text-lg font-semibold text-red-400 mb-4">
                 🔥 Feeling Hot
@@ -331,59 +331,75 @@ const Module6 = () => {
             Understanding what's water vs. fat helps set realistic expectations.
           </p>
 
-          <div className="bg-white/5 rounded-xl p-5 mb-6 border border-white/10">
+          <div className="bg-white/5 rounded-xl p-4 sm:p-5 mb-6 border border-white/10">
             <h3 className="text-lg font-semibold text-emerald-400 mb-4">
               📉 Expected Weight Loss Breakdown
             </h3>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-white/20">
-                    <th className="py-2 px-3 text-left text-gray-400">Phase</th>
-                    <th className="py-2 px-3 text-left text-gray-400">
-                      Water Loss
-                    </th>
-                    <th className="py-2 px-3 text-left text-gray-400">
-                      Fat Loss
-                    </th>
-                    <th className="py-2 px-3 text-left text-gray-400">Total</th>
-                  </tr>
-                </thead>
-                <tbody className="text-gray-300">
-                  <tr className="border-b border-white/10">
-                    <td className="py-2 px-3">Days 1-3</td>
-                    <td className="py-2 px-3">5-8 lbs</td>
-                    <td className="py-2 px-3">3-4 lbs</td>
-                    <td className="py-2 px-3 text-emerald-400 font-medium">
-                      8-12 lbs
-                    </td>
-                  </tr>
-                  <tr className="border-b border-white/10">
-                    <td className="py-2 px-3">Days 4-6</td>
-                    <td className="py-2 px-3">2-3 lbs</td>
-                    <td className="py-2 px-3">4-5 lbs</td>
-                    <td className="py-2 px-3 text-emerald-400 font-medium">
-                      6-8 lbs
-                    </td>
-                  </tr>
-                  <tr className="border-b border-white/10">
-                    <td className="py-2 px-3">Days 7-10</td>
-                    <td className="py-2 px-3">1-2 lbs</td>
-                    <td className="py-2 px-3">4-6 lbs</td>
-                    <td className="py-2 px-3 text-emerald-400 font-medium">
-                      5-8 lbs
-                    </td>
-                  </tr>
-                  <tr className="bg-emerald-500/10">
-                    <td className="py-2 px-3 font-bold">Total</td>
-                    <td className="py-2 px-3">8-13 lbs</td>
-                    <td className="py-2 px-3">11-15 lbs</td>
-                    <td className="py-2 px-3 text-emerald-400 font-bold">
-                      20-28 lbs
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {[
+                {
+                  phase: "Days 1-3",
+                  water: "5-8 lbs",
+                  fat: "3-4 lbs",
+                  total: "8-12 lbs",
+                },
+                {
+                  phase: "Days 4-6",
+                  water: "2-3 lbs",
+                  fat: "4-5 lbs",
+                  total: "6-8 lbs",
+                },
+                {
+                  phase: "Days 7-10",
+                  water: "1-2 lbs",
+                  fat: "4-6 lbs",
+                  total: "5-8 lbs",
+                },
+                {
+                  phase: "Total",
+                  water: "8-13 lbs",
+                  fat: "11-15 lbs",
+                  total: "20-28 lbs",
+                  highlight: true,
+                },
+              ].map((row, i) => (
+                <div
+                  key={i}
+                  className={`rounded-lg p-4 ${
+                    row.highlight
+                      ? "bg-emerald-500/20 border border-emerald-500/50"
+                      : "bg-gray-800/50"
+                  }`}
+                >
+                  <h4
+                    className={`font-semibold mb-2 ${
+                      row.highlight ? "text-emerald-400" : "text-white"
+                    }`}
+                  >
+                    {row.phase}
+                  </h4>
+                  <div className="grid grid-cols-3 gap-2 text-sm">
+                    <div>
+                      <span className="text-blue-400 block text-xs">
+                        💧 Water
+                      </span>
+                      {row.water}
+                    </div>
+                    <div>
+                      <span className="text-orange-400 block text-xs">
+                        🔥 Fat
+                      </span>
+                      {row.fat}
+                    </div>
+                    <div>
+                      <span className="text-emerald-400 block text-xs">
+                        📊 Total
+                      </span>
+                      <span className="font-semibold">{row.total}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
             <p className="text-gray-500 text-sm mt-3 italic">
               Note: Some water weight returns during refeeding. Net fat loss of
@@ -414,7 +430,7 @@ const Module6 = () => {
           Mental States
         </h2>
         <div className="bg-gradient-to-br from-cyan-900/30 to-blue-900/30 rounded-2xl p-6 border border-cyan-500/30">
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-cyan-400">
                 ✨ Positive States

@@ -19,7 +19,7 @@ const Module1 = () => {
             dry fasting puts your body into a unique metabolic state that
             accelerates many of the benefits associated with fasting.
           </p>
-          <div className="grid md:grid-cols-2 gap-4 mt-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
             <div className="bg-white/5 rounded-xl p-5 border border-white/10">
               <h3 className="text-lg font-semibold text-amber-400 mb-2">
                 🌊 Soft Dry Fast
@@ -122,65 +122,124 @@ const Module1 = () => {
           </span>
           Dry Fasting vs Other Fasting Methods
         </h2>
-        <div className="bg-gradient-to-br from-teal-900/30 to-cyan-900/30 rounded-2xl p-6 border border-teal-500/30">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
+        <div className="bg-gradient-to-br from-teal-900/30 to-cyan-900/30 rounded-2xl p-4 sm:p-6 border border-teal-500/30">
+          {/* Mobile Card View */}
+          <div className="block sm:hidden space-y-4">
+            {[
+              {
+                aspect: "Water Intake",
+                dry: "None",
+                water: "Unlimited",
+                if: "Unlimited",
+              },
+              {
+                aspect: "Ketosis Speed",
+                dry: "⚡ Fastest (12-24h)",
+                water: "Fast (24-48h)",
+                if: "Slow (varies)",
+              },
+              {
+                aspect: "Autophagy Rate",
+                dry: "⚡ 3x water fasting",
+                water: "Moderate",
+                if: "Minimal",
+              },
+              {
+                aspect: "Fat Burning",
+                dry: "⚡ Maximum",
+                water: "High",
+                if: "Moderate",
+              },
+              {
+                aspect: "Typical Duration",
+                dry: "1-10+ days",
+                water: "3-40+ days",
+                if: "16-24 hours",
+              },
+              {
+                aspect: "Difficulty Level",
+                dry: "Challenging",
+                water: "Moderate",
+                if: "Easy",
+              },
+            ].map((row, i) => (
+              <div
+                key={i}
+                className="bg-white/5 rounded-xl p-4 border border-white/10"
+              >
+                <h4 className="text-white font-semibold mb-3">{row.aspect}</h4>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-amber-400">🔥 Dry:</span>
+                    <span className="text-gray-300">{row.dry}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-blue-400">💧 Water:</span>
+                    <span className="text-gray-300">{row.water}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-green-400">⏰ IF:</span>
+                    <span className="text-gray-300">{row.if}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* Desktop Table View */}
+          <div className="hidden sm:block overflow-x-auto">
+            <table className="w-full text-left text-sm">
               <thead>
                 <tr className="border-b border-white/20">
-                  <th className="py-3 px-4 text-gray-400 font-medium">
+                  <th className="py-3 px-3 text-gray-400 font-medium">
                     Aspect
                   </th>
-                  <th className="py-3 px-4 text-amber-400 font-medium">
-                    🔥 Dry Fasting
+                  <th className="py-3 px-3 text-amber-400 font-medium">
+                    🔥 Dry
                   </th>
-                  <th className="py-3 px-4 text-blue-400 font-medium">
-                    💧 Water Fasting
+                  <th className="py-3 px-3 text-blue-400 font-medium">
+                    💧 Water
                   </th>
-                  <th className="py-3 px-4 text-green-400 font-medium">
-                    ⏰ Intermittent
+                  <th className="py-3 px-3 text-green-400 font-medium">
+                    ⏰ IF
                   </th>
                 </tr>
               </thead>
               <tbody className="text-gray-300">
                 <tr className="border-b border-white/10">
-                  <td className="py-3 px-4 font-medium">Water Intake</td>
-                  <td className="py-3 px-4">None</td>
-                  <td className="py-3 px-4">Unlimited</td>
-                  <td className="py-3 px-4">Unlimited</td>
+                  <td className="py-3 px-3 font-medium">Water Intake</td>
+                  <td className="py-3 px-3">None</td>
+                  <td className="py-3 px-3">Unlimited</td>
+                  <td className="py-3 px-3">Unlimited</td>
                 </tr>
                 <tr className="border-b border-white/10">
-                  <td className="py-3 px-4 font-medium">Ketosis Speed</td>
-                  <td className="py-3 px-4 text-amber-400">
-                    ⚡ Fastest (12-24h)
-                  </td>
-                  <td className="py-3 px-4">Fast (24-48h)</td>
-                  <td className="py-3 px-4">Slow (varies)</td>
+                  <td className="py-3 px-3 font-medium">Ketosis Speed</td>
+                  <td className="py-3 px-3 text-amber-400">⚡ Fastest</td>
+                  <td className="py-3 px-3">Fast</td>
+                  <td className="py-3 px-3">Slow</td>
                 </tr>
                 <tr className="border-b border-white/10">
-                  <td className="py-3 px-4 font-medium">Autophagy Rate</td>
-                  <td className="py-3 px-4 text-amber-400">
-                    ⚡ 3x water fasting
-                  </td>
-                  <td className="py-3 px-4">Moderate</td>
-                  <td className="py-3 px-4">Minimal</td>
+                  <td className="py-3 px-3 font-medium">Autophagy</td>
+                  <td className="py-3 px-3 text-amber-400">⚡ 3x</td>
+                  <td className="py-3 px-3">Moderate</td>
+                  <td className="py-3 px-3">Minimal</td>
                 </tr>
                 <tr className="border-b border-white/10">
-                  <td className="py-3 px-4 font-medium">Fat Burning</td>
-                  <td className="py-3 px-4 text-amber-400">⚡ Maximum</td>
-                  <td className="py-3 px-4">High</td>
-                  <td className="py-3 px-4">Moderate</td>
+                  <td className="py-3 px-3 font-medium">Fat Burning</td>
+                  <td className="py-3 px-3 text-amber-400">⚡ Max</td>
+                  <td className="py-3 px-3">High</td>
+                  <td className="py-3 px-3">Moderate</td>
                 </tr>
                 <tr className="border-b border-white/10">
-                  <td className="py-3 px-4 font-medium">Typical Duration</td>
-                  <td className="py-3 px-4">1-10+ days</td>
-                  <td className="py-3 px-4">3-40+ days</td>
-                  <td className="py-3 px-4">16-24 hours</td>
+                  <td className="py-3 px-3 font-medium">Duration</td>
+                  <td className="py-3 px-3">1-10+ days</td>
+                  <td className="py-3 px-3">3-40+ days</td>
+                  <td className="py-3 px-3">16-24h</td>
                 </tr>
                 <tr>
-                  <td className="py-3 px-4 font-medium">Difficulty Level</td>
-                  <td className="py-3 px-4 text-amber-400">Challenging</td>
-                  <td className="py-3 px-4">Moderate</td>
-                  <td className="py-3 px-4">Easy</td>
+                  <td className="py-3 px-3 font-medium">Difficulty</td>
+                  <td className="py-3 px-3 text-amber-400">Challenging</td>
+                  <td className="py-3 px-3">Moderate</td>
+                  <td className="py-3 px-3">Easy</td>
                 </tr>
               </tbody>
             </table>

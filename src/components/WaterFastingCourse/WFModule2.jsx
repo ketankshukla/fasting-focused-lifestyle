@@ -19,7 +19,7 @@ const WFModule2 = () => {
             process won the 2016 Nobel Prize in Medicine.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="bg-white/5 rounded-xl p-5 border border-white/10">
               <h3 className="text-lg font-semibold text-indigo-400 mb-4">
                 🔄 What Autophagy Does
@@ -124,7 +124,7 @@ const WFModule2 = () => {
             body.
           </p>
 
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               {
                 title: "Beta-Hydroxybutyrate (BHB)",
@@ -185,7 +185,7 @@ const WFModule2 = () => {
           Hormonal Changes During Fasting
         </h2>
         <div className="bg-gradient-to-br from-emerald-900/30 to-teal-900/30 rounded-2xl p-6 border border-emerald-500/30">
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {[
               {
                 hormone: "Insulin",
@@ -337,7 +337,7 @@ const WFModule2 = () => {
             Fasting powerfully reduces inflammatory markers throughout the body.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="bg-white/5 rounded-xl p-5 border border-white/10">
               <h3 className="text-lg font-semibold text-blue-400 mb-4">
                 📉 Markers That Decrease

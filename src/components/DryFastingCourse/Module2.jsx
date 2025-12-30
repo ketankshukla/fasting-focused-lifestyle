@@ -73,7 +73,7 @@ const Module2 = () => {
             </ol>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-xl p-5 border border-green-500/30">
               <h4 className="font-semibold text-green-400 mb-2">
                 ✅ What Gets Recycled
@@ -154,7 +154,7 @@ const Module2 = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               {
                 icon: "🐪",
@@ -302,7 +302,7 @@ const Module2 = () => {
             triggers stem cell regeneration and a complete immune system reset.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-emerald-400">
                 🔬 Stem Cell Activation
@@ -376,7 +376,7 @@ const Module2 = () => {
             multiple mechanisms.
           </p>
 
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               {
                 icon: "🧬",
@@ -416,7 +416,7 @@ const Module2 = () => {
           Hormonal Changes
         </h2>
         <div className="bg-gradient-to-br from-violet-900/30 to-purple-900/30 rounded-2xl p-6 border border-violet-500/30">
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="bg-white/5 rounded-xl p-5 border border-green-500/30">
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-2xl">📈</span>

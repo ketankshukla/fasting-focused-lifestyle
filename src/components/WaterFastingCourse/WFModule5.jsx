@@ -92,7 +92,7 @@ const WFModule5 = () => {
           Essential Supplies Checklist
         </h2>
         <div className="bg-gradient-to-br from-emerald-900/30 to-green-900/30 rounded-2xl p-6 border border-emerald-500/30">
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="bg-yellow-500/10 rounded-xl p-5 border border-yellow-500/30">
               <h3 className="text-lg font-semibold text-yellow-400 mb-4">
                 ⚡ Electrolytes (CRITICAL)
@@ -229,7 +229,7 @@ const WFModule5 = () => {
             important as physical preparation.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="bg-white/5 rounded-xl p-5 border border-white/10">
               <h3 className="text-lg font-semibold text-cyan-400 mb-4">
                 🎯 Set Clear Intentions
@@ -293,7 +293,7 @@ const WFModule5 = () => {
           Environment Setup
         </h2>
         <div className="bg-gradient-to-br from-amber-900/30 to-orange-900/30 rounded-2xl p-6 border border-amber-500/30">
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="bg-white/5 rounded-xl p-5 border border-white/10">
               <h3 className="text-lg font-semibold text-amber-400 mb-4">
                 ✅ Do This
@@ -355,7 +355,7 @@ const WFModule5 = () => {
             your success and comfort.
           </p>
 
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               {
                 title: "Best Times to Start",

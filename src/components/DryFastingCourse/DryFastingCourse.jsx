@@ -237,10 +237,10 @@ const DryFastingCourse = () => {
             </span>
           </div>
 
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-4">
             Prolonged Dry Fasting 🌟
           </h1>
-          <p className="text-xl text-white/90 mb-6 max-w-2xl">
+          <p className="text-base sm:text-lg md:text-xl text-white/90 mb-6 max-w-2xl">
             Master the transformative practice of 10-day dry fasting. A
             comprehensive guide covering science, preparation, execution, and
             recovery.
@@ -398,7 +398,7 @@ const DryFastingCourse = () => {
         <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
           🎯 What You'll Master
         </h2>
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {[
             {
               icon: "🔬",

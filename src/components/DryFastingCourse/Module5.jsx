@@ -38,7 +38,7 @@ const Module5 = () => {
                 🌅 The Beginning
               </span>
             </div>
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <h4 className="text-white font-semibold mb-2">
                   What's Happening Inside 🔬
@@ -83,7 +83,7 @@ const Module5 = () => {
                 🔥 The Challenge
               </span>
             </div>
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <h4 className="text-white font-semibold mb-2">
                   What's Happening Inside 🔬
@@ -128,7 +128,7 @@ const Module5 = () => {
                 ⚡ The Acidotic Crisis
               </span>
             </div>
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <h4 className="text-white font-semibold mb-2">
                   What's Happening Inside 🔬
@@ -190,7 +190,7 @@ const Module5 = () => {
                 🧬 Deep Cleaning Begins
               </span>
             </div>
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <h4 className="text-white font-semibold mb-2">
                   What's Happening Inside 🔬
@@ -235,7 +235,7 @@ const Module5 = () => {
                 🔥 Peak Fat Burning
               </span>
             </div>
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <h4 className="text-white font-semibold mb-2">
                   What's Happening Inside 🔬
@@ -280,7 +280,7 @@ const Module5 = () => {
                 🛡️ Immune System Reset
               </span>
             </div>
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <h4 className="text-white font-semibold mb-2">
                   What's Happening Inside 🔬
@@ -342,7 +342,7 @@ const Module5 = () => {
                 📈 Growth Hormone Surge
               </span>
             </div>
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <h4 className="text-white font-semibold mb-2">
                   What's Happening Inside 🔬
@@ -387,7 +387,7 @@ const Module5 = () => {
                 🧬 Advanced Autophagy
               </span>
             </div>
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <h4 className="text-white font-semibold mb-2">
                   What's Happening Inside 🔬
@@ -432,7 +432,7 @@ const Module5 = () => {
                 ⚡ Mitochondrial Renewal
               </span>
             </div>
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <h4 className="text-white font-semibold mb-2">
                   What's Happening Inside 🔬
@@ -476,7 +476,7 @@ const Module5 = () => {
                 🎉 Completion & Victory
               </span>
             </div>
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <h4 className="text-white font-semibold mb-2">
                   What's Happening Inside 🔬

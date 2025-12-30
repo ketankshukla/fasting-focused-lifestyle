@@ -18,7 +18,7 @@ const Module3 = () => {
             at identifying and recycling damaged cellular components.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {[
               {
                 icon: "🧹",
@@ -155,7 +155,7 @@ const Module3 = () => {
             rejuvenation.
           </p>
 
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               {
                 icon: "🌟",
@@ -216,7 +216,7 @@ const Module3 = () => {
             fasting as a spiritual practice for this reason.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-violet-400">
                 🎯 Cognitive Benefits
@@ -308,7 +308,7 @@ const Module3 = () => {
             research is needed, the mechanisms are logical.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="bg-white/5 rounded-xl p-5 border border-white/10">
               <h4 className="font-semibold text-red-400 mb-3">
                 🔬 Theoretical Mechanisms
@@ -424,7 +424,7 @@ const Module3 = () => {
             experiences.
           </p>
 
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               {
                 category: "Metabolic",

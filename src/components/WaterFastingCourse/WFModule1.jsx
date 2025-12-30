@@ -19,7 +19,7 @@ const WFModule1 = () => {
             triggering deep cellular repair, autophagy, and metabolic reset.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="bg-white/5 rounded-xl p-5 border border-white/10">
               <h3 className="text-lg font-semibold text-cyan-400 mb-3">
                 🌊 Water Fasting Defined
@@ -90,7 +90,7 @@ const WFModule1 = () => {
             spiritual growth.
           </p>
 
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               {
                 icon: "🙏",
@@ -163,74 +163,81 @@ const WFModule1 = () => {
           </span>
           Water Fasting vs Other Fasting Methods
         </h2>
-        <div className="bg-gradient-to-br from-violet-900/30 to-purple-900/30 rounded-2xl p-6 border border-violet-500/30">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-white/20">
-                  <th className="py-3 px-4 text-left text-gray-400">Method</th>
-                  <th className="py-3 px-4 text-left text-gray-400">
-                    What's Consumed
-                  </th>
-                  <th className="py-3 px-4 text-left text-gray-400">
-                    Autophagy
-                  </th>
-                  <th className="py-3 px-4 text-left text-gray-400">
-                    Difficulty
-                  </th>
-                  <th className="py-3 px-4 text-left text-gray-400">Speed</th>
-                </tr>
-              </thead>
-              <tbody className="text-gray-300">
-                <tr className="border-b border-white/10 bg-cyan-500/10">
-                  <td className="py-3 px-4 font-semibold text-cyan-400">
-                    💧 Water Fast + Electrolytes
-                  </td>
-                  <td className="py-3 px-4">
-                    Water with sodium, potassium, magnesium
-                  </td>
-                  <td className="py-3 px-4 text-green-400">High</td>
-                  <td className="py-3 px-4 text-yellow-400">Moderate</td>
-                  <td className="py-3 px-4">Moderate</td>
-                </tr>
-                <tr className="border-b border-white/10">
-                  <td className="py-3 px-4 font-semibold text-rose-400">
-                    🔥 Dry Fast
-                  </td>
-                  <td className="py-3 px-4">Nothing—no food or water</td>
-                  <td className="py-3 px-4 text-green-400">Maximum</td>
-                  <td className="py-3 px-4 text-red-400">Hard</td>
-                  <td className="py-3 px-4">Fastest</td>
-                </tr>
-                <tr className="border-b border-white/10">
-                  <td className="py-3 px-4 font-semibold text-gray-400">
-                    ☕ Intermittent Fast
-                  </td>
-                  <td className="py-3 px-4">Nothing during fasting window</td>
-                  <td className="py-3 px-4 text-yellow-400">Low-Moderate</td>
-                  <td className="py-3 px-4 text-green-400">Easy</td>
-                  <td className="py-3 px-4">Slow</td>
-                </tr>
-                <tr className="border-b border-white/10">
-                  <td className="py-3 px-4 font-semibold text-gray-400">
-                    🥤 Juice Fast
-                  </td>
-                  <td className="py-3 px-4">Fresh fruit/vegetable juices</td>
-                  <td className="py-3 px-4 text-red-400">Minimal</td>
-                  <td className="py-3 px-4 text-green-400">Easy</td>
-                  <td className="py-3 px-4">Slow</td>
-                </tr>
-                <tr className="border-b border-white/10">
-                  <td className="py-3 px-4 font-semibold text-gray-400">
-                    🍵 Bone Broth Fast
-                  </td>
-                  <td className="py-3 px-4">Bone broth only</td>
-                  <td className="py-3 px-4 text-yellow-400">Low-Moderate</td>
-                  <td className="py-3 px-4 text-green-400">Easy</td>
-                  <td className="py-3 px-4">Slow</td>
-                </tr>
-              </tbody>
-            </table>
+        <div className="bg-gradient-to-br from-violet-900/30 to-purple-900/30 rounded-2xl p-4 sm:p-6 border border-violet-500/30">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              {
+                method: "💧 Water Fast + Electrolytes",
+                consumed: "Water with sodium, potassium, magnesium",
+                autophagy: "High",
+                difficulty: "Moderate",
+                speed: "Moderate",
+                highlight: true,
+              },
+              {
+                method: "🔥 Dry Fast",
+                consumed: "Nothing—no food or water",
+                autophagy: "Maximum",
+                difficulty: "Hard",
+                speed: "Fastest",
+                highlight: false,
+              },
+              {
+                method: "☕ Intermittent Fast",
+                consumed: "Nothing during fasting window",
+                autophagy: "Low-Moderate",
+                difficulty: "Easy",
+                speed: "Slow",
+                highlight: false,
+              },
+              {
+                method: "🥤 Juice Fast",
+                consumed: "Fresh fruit/vegetable juices",
+                autophagy: "Minimal",
+                difficulty: "Easy",
+                speed: "Slow",
+                highlight: false,
+              },
+              {
+                method: "🍵 Bone Broth Fast",
+                consumed: "Bone broth only",
+                autophagy: "Low-Moderate",
+                difficulty: "Easy",
+                speed: "Slow",
+                highlight: false,
+              },
+            ].map((item, i) => (
+              <div
+                key={i}
+                className={`rounded-xl p-4 border ${
+                  item.highlight
+                    ? "bg-cyan-500/20 border-cyan-500/50"
+                    : "bg-white/5 border-white/10"
+                }`}
+              >
+                <h4
+                  className={`font-semibold mb-3 ${
+                    item.highlight ? "text-cyan-400" : "text-white"
+                  }`}
+                >
+                  {item.method}
+                </h4>
+                <div className="space-y-2 text-sm">
+                  <p className="text-gray-300">
+                    <span className="text-gray-500">Consumed:</span>{" "}
+                    {item.consumed}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="px-2 py-1 bg-white/10 rounded text-green-400">
+                      Autophagy: {item.autophagy}
+                    </span>
+                    <span className="px-2 py-1 bg-white/10 rounded text-yellow-400">
+                      Difficulty: {item.difficulty}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
 
           <div className="mt-6 bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-5">

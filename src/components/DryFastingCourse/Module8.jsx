@@ -18,7 +18,7 @@ const Module8 = () => {
             old habits that caused problems in the first place.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="bg-white/5 rounded-xl p-5 border border-fuchsia-500/20">
               <h3 className="text-lg font-semibold text-fuchsia-400 mb-4">
                 ✅ Do Continue
@@ -90,7 +90,7 @@ const Module8 = () => {
             your fasting practice.
           </p>
 
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               {
                 icon: "⏰",
@@ -330,7 +330,7 @@ const Module8 = () => {
             and keeps you motivated for future fasts.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="bg-white/5 rounded-xl p-5 border border-violet-500/20">
               <h3 className="text-lg font-semibold text-violet-400 mb-4">
                 📏 Physical Metrics

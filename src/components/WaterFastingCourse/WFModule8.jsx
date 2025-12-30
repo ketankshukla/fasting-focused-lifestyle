@@ -233,7 +233,7 @@ const WFModule8 = () => {
                 >
                   📆 {phase.day}
                 </h3>
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <h4 className="text-white font-medium mb-2">✅ Can Add</h4>
                     <ul className="text-gray-300 text-sm space-y-1">
@@ -274,7 +274,7 @@ const WFModule8 = () => {
           Critical Mistakes to Avoid
         </h2>
         <div className="bg-gradient-to-br from-red-900/30 to-rose-900/30 rounded-2xl p-6 border border-red-500/30">
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="bg-white/5 rounded-xl p-5 border border-red-500/20">
               <h3 className="text-lg font-semibold text-red-400 mb-4">
                 ❌ Never Do
@@ -364,7 +364,7 @@ const WFModule8 = () => {
           Normal vs. Problem Signs During Refeeding
         </h2>
         <div className="bg-gradient-to-br from-amber-900/30 to-orange-900/30 rounded-2xl p-6 border border-amber-500/30">
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="bg-green-500/10 rounded-xl p-5 border border-green-500/30">
               <h3 className="text-lg font-semibold text-green-400 mb-4">
                 ✅ Normal During Refeeding

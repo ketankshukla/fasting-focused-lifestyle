@@ -24,7 +24,7 @@ const Module4 = () => {
               <h3 className="text-lg font-semibold text-purple-400 mb-4">
                 📅 2 Weeks Before
               </h3>
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <h4 className="font-medium text-green-400 mb-2">
                     ✅ Start Doing
@@ -57,7 +57,7 @@ const Module4 = () => {
               <h3 className="text-lg font-semibold text-violet-400 mb-4">
                 📅 1 Week Before
               </h3>
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <h4 className="font-medium text-green-400 mb-2">
                     ✅ Focus On
@@ -90,7 +90,7 @@ const Module4 = () => {
               <h3 className="text-lg font-semibold text-pink-400 mb-4">
                 📅 2-3 Days Before
               </h3>
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <h4 className="font-medium text-green-400 mb-2">
                     ✅ Final Prep
@@ -136,7 +136,7 @@ const Module4 = () => {
             successfully.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-indigo-400">
                 🎯 Setting Your Intention
@@ -231,7 +231,7 @@ const Module4 = () => {
             temptations and create a supportive space for healing.
           </p>
 
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               {
                 icon: "🍽️",
@@ -300,7 +300,7 @@ const Module4 = () => {
             go shopping when it's time to break your fast.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="bg-white/5 rounded-xl p-5 border border-green-500/20">
               <h3 className="text-lg font-semibold text-green-400 mb-4">
                 🥤 First 24 Hours
@@ -394,7 +394,7 @@ const Module4 = () => {
             and failure. Plan around your life, not against it.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-amber-400">
                 ✅ Ideal Timing
@@ -466,7 +466,7 @@ const Module4 = () => {
             <h3 className="text-lg font-semibold text-rose-400 mb-4">
               📝 Daily Tracking Template
             </h3>
-            <div className="grid md:grid-cols-2 gap-4 text-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
               <div className="space-y-2">
                 <p className="text-white font-medium">Morning Check-in:</p>
                 <ul className="text-gray-400 space-y-1">
@@ -490,7 +490,7 @@ const Module4 = () => {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               {
                 icon: "📊",

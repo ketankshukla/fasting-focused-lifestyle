@@ -17,7 +17,7 @@ const Module9 = () => {
             and research sources from leading practitioners and scientists.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {[
               {
                 title: "Dry Fasting: The Phoenix Protocol",
@@ -99,7 +99,7 @@ const Module9 = () => {
             get support, and learn from others' journeys.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {[
               {
                 name: "r/Dryfasting",
@@ -203,7 +203,7 @@ const Module9 = () => {
             motivated throughout your fasting journey.
           </p>
 
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               {
                 name: "Zero",
@@ -304,7 +304,7 @@ const Module9 = () => {
               🥗 Pre-Fast Week Meal Plan
             </h3>
             <div className="bg-white/5 rounded-xl p-5 border border-white/10">
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <h4 className="text-white font-medium mb-3">
                     Days 7-5 Before Fast

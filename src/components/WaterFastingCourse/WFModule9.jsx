@@ -17,7 +17,7 @@ const WFModule9 = () => {
             maintaining those benefits through sustainable lifestyle choices.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="bg-green-500/10 rounded-xl p-5 border border-green-500/30">
               <h3 className="text-lg font-semibold text-green-400 mb-4">
                 ✅ Continue Doing
@@ -125,7 +125,7 @@ const WFModule9 = () => {
                       {item.freq}
                     </span>
                   </div>
-                  <div className="grid md:grid-cols-2 gap-2 text-sm">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                     <p className="text-gray-300">
                       <strong>Purpose:</strong> {item.purpose}
                     </p>
@@ -161,7 +161,7 @@ const WFModule9 = () => {
           Recommended Resources
         </h2>
         <div className="bg-gradient-to-br from-blue-900/30 to-indigo-900/30 rounded-2xl p-6 border border-blue-500/30">
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {/* Books */}
             <div className="bg-white/5 rounded-xl p-5 border border-white/10">
               <h3 className="text-lg font-semibold text-blue-400 mb-4">
@@ -331,7 +331,7 @@ const WFModule9 = () => {
           Quick Reference Card
         </h2>
         <div className="bg-gradient-to-br from-emerald-900/30 to-green-900/30 rounded-2xl p-6 border border-emerald-500/30">
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="bg-yellow-500/10 rounded-xl p-4 border border-yellow-500/30">
               <h4 className="font-semibold text-yellow-400 mb-3">
                 ⚡ Daily Electrolytes

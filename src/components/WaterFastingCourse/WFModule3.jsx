@@ -18,7 +18,7 @@ const WFModule3 = () => {
             damage and dysfunction that builds up over years.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="bg-white/5 rounded-xl p-5 border border-white/10">
               <h3 className="text-lg font-semibold text-emerald-400 mb-4">
                 🔄 What Gets Cleaned
@@ -125,7 +125,7 @@ const WFModule3 = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-5">
               <h4 className="font-semibold text-green-400 mb-2">
                 ✅ Why Fasting Fat Loss Sticks
@@ -169,7 +169,7 @@ const WFModule3 = () => {
             it.
           </p>
 
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               {
                 title: "Ketone Brain Fuel",
@@ -211,7 +211,7 @@ const WFModule3 = () => {
             <h4 className="font-semibold text-violet-400 mb-2">
               🎯 Reported Cognitive Benefits
             </h4>
-            <div className="grid md:grid-cols-2 gap-3 text-gray-300 text-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-gray-300 text-sm">
               <div>• Laser-like focus and concentration</div>
               <div>• Enhanced memory and recall</div>
               <div>• Creative insights and problem-solving</div>
@@ -307,7 +307,7 @@ const WFModule3 = () => {
             repair and regeneration of the gut lining.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="bg-white/5 rounded-xl p-5 border border-white/10">
               <h3 className="text-lg font-semibold text-lime-400 mb-4">
                 🔧 What Heals During Rest
@@ -362,7 +362,7 @@ const WFModule3 = () => {
           Additional Reported Benefits
         </h2>
         <div className="bg-gradient-to-br from-pink-900/30 to-rose-900/30 rounded-2xl p-6 border border-pink-500/30">
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               {
                 icon: "💧",

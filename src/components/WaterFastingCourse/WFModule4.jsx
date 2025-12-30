@@ -39,7 +39,7 @@ const WFModule4 = () => {
             replacement, you'll experience debilitating symptoms.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="bg-red-500/10 rounded-xl p-5 border border-red-500/30">
               <h3 className="text-lg font-semibold text-red-400 mb-4">
                 ❌ Plain Water Dangers
@@ -102,7 +102,7 @@ const WFModule4 = () => {
           The Big Three: Sodium, Potassium, Magnesium
         </h2>
         <div className="bg-gradient-to-br from-cyan-900/30 to-blue-900/30 rounded-2xl p-6 border border-cyan-500/30">
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Sodium */}
             <div className="bg-white/5 rounded-xl p-5 border border-white/10">
               <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center mb-4">
@@ -271,7 +271,7 @@ const WFModule4 = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="bg-white/5 rounded-xl p-5 border border-white/10">
               <h3 className="text-lg font-semibold text-green-400 mb-4">
                 ⏰ When to Take
@@ -343,7 +343,7 @@ const WFModule4 = () => {
             well for fasting. Look for products without sugar or calories.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {[
               {
                 name: "LMNT",
@@ -402,7 +402,7 @@ const WFModule4 = () => {
             <h4 className="font-semibold text-red-400 mb-2">
               ⚠️ Avoid These During Fasting
             </h4>
-            <ul className="text-gray-300 text-sm grid md:grid-cols-2 gap-2">
+            <ul className="text-gray-300 text-sm grid grid-cols-1 sm:grid-cols-2 gap-2">
               <li>• Gatorade / Powerade (full of sugar)</li>
               <li>• Pedialyte (contains sugar)</li>
               <li>• Most sports drinks (too much sugar)</li>
@@ -422,83 +422,72 @@ const WFModule4 = () => {
           </span>
           Symptom Guide: What Your Body Is Telling You
         </h2>
-        <div className="bg-gradient-to-br from-rose-900/30 to-pink-900/30 rounded-2xl p-6 border border-rose-500/30">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-white/20">
-                  <th className="py-3 px-4 text-left text-gray-400">Symptom</th>
-                  <th className="py-3 px-4 text-left text-gray-400">
-                    Likely Deficiency
-                  </th>
-                  <th className="py-3 px-4 text-left text-gray-400">
-                    Quick Fix
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="text-gray-300">
-                {[
-                  {
-                    symptom: "Headache",
-                    deficiency: "Sodium",
-                    fix: "Take 1/4-1/2 tsp salt in water immediately",
-                  },
-                  {
-                    symptom: "Dizziness when standing",
-                    deficiency: "Sodium",
-                    fix: "More salt, stand up slowly",
-                  },
-                  {
-                    symptom: "Heart palpitations",
-                    deficiency: "Potassium (or Magnesium)",
-                    fix: "Take potassium supplement, rest",
-                  },
-                  {
-                    symptom: "Muscle cramps",
-                    deficiency: "Magnesium (or Potassium)",
-                    fix: "Magnesium supplement, Epsom salt bath",
-                  },
-                  {
-                    symptom: "Severe fatigue/weakness",
-                    deficiency: "All electrolytes",
-                    fix: "Full electrolyte dose, rest",
-                  },
-                  {
-                    symptom: "Nausea",
-                    deficiency: "Sodium",
-                    fix: "Small sips of salty water",
-                  },
-                  {
-                    symptom: "Insomnia/restlessness",
-                    deficiency: "Magnesium",
-                    fix: "Magnesium before bed",
-                  },
-                  {
-                    symptom: "Muscle twitching",
-                    deficiency: "Magnesium",
-                    fix: "Magnesium supplement",
-                  },
-                  {
-                    symptom: "Brain fog",
-                    deficiency: "Sodium",
-                    fix: "Increase salt intake",
-                  },
-                  {
-                    symptom: "Irritability",
-                    deficiency: "Magnesium",
-                    fix: "Magnesium supplement",
-                  },
-                ].map((row, i) => (
-                  <tr key={i} className="border-b border-white/10">
-                    <td className="py-3 px-4">{row.symptom}</td>
-                    <td className="py-3 px-4 text-yellow-400">
-                      {row.deficiency}
-                    </td>
-                    <td className="py-3 px-4 text-green-400">{row.fix}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <div className="bg-gradient-to-br from-rose-900/30 to-pink-900/30 rounded-2xl p-4 sm:p-6 border border-rose-500/30">
+          {/* Mobile Card View */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {[
+              {
+                symptom: "Headache",
+                deficiency: "Sodium",
+                fix: "Take 1/4-1/2 tsp salt in water",
+              },
+              {
+                symptom: "Dizziness",
+                deficiency: "Sodium",
+                fix: "More salt, stand up slowly",
+              },
+              {
+                symptom: "Heart palpitations",
+                deficiency: "Potassium",
+                fix: "Potassium supplement, rest",
+              },
+              {
+                symptom: "Muscle cramps",
+                deficiency: "Magnesium",
+                fix: "Magnesium supplement",
+              },
+              {
+                symptom: "Severe fatigue",
+                deficiency: "All electrolytes",
+                fix: "Full electrolyte dose",
+              },
+              {
+                symptom: "Nausea",
+                deficiency: "Sodium",
+                fix: "Small sips of salty water",
+              },
+              {
+                symptom: "Insomnia",
+                deficiency: "Magnesium",
+                fix: "Magnesium before bed",
+              },
+              {
+                symptom: "Muscle twitching",
+                deficiency: "Magnesium",
+                fix: "Magnesium supplement",
+              },
+              {
+                symptom: "Brain fog",
+                deficiency: "Sodium",
+                fix: "Increase salt intake",
+              },
+              {
+                symptom: "Irritability",
+                deficiency: "Magnesium",
+                fix: "Magnesium supplement",
+              },
+            ].map((row, i) => (
+              <div
+                key={i}
+                className="bg-white/5 rounded-xl p-4 border border-white/10"
+              >
+                <h4 className="text-white font-semibold mb-2">{row.symptom}</h4>
+                <p className="text-yellow-400 text-sm mb-1">
+                  ⚠️ {row.deficiency}
+                </p>
+                <p className="text-green-400 text-sm">✓ {row.fix}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>

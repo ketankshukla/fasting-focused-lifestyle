@@ -231,7 +231,7 @@ const WaterFastingCourse = () => {
         <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2" />
 
         <div className="relative z-10">
-          <div className="flex items-center gap-2 text-white/90 text-sm font-medium mb-4">
+          <div className="flex flex-wrap items-center gap-2 text-white/90 text-sm font-medium mb-4">
             <span className="px-3 py-1 bg-white/20 rounded-full">
               💧 Premium Course
             </span>
@@ -243,10 +243,10 @@ const WaterFastingCourse = () => {
             </span>
           </div>
 
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-4">
             Extended Water Fasting 💧
           </h1>
-          <p className="text-xl text-white/90 mb-6 max-w-2xl">
+          <p className="text-base sm:text-lg md:text-xl text-white/90 mb-6 max-w-2xl">
             Master the art of extended water fasting with proper electrolyte
             supplementation. A comprehensive guide covering science,
             preparation, execution, and recovery.
@@ -341,7 +341,7 @@ const WaterFastingCourse = () => {
       {/* Module Grid */}
       <div className="space-y-4">
         <h2 className="text-2xl font-bold text-white">📖 Course Modules</h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {modules.map((module) => (
             <button
               key={module.id}
@@ -382,7 +382,7 @@ const WaterFastingCourse = () => {
         <h2 className="text-xl font-bold text-white mb-4">
           🎯 What You'll Learn
         </h2>
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {[
             {
               icon: "💧",

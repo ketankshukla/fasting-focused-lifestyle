@@ -18,7 +18,7 @@ const WFModule7 = () => {
             act.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {/* Normal Symptoms */}
             <div className="bg-green-500/10 rounded-xl p-5 border border-green-500/30">
               <h3 className="text-lg font-semibold text-green-400 mb-4">
@@ -116,7 +116,7 @@ const WFModule7 = () => {
             <h3 className="text-lg font-semibold text-red-400 mb-4">
               🚨 Warning Signs (Consider Breaking Fast)
             </h3>
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <ul className="space-y-2 text-gray-300 text-sm">
                 <li className="flex items-start gap-2">
                   <span className="text-red-400">⚠️</span> Severe or persistent
@@ -170,7 +170,7 @@ const WFModule7 = () => {
           Mental & Emotional Experiences
         </h2>
         <div className="bg-gradient-to-br from-purple-900/30 to-violet-900/30 rounded-2xl p-6 border border-purple-500/30">
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-purple-400">
                 ✨ Positive States
@@ -283,7 +283,7 @@ const WFModule7 = () => {
           Sleep Changes
         </h2>
         <div className="bg-gradient-to-br from-indigo-900/30 to-blue-900/30 rounded-2xl p-6 border border-indigo-500/30">
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               {
                 title: "Need Less Sleep",
@@ -325,7 +325,7 @@ const WFModule7 = () => {
             <h4 className="font-semibold text-indigo-400 mb-2">
               💡 Sleep Tips During Fasting
             </h4>
-            <ul className="text-gray-300 space-y-1 text-sm grid md:grid-cols-2 gap-2">
+            <ul className="text-gray-300 space-y-1 text-sm grid grid-cols-1 sm:grid-cols-2 gap-2">
               <li>• Take magnesium before bed</li>
               <li>• Keep room cool (you may feel warmer)</li>
               <li>• Use the extra awake time productively</li>
@@ -346,7 +346,7 @@ const WFModule7 = () => {
           Activity Recommendations
         </h2>
         <div className="bg-gradient-to-br from-emerald-900/30 to-green-900/30 rounded-2xl p-6 border border-emerald-500/30">
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="bg-green-500/10 rounded-xl p-5 border border-green-500/30">
               <h3 className="text-lg font-semibold text-green-400 mb-4">
                 ✅ Recommended Activities
@@ -398,7 +398,7 @@ const WFModule7 = () => {
             <h4 className="font-semibold text-emerald-400 mb-2">
               📅 Activity by Phase
             </h4>
-            <div className="grid md:grid-cols-3 gap-4 text-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
               <div>
                 <span className="text-white font-medium">Days 1-3:</span>
                 <p className="text-gray-400">
