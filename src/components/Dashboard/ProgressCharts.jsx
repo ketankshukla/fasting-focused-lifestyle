@@ -177,21 +177,16 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
         <ResponsiveContainer width="100%" height="100%">
           {chartType === "weight" ? (
             // BAR CHART for weight
-            <BarChart data={chartData} margin={{ bottom: 20, left: 10 }}>
+            <BarChart data={chartData} margin={{ bottom: 5, left: 10 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
               <XAxis
                 dataKey="date"
+                type="category"
                 stroke="#9CA3AF"
                 fontSize={12}
                 tick={{ fill: "#9CA3AF" }}
-                interval={0}
-                label={{
-                  value: "Date",
-                  position: "insideBottom",
-                  offset: -10,
-                  fill: "#9CA3AF",
-                  fontSize: 11,
-                }}
+                tickLine={false}
+                axisLine={{ stroke: "#374151" }}
               />
               <YAxis
                 stroke="#9CA3AF"
@@ -250,21 +245,16 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
             </PieChart>
           ) : chartType === "wellness" ? (
             // BAR CHART for wellness (energy & mood)
-            <BarChart data={chartData} margin={{ bottom: 20, left: 10 }}>
+            <BarChart data={chartData} margin={{ bottom: 5, left: 10 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
               <XAxis
                 dataKey="date"
+                type="category"
                 stroke="#9CA3AF"
                 fontSize={12}
                 tick={{ fill: "#9CA3AF" }}
-                interval={0}
-                label={{
-                  value: "Date",
-                  position: "insideBottom",
-                  offset: -10,
-                  fill: "#9CA3AF",
-                  fontSize: 11,
-                }}
+                tickLine={false}
+                axisLine={{ stroke: "#374151" }}
               />
               <YAxis
                 stroke="#9CA3AF"
@@ -296,21 +286,16 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
             </BarChart>
           ) : (
             // LINE CHART for comparison (weight trend)
-            <LineChart data={chartData} margin={{ bottom: 20, left: 10 }}>
+            <LineChart data={chartData} margin={{ bottom: 5, left: 10 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
               <XAxis
                 dataKey="date"
+                type="category"
                 stroke="#9CA3AF"
                 fontSize={12}
                 tick={{ fill: "#9CA3AF" }}
-                interval={0}
-                label={{
-                  value: "Date",
-                  position: "insideBottom",
-                  offset: -10,
-                  fill: "#9CA3AF",
-                  fontSize: 11,
-                }}
+                tickLine={false}
+                axisLine={{ stroke: "#374151" }}
               />
               <YAxis
                 stroke="#9CA3AF"
