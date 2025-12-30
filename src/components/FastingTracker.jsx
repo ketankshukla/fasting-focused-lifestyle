@@ -51,8 +51,16 @@ const FastingTracker = () => {
   const [showYearView, setShowYearView] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [showLogModal, setShowLogModal] = useState(false);
-  const [activeSection, setActiveSection] = useState("dashboard");
+  const [activeSection, setActiveSection] = useState(() => {
+    return localStorage.getItem("activeSection") || "dashboard";
+  });
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Persist active section to localStorage
+  const handleSectionChange = (section) => {
+    setActiveSection(section);
+    localStorage.setItem("activeSection", section);
+  };
 
   const stats = getProgressStats(profile, dailyLogs);
   const scheduleStats = getScheduleStats();
@@ -195,7 +203,7 @@ const FastingTracker = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex">
       <Sidebar
         activeSection={activeSection}
-        onSectionChange={setActiveSection}
+        onSectionChange={handleSectionChange}
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
       />
