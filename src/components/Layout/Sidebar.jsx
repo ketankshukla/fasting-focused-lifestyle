@@ -8,6 +8,12 @@ const menuItems = [
     label: "Dry Fasting Course",
     section: "overview",
   },
+  {
+    id: "watercourse",
+    icon: "💧",
+    label: "Water Fasting Course",
+    section: "overview",
+  },
   { id: "charts", icon: "📈", label: "Progress Charts", section: "tracking" },
   { id: "photos", icon: "📸", label: "Photo Progress", section: "tracking" },
   { id: "journal", icon: "📔", label: "Journal", section: "tracking" },

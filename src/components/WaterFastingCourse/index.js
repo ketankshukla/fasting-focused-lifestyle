@@ -1,0 +1,10 @@
+export { default as WaterFastingCourse } from "./WaterFastingCourse";
+export { default as WFModule1 } from "./WFModule1";
+export { default as WFModule2 } from "./WFModule2";
+export { default as WFModule3 } from "./WFModule3";
+export { default as WFModule4 } from "./WFModule4";
+export { default as WFModule5 } from "./WFModule5";
+export { default as WFModule6 } from "./WFModule6";
+export { default as WFModule7 } from "./WFModule7";
+export { default as WFModule8 } from "./WFModule8";
+export { default as WFModule9 } from "./WFModule9";
