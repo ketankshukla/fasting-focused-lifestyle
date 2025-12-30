@@ -15,11 +15,17 @@ import {
 const ProgressCharts = ({ dailyLogs, profile }) => {
   const [chartType, setChartType] = useState("weight");
 
+  // Helper to parse date string as local date (not UTC)
+  const parseLocalDate = (dateStr) => {
+    const [year, month, day] = dateStr.split("-").map(Number);
+    return new Date(year, month - 1, day);
+  };
+
   const chartData = Object.entries(dailyLogs)
-    .filter(([_, log]) => log.weight || log.waist)
+    .filter(([_, log]) => log.weight || log.waist || log.energy || log.mood)
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([date, log]) => ({
-      date: new Date(date).toLocaleDateString("en-US", {
+      date: parseLocalDate(date).toLocaleDateString("en-US", {
         month: "short",
         day: "numeric",
       }),
@@ -28,9 +34,16 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
       waist: log.waist || null,
       energy: log.energy || null,
       mood: log.mood || null,
+      glucose: log.glucose || null,
+      bloodPressureSys: log.bloodPressureSys || null,
+      bloodPressureDia: log.bloodPressureDia || null,
+      sleepHours: log.sleepHours || null,
+      sleepQuality: log.sleepQuality || null,
+      ketones: log.ketones || null,
+      waterIntake: log.waterIntake || null,
     }));
 
-  if (chartData.length < 2) {
+  if (chartData.length < 1) {
     return (
       <div className="bg-white/10 backdrop-blur rounded-2xl p-4 sm:p-6">
         <h3 className="text-lg font-bold text-white mb-4">
@@ -38,7 +51,7 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
         </h3>
         <div className="text-center py-8 text-gray-400">
           <p className="text-4xl mb-2">📈</p>
-          <p>Log at least 2 days of data to see your progress charts!</p>
+          <p>Log your first day to see your progress charts!</p>
         </div>
       </div>
     );
@@ -70,11 +83,11 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
       <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
         <h3 className="text-lg font-bold text-white">📊 Progress Charts</h3>
         <div className="flex gap-2">
-          {["weight", "waist", "wellness"].map((type) => (
+          {["weight", "waist", "wellness", "vitals", "sleep"].map((type) => (
             <button
               key={type}
               onClick={() => setChartType(type)}
-              className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+              className={`px-2 py-1 rounded-full text-xs font-medium transition-all ${
                 chartType === type
                   ? "bg-white text-gray-900"
                   : "bg-white/20 text-white hover:bg-white/30"
@@ -84,7 +97,11 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
                 ? "⚖️ Weight"
                 : type === "waist"
                 ? "📏 Waist"
-                : "💚 Wellness"}
+                : type === "wellness"
+                ? "💚 Wellness"
+                : type === "vitals"
+                ? "🩺 Vitals"
+                : "😴 Sleep"}
             </button>
           ))}
         </div>
@@ -168,7 +185,7 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
                 dot={false}
               />
             </AreaChart>
-          ) : (
+          ) : chartType === "wellness" ? (
             <LineChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
               <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12} />
@@ -191,6 +208,85 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
                 stroke="#EC4899"
                 strokeWidth={2}
                 dot={{ fill: "#EC4899", strokeWidth: 2, r: 4 }}
+                connectNulls
+              />
+            </LineChart>
+          ) : chartType === "vitals" ? (
+            <LineChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+              <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12} />
+              <YAxis stroke="#9CA3AF" fontSize={12} />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend />
+              <Line
+                type="monotone"
+                dataKey="bloodPressureSys"
+                name="BP Systolic"
+                stroke="#EF4444"
+                strokeWidth={2}
+                dot={{ fill: "#EF4444", strokeWidth: 2, r: 4 }}
+                connectNulls
+              />
+              <Line
+                type="monotone"
+                dataKey="bloodPressureDia"
+                name="BP Diastolic"
+                stroke="#F97316"
+                strokeWidth={2}
+                dot={{ fill: "#F97316", strokeWidth: 2, r: 4 }}
+                connectNulls
+              />
+              <Line
+                type="monotone"
+                dataKey="glucose"
+                name="Glucose"
+                stroke="#06B6D4"
+                strokeWidth={2}
+                dot={{ fill: "#06B6D4", strokeWidth: 2, r: 4 }}
+                connectNulls
+              />
+              <Line
+                type="monotone"
+                dataKey="ketones"
+                name="Ketones"
+                stroke="#A855F7"
+                strokeWidth={2}
+                dot={{ fill: "#A855F7", strokeWidth: 2, r: 4 }}
+                connectNulls
+              />
+            </LineChart>
+          ) : (
+            <LineChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+              <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12} />
+              <YAxis stroke="#9CA3AF" fontSize={12} />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend />
+              <Line
+                type="monotone"
+                dataKey="sleepHours"
+                name="Sleep Hours"
+                stroke="#3B82F6"
+                strokeWidth={2}
+                dot={{ fill: "#3B82F6", strokeWidth: 2, r: 4 }}
+                connectNulls
+              />
+              <Line
+                type="monotone"
+                dataKey="sleepQuality"
+                name="Sleep Quality"
+                stroke="#8B5CF6"
+                strokeWidth={2}
+                dot={{ fill: "#8B5CF6", strokeWidth: 2, r: 4 }}
+                connectNulls
+              />
+              <Line
+                type="monotone"
+                dataKey="waterIntake"
+                name="Water (oz)"
+                stroke="#06B6D4"
+                strokeWidth={2}
+                dot={{ fill: "#06B6D4", strokeWidth: 2, r: 4 }}
                 connectNulls
               />
             </LineChart>
