@@ -18,6 +18,7 @@ import {
   StreakCounter,
   AchievementBadges,
   MotivationalQuotes,
+  JournalDiary,
 } from "./Dashboard";
 import { MonthView, YearView } from "./Calendar";
 import { LogModal, ProfileModal } from "./Modals";
@@ -88,6 +89,8 @@ const FastingTracker = () => {
           profile={profile}
           stats={stats}
         />
+
+        <JournalDiary dailyLogs={dailyLogs} />
 
         <FastTypeStats scheduleStats={scheduleStats} />
 
