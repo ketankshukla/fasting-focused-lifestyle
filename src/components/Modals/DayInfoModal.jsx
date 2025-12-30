@@ -183,43 +183,145 @@ const DayInfoModal = ({ selectedDay, dailyLogs, onClose, onNavigate }) => {
               <h4 className="text-sm font-semibold text-green-800 mb-2">
                 🍽️ Meal Suggestions
               </h4>
+              {info.meals.overview && (
+                <p className="text-xs text-green-700 mb-2 font-medium bg-green-100 p-2 rounded">
+                  {info.meals.overview}
+                </p>
+              )}
               <div className="space-y-2">
-                {info.meals.breakfast && (
-                  <div>
-                    <span className="text-xs font-medium text-green-600">
-                      Breakfast:
-                    </span>
-                    <p className="text-sm text-green-700">
-                      {info.meals.breakfast}
+                {info.meals.meal1 && (
+                  <div className="bg-white rounded p-2 border border-green-200">
+                    <div className="flex justify-between items-start">
+                      <span className="text-xs font-bold text-green-700">
+                        🍳 {info.meals.meal1.time}
+                      </span>
+                      <div className="text-right">
+                        <span className="text-xs font-semibold text-emerald-600">
+                          {info.meals.meal1.protein}
+                        </span>
+                        {info.meals.meal1.cost && (
+                          <span className="text-xs text-gray-500 ml-1">
+                            ~{info.meals.meal1.cost}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <p className="text-sm text-gray-800 mt-1">
+                      {info.meals.meal1.food}
                     </p>
+                    {info.meals.meal1.notes && (
+                      <p className="text-xs text-gray-500 italic mt-1">
+                        {info.meals.meal1.notes}
+                      </p>
+                    )}
                   </div>
                 )}
-                {info.meals.lunch && (
-                  <div>
-                    <span className="text-xs font-medium text-green-600">
-                      Lunch:
-                    </span>
-                    <p className="text-sm text-green-700">{info.meals.lunch}</p>
+                {info.meals.meal2 && (
+                  <div className="bg-white rounded p-2 border border-green-200">
+                    <div className="flex justify-between items-start">
+                      <span className="text-xs font-bold text-green-700">
+                        🍗 {info.meals.meal2.time}
+                      </span>
+                      <div className="text-right">
+                        <span className="text-xs font-semibold text-emerald-600">
+                          {info.meals.meal2.protein}
+                        </span>
+                        {info.meals.meal2.cost && (
+                          <span className="text-xs text-gray-500 ml-1">
+                            ~{info.meals.meal2.cost}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <p className="text-sm text-gray-800 mt-1">
+                      {info.meals.meal2.food}
+                    </p>
+                    {info.meals.meal2.notes && (
+                      <p className="text-xs text-gray-500 italic mt-1">
+                        {info.meals.meal2.notes}
+                      </p>
+                    )}
                   </div>
                 )}
-                {info.meals.dinner && (
-                  <div>
-                    <span className="text-xs font-medium text-green-600">
-                      Dinner:
-                    </span>
-                    <p className="text-sm text-green-700">
-                      {info.meals.dinner}
+                {info.meals.meal3 && (
+                  <div className="bg-white rounded p-2 border border-green-200">
+                    <div className="flex justify-between items-start">
+                      <span className="text-xs font-bold text-green-700">
+                        🥩 {info.meals.meal3.time}
+                      </span>
+                      <div className="text-right">
+                        <span className="text-xs font-semibold text-emerald-600">
+                          {info.meals.meal3.protein}
+                        </span>
+                        {info.meals.meal3.cost && (
+                          <span className="text-xs text-gray-500 ml-1">
+                            ~{info.meals.meal3.cost}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <p className="text-sm text-gray-800 mt-1">
+                      {info.meals.meal3.food}
                     </p>
+                    {info.meals.meal3.notes && (
+                      <p className="text-xs text-gray-500 italic mt-1">
+                        {info.meals.meal3.notes}
+                      </p>
+                    )}
                   </div>
                 )}
-                {info.meals.snacks && (
-                  <div>
-                    <span className="text-xs font-medium text-green-600">
-                      Snacks:
-                    </span>
-                    <p className="text-sm text-green-700">
-                      {info.meals.snacks}
+                {info.meals.meal4 && (
+                  <div className="bg-white rounded p-2 border border-green-200">
+                    <div className="flex justify-between items-start">
+                      <span className="text-xs font-bold text-green-700">
+                        🍖 {info.meals.meal4.time}
+                      </span>
+                      <div className="text-right">
+                        <span className="text-xs font-semibold text-emerald-600">
+                          {info.meals.meal4.protein}
+                        </span>
+                        {info.meals.meal4.cost && (
+                          <span className="text-xs text-gray-500 ml-1">
+                            ~{info.meals.meal4.cost}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <p className="text-sm text-gray-800 mt-1">
+                      {info.meals.meal4.food}
                     </p>
+                    {info.meals.meal4.notes && (
+                      <p className="text-xs text-gray-500 italic mt-1">
+                        {info.meals.meal4.notes}
+                      </p>
+                    )}
+                  </div>
+                )}
+                {info.meals.snack && (
+                  <div className="bg-amber-50 rounded p-2 border border-amber-200">
+                    <div className="flex justify-between items-start">
+                      <span className="text-xs font-bold text-amber-700">
+                        🥜 {info.meals.snack.time}
+                      </span>
+                      <div className="text-right">
+                        <span className="text-xs font-semibold text-emerald-600">
+                          {info.meals.snack.protein}
+                        </span>
+                        {info.meals.snack.cost && (
+                          <span className="text-xs text-gray-500 ml-1">
+                            ~{info.meals.snack.cost}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <p className="text-sm text-gray-800 mt-1">
+                      {info.meals.snack.food}
+                    </p>
+                    {info.meals.snack.notes && (
+                      <p className="text-xs text-gray-500 italic mt-1">
+                        {info.meals.snack.notes}
+                      </p>
+                    )}
                   </div>
                 )}
               </div>
