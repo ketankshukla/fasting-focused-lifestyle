@@ -49,7 +49,10 @@ const PhotoProgress = ({
   };
 
   const formatDate = (dateStr) => {
-    return new Date(dateStr).toLocaleDateString("en-US", {
+    // Handle format: "2025-12-29_1735123456789" (date with timestamp)
+    const datePart = dateStr.split("_")[0];
+    const date = new Date(datePart + "T00:00:00");
+    return date.toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
       year: "numeric",
