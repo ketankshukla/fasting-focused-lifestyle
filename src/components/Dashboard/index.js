@@ -13,3 +13,4 @@ export { default as JournalDiary } from "./JournalDiary";
 export { default as ExportData } from "./ExportData";
 export { default as ShareProgress } from "./ShareProgress";
 export { default as BackupRestore } from "./BackupRestore";
+export { default as QuickLogButton } from "./QuickLogButton";

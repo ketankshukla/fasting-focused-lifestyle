@@ -22,6 +22,7 @@ import {
   ExportData,
   ShareProgress,
   BackupRestore,
+  QuickLogButton,
 } from "./Dashboard";
 import { MonthView, YearView } from "./Calendar";
 import { LogModal, ProfileModal } from "./Modals";
@@ -140,6 +141,8 @@ const FastingTracker = () => {
         )}
 
         <Footer />
+
+        <QuickLogButton onLogToday={handleDayClick} />
       </div>
     </div>
   );
