@@ -13,7 +13,7 @@ const FastingTimer = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setNow(new Date());
-    }, 1000);
+    }, 50);
     return () => clearInterval(interval);
   }, []);
 
@@ -103,11 +103,15 @@ const FastingTimer = () => {
     const daysCompleted = Math.floor(hours / 24);
     const currentDayHours = hours % 24;
 
+    const milliseconds = diff % 1000;
+
     return {
       hours,
       minutes,
       seconds,
-      totalHours: hours + minutes / 60,
+      milliseconds,
+      totalMs: diff,
+      totalHours: diff / (1000 * 60 * 60),
       daysCompleted,
       currentDayHours,
     };
@@ -130,8 +134,9 @@ const FastingTimer = () => {
   };
 
   const expectedDuration = getExpectedDuration();
+  const expectedMs = expectedDuration * 60 * 60 * 1000;
   const progress = timeElapsed
-    ? Math.min(100, (timeElapsed.totalHours / expectedDuration) * 100)
+    ? Math.min(100, (timeElapsed.totalMs / expectedMs) * 100)
     : 0;
 
   const formatTime = (value) => String(value).padStart(2, "0");
@@ -180,8 +185,8 @@ const FastingTimer = () => {
     );
   }
 
-  // Calculate seconds until next log for precise countdown
-  const getSecondsUntilNextLog = () => {
+  // Calculate time until next log with milliseconds
+  const getTimeUntilNextLogPrecise = () => {
     const nextLog = new Date(now);
     nextLog.setHours(DAILY_LOG_HOUR, 0, 0, 0);
     if (now >= nextLog) {
@@ -191,10 +196,11 @@ const FastingTimer = () => {
     const hours = Math.floor(diff / (1000 * 60 * 60));
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-    return { hours, minutes, seconds };
+    const milliseconds = diff % 1000;
+    return { hours, minutes, seconds, milliseconds };
   };
 
-  const countdownTime = getSecondsUntilNextLog();
+  const countdownTime = getTimeUntilNextLogPrecise();
 
   return (
     <div className="bg-white/10 backdrop-blur rounded-2xl p-4 sm:p-6">
@@ -208,98 +214,99 @@ const FastingTimer = () => {
         </div>
       </div>
 
-      {/* Main Timer Display */}
-      <div className="text-center mb-4">
-        <div className="flex justify-center items-baseline gap-1 text-white">
-          <span className="text-5xl sm:text-6xl font-black tabular-nums">
-            {formatTime(timeElapsed?.hours || 0)}
-          </span>
-          <span className="text-2xl sm:text-3xl font-bold animate-pulse">
-            :
-          </span>
-          <span className="text-5xl sm:text-6xl font-black tabular-nums">
-            {formatTime(timeElapsed?.minutes || 0)}
-          </span>
-          <span className="text-2xl sm:text-3xl font-bold animate-pulse">
-            :
-          </span>
-          <span className="text-5xl sm:text-6xl font-black tabular-nums">
-            {formatTime(timeElapsed?.seconds || 0)}
-          </span>
+      {/* Timers Side by Side */}
+      <div className="grid grid-cols-2 gap-4 mb-4">
+        {/* Fasting Duration */}
+        <div className="text-center">
+          <div className="flex justify-center items-baseline gap-0.5 text-amber-400">
+            <span className="text-3xl sm:text-4xl font-black tabular-nums">
+              {formatTime(timeElapsed?.hours || 0)}
+            </span>
+            <span className="text-xl font-bold">:</span>
+            <span className="text-3xl sm:text-4xl font-black tabular-nums">
+              {formatTime(timeElapsed?.minutes || 0)}
+            </span>
+            <span className="text-xl font-bold">:</span>
+            <span className="text-3xl sm:text-4xl font-black tabular-nums">
+              {formatTime(timeElapsed?.seconds || 0)}
+            </span>
+          </div>
+          <p className="text-amber-300 text-xs mt-1 font-medium">
+            ⏱️ Fasting Duration
+          </p>
         </div>
-        <p className="text-gray-500 text-xs mt-1">Fasting Duration</p>
+
+        {/* Next Log Countdown */}
+        <div className="text-center">
+          <div className="flex justify-center items-baseline gap-0.5 text-cyan-400">
+            <span className="text-3xl sm:text-4xl font-black tabular-nums">
+              {formatTime(countdownTime.hours)}
+            </span>
+            <span className="text-xl font-bold">:</span>
+            <span className="text-3xl sm:text-4xl font-black tabular-nums">
+              {formatTime(countdownTime.minutes)}
+            </span>
+            <span className="text-xl font-bold">:</span>
+            <span className="text-3xl sm:text-4xl font-black tabular-nums">
+              {formatTime(countdownTime.seconds)}
+            </span>
+          </div>
+          <p className="text-cyan-300 text-xs mt-1 font-medium">
+            📝 Next Log In
+          </p>
+        </div>
       </div>
 
-      {/* Next Log Countdown - Same size, contrasting color */}
-      <div className="text-center mb-6">
-        <div className="flex justify-center items-baseline gap-1 text-cyan-400">
-          <span className="text-5xl sm:text-6xl font-black tabular-nums">
-            {formatTime(countdownTime.hours)}
-          </span>
-          <span className="text-2xl sm:text-3xl font-bold animate-pulse">
-            :
-          </span>
-          <span className="text-5xl sm:text-6xl font-black tabular-nums">
-            {formatTime(countdownTime.minutes)}
-          </span>
-          <span className="text-2xl sm:text-3xl font-bold animate-pulse">
-            :
-          </span>
-          <span className="text-5xl sm:text-6xl font-black tabular-nums">
-            {formatTime(countdownTime.seconds)}
-          </span>
-        </div>
-        <p className="text-gray-500 text-xs mt-1">Next Log In</p>
-      </div>
-
+      {/* Progress Bar */}
       <div className="mb-4">
-        <div className="flex justify-between text-xs text-gray-400 mb-1">
-          <span>0h</span>
-          <span className="font-mono">{progress.toFixed(6)}%</span>
-          <span>{expectedDuration}h</span>
+        <div className="flex justify-between text-xs mb-1">
+          <span className="text-emerald-400 font-medium">0h</span>
+          <span className="font-mono text-pink-400 font-bold">
+            {progress.toFixed(6)}%
+          </span>
+          <span className="text-emerald-400 font-medium">
+            {expectedDuration}h
+          </span>
         </div>
-        <div className="h-3 bg-gray-700 rounded-full overflow-hidden">
+        <div className="h-4 bg-gray-900/50 rounded-full overflow-hidden border border-white/10">
           <div
-            className="h-full rounded-full"
-            style={{
-              width: `${progress}%`,
-              backgroundColor: currentFast.color.bg,
-            }}
+            className="h-full rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500"
+            style={{ width: `${progress}%` }}
           />
         </div>
       </div>
 
       <div className="bg-white/5 rounded-lg p-3 text-center">
-        <p className="text-sm text-gray-300">{getMotivationalMessage()}</p>
+        <p className="text-sm text-yellow-300">{getMotivationalMessage()}</p>
       </div>
 
       <div className="grid grid-cols-5 gap-2 mt-4 text-center">
         <div className="bg-white/5 rounded-lg p-2">
-          <p className="text-xs text-gray-400">Total Hours</p>
+          <p className="text-xs text-rose-300 font-medium">Total Hours</p>
           <p className="text-lg font-bold text-white">
             {timeElapsed?.hours || 0}
           </p>
         </div>
         <div className="bg-white/5 rounded-lg p-2">
-          <p className="text-xs text-gray-400">Full Days</p>
+          <p className="text-xs text-amber-300 font-medium">Full Days</p>
           <p className="text-lg font-bold text-amber-400">
             {timeElapsed?.daysCompleted || 0}
           </p>
         </div>
         <div className="bg-white/5 rounded-lg p-2">
-          <p className="text-xs text-gray-400">Current Day</p>
+          <p className="text-xs text-purple-300 font-medium">Current Day</p>
           <p className="text-lg font-bold text-purple-400">
             {timeElapsed?.currentDayHours || 0}h
           </p>
         </div>
         <div className="bg-white/5 rounded-lg p-2">
-          <p className="text-xs text-gray-400">Hours Left</p>
+          <p className="text-xs text-green-300 font-medium">Hours Left</p>
           <p className="text-lg font-bold text-green-400">
             {Math.max(0, expectedDuration - (timeElapsed?.hours || 0))}
           </p>
         </div>
         <div className="bg-white/5 rounded-lg p-2">
-          <p className="text-xs text-gray-400">Log Time</p>
+          <p className="text-xs text-cyan-300 font-medium">Log Time</p>
           <p className="text-lg font-bold text-cyan-400">9PM</p>
         </div>
       </div>
