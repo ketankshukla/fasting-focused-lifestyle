@@ -12,8 +12,21 @@ import {
   Area,
   BarChart,
   Bar,
-  Label,
+  PieChart,
+  Pie,
+  Cell,
+  RadialBarChart,
+  RadialBar,
 } from "recharts";
+
+const COLORS = [
+  "#10B981",
+  "#F59E0B",
+  "#EC4899",
+  "#8B5CF6",
+  "#06B6D4",
+  "#EF4444",
+];
 
 const ProgressCharts = ({ dailyLogs, profile }) => {
   const [chartType, setChartType] = useState("weight");
@@ -29,6 +42,7 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
     ([_, log]) => log.weight
   ).length;
 
+  // Filter to only include entries with actual data
   const chartData = Object.entries(dailyLogs)
     .filter(([_, log]) => log.weight || log.waist || log.energy || log.mood)
     .sort(([a], [b]) => a.localeCompare(b))
@@ -50,6 +64,38 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
       ketones: log.ketones || null,
       waterIntake: log.waterIntake || null,
     }));
+
+  // Data for pie/radial charts - progress overview
+  const progressData = [
+    {
+      name: "Lost",
+      value:
+        profile.startingWeight -
+        (chartData[chartData.length - 1]?.weight || profile.startingWeight),
+      fill: "#10B981",
+    },
+    {
+      name: "Remaining",
+      value: Math.max(
+        0,
+        (chartData[chartData.length - 1]?.weight || profile.startingWeight) -
+          profile.goalWeight
+      ),
+      fill: "#374151",
+    },
+  ];
+
+  // Average wellness data for pie chart
+  const avgEnergy =
+    chartData.length > 0
+      ? chartData.reduce((sum, d) => sum + (d.energy || 0), 0) /
+          chartData.filter((d) => d.energy).length || 0
+      : 0;
+  const avgMood =
+    chartData.length > 0
+      ? chartData.reduce((sum, d) => sum + (d.mood || 0), 0) /
+          chartData.filter((d) => d.mood).length || 0
+      : 0;
 
   if (chartData.length < 1) {
     return (
@@ -104,8 +150,8 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
     <div className="bg-white/10 backdrop-blur rounded-2xl p-4 sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
         <h3 className="text-lg font-bold text-white">📊 Progress Charts</h3>
-        <div className="flex gap-2">
-          {["weight", "waist", "wellness", "vitals", "sleep"].map((type) => (
+        <div className="flex flex-wrap gap-2">
+          {["weight", "progress", "wellness", "compare"].map((type) => (
             <button
               key={type}
               onClick={() => setChartType(type)}
@@ -117,13 +163,11 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
             >
               {type === "weight"
                 ? "⚖️ Weight"
-                : type === "waist"
-                ? "📏 Waist"
+                : type === "progress"
+                ? "🎯 Progress"
                 : type === "wellness"
                 ? "💚 Wellness"
-                : type === "vitals"
-                ? "🩺 Vitals"
-                : "😴 Sleep"}
+                : "📊 Compare"}
             </button>
           ))}
         </div>
@@ -132,268 +176,172 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
       <div className="h-64 sm:h-80">
         <ResponsiveContainer width="100%" height="100%">
           {chartType === "weight" ? (
-            <AreaChart data={chartData}>
-              <defs>
-                <linearGradient id="weightGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#10B981" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#10B981" stopOpacity={0.1} />
-                </linearGradient>
-              </defs>
+            // BAR CHART for weight
+            <BarChart data={chartData} margin={{ bottom: 20, left: 10 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-              <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12}>
-                <Label
-                  value="Date"
-                  offset={-5}
-                  position="insideBottom"
-                  fill="#9CA3AF"
-                  fontSize={11}
-                />
-              </XAxis>
+              <XAxis
+                dataKey="date"
+                stroke="#9CA3AF"
+                fontSize={12}
+                tick={{ fill: "#9CA3AF" }}
+                interval={0}
+                label={{
+                  value: "Date",
+                  position: "insideBottom",
+                  offset: -10,
+                  fill: "#9CA3AF",
+                  fontSize: 11,
+                }}
+              />
               <YAxis
                 stroke="#9CA3AF"
                 fontSize={12}
                 domain={[profile.goalWeight - 10, "dataMax + 5"]}
-                tickFormatter={(val) => `${val}`}
-              >
-                <Label
-                  value="Weight (lbs)"
-                  angle={-90}
-                  position="insideLeft"
-                  fill="#9CA3AF"
-                  fontSize={11}
-                  style={{ textAnchor: "middle" }}
-                />
-              </YAxis>
+                tick={{ fill: "#9CA3AF" }}
+                label={{
+                  value: "Weight (lbs)",
+                  angle: -90,
+                  position: "insideLeft",
+                  fill: "#9CA3AF",
+                  fontSize: 11,
+                }}
+              />
               <Tooltip content={<CustomTooltip />} />
-              <Area
+              <Bar
+                dataKey="weight"
+                name="Weight"
+                fill="#10B981"
+                radius={[4, 4, 0, 0]}
+              />
+            </BarChart>
+          ) : chartType === "progress" ? (
+            // PIE CHART for progress overview
+            <PieChart>
+              <Pie
+                data={progressData}
+                cx="50%"
+                cy="50%"
+                innerRadius={60}
+                outerRadius={100}
+                paddingAngle={2}
+                dataKey="value"
+                label={({ name, value }) => `${name}: ${value.toFixed(1)} lbs`}
+                labelLine={{ stroke: "#9CA3AF" }}
+              >
+                {progressData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.fill} />
+                ))}
+              </Pie>
+              <Tooltip
+                formatter={(value) => [`${value.toFixed(1)} lbs`, ""]}
+                contentStyle={{
+                  backgroundColor: "#1F2937",
+                  border: "1px solid #374151",
+                  borderRadius: "8px",
+                }}
+                labelStyle={{ color: "white" }}
+              />
+              <Legend
+                verticalAlign="bottom"
+                formatter={(value) => (
+                  <span style={{ color: "#9CA3AF" }}>{value}</span>
+                )}
+              />
+            </PieChart>
+          ) : chartType === "wellness" ? (
+            // BAR CHART for wellness (energy & mood)
+            <BarChart data={chartData} margin={{ bottom: 20, left: 10 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+              <XAxis
+                dataKey="date"
+                stroke="#9CA3AF"
+                fontSize={12}
+                tick={{ fill: "#9CA3AF" }}
+                interval={0}
+                label={{
+                  value: "Date",
+                  position: "insideBottom",
+                  offset: -10,
+                  fill: "#9CA3AF",
+                  fontSize: 11,
+                }}
+              />
+              <YAxis
+                stroke="#9CA3AF"
+                fontSize={12}
+                domain={[0, 10]}
+                tick={{ fill: "#9CA3AF" }}
+                label={{
+                  value: "Rating (1-10)",
+                  angle: -90,
+                  position: "insideLeft",
+                  fill: "#9CA3AF",
+                  fontSize: 11,
+                }}
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend />
+              <Bar
+                dataKey="energy"
+                name="Energy"
+                fill="#F59E0B"
+                radius={[4, 4, 0, 0]}
+              />
+              <Bar
+                dataKey="mood"
+                name="Mood"
+                fill="#EC4899"
+                radius={[4, 4, 0, 0]}
+              />
+            </BarChart>
+          ) : (
+            // LINE CHART for comparison (weight trend)
+            <LineChart data={chartData} margin={{ bottom: 20, left: 10 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+              <XAxis
+                dataKey="date"
+                stroke="#9CA3AF"
+                fontSize={12}
+                tick={{ fill: "#9CA3AF" }}
+                interval={0}
+                label={{
+                  value: "Date",
+                  position: "insideBottom",
+                  offset: -10,
+                  fill: "#9CA3AF",
+                  fontSize: 11,
+                }}
+              />
+              <YAxis
+                stroke="#9CA3AF"
+                fontSize={12}
+                tick={{ fill: "#9CA3AF" }}
+                label={{
+                  value: "Value",
+                  angle: -90,
+                  position: "insideLeft",
+                  fill: "#9CA3AF",
+                  fontSize: 11,
+                }}
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend />
+              <Line
                 type="monotone"
                 dataKey="weight"
                 name="Weight"
                 stroke="#10B981"
-                fill="url(#weightGradient)"
-                strokeWidth={2}
-                dot={{ fill: "#10B981", strokeWidth: 2, r: 4 }}
-                activeDot={{ r: 6, fill: "#10B981" }}
+                strokeWidth={3}
+                dot={{ fill: "#10B981", strokeWidth: 2, r: 6 }}
                 connectNulls
               />
-              {/* Goal line */}
               <Line
-                type="monotone"
-                dataKey={() => profile.goalWeight}
-                name="Goal"
-                stroke="#F59E0B"
-                strokeDasharray="5 5"
-                strokeWidth={2}
-                dot={false}
-              />
-            </AreaChart>
-          ) : chartType === "waist" ? (
-            <AreaChart data={chartData}>
-              <defs>
-                <linearGradient id="waistGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#8B5CF6" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#8B5CF6" stopOpacity={0.1} />
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-              <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12}>
-                <Label
-                  value="Date"
-                  offset={-5}
-                  position="insideBottom"
-                  fill="#9CA3AF"
-                  fontSize={11}
-                />
-              </XAxis>
-              <YAxis
-                stroke="#9CA3AF"
-                fontSize={12}
-                domain={[profile.goalWaist - 2, "dataMax + 2"]}
-              >
-                <Label
-                  value="Waist (inches)"
-                  angle={-90}
-                  position="insideLeft"
-                  fill="#9CA3AF"
-                  fontSize={11}
-                  style={{ textAnchor: "middle" }}
-                />
-              </YAxis>
-              <Tooltip content={<CustomTooltip />} />
-              <Area
                 type="monotone"
                 dataKey="waist"
                 name="Waist"
                 stroke="#8B5CF6"
-                fill="url(#waistGradient)"
-                strokeWidth={2}
-                dot={{ fill: "#8B5CF6", strokeWidth: 2, r: 4 }}
-                activeDot={{ r: 6, fill: "#8B5CF6" }}
-                connectNulls
-              />
-              <Line
-                type="monotone"
-                dataKey={() => profile.goalWaist}
-                name="Goal"
-                stroke="#F59E0B"
-                strokeDasharray="5 5"
-                strokeWidth={2}
-                dot={false}
-              />
-            </AreaChart>
-          ) : chartType === "wellness" ? (
-            <LineChart data={chartData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-              <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12}>
-                <Label
-                  value="Date"
-                  offset={-5}
-                  position="insideBottom"
-                  fill="#9CA3AF"
-                  fontSize={11}
-                />
-              </XAxis>
-              <YAxis stroke="#9CA3AF" fontSize={12} domain={[0, 10]}>
-                <Label
-                  value="Rating (1-10)"
-                  angle={-90}
-                  position="insideLeft"
-                  fill="#9CA3AF"
-                  fontSize={11}
-                  style={{ textAnchor: "middle" }}
-                />
-              </YAxis>
-              <Tooltip content={<CustomTooltip />} />
-              <Legend />
-              <Line
-                type="monotone"
-                dataKey="energy"
-                name="Energy"
-                stroke="#F59E0B"
-                strokeWidth={2}
-                dot={{ fill: "#F59E0B", strokeWidth: 2, r: 4 }}
-                connectNulls
-              />
-              <Line
-                type="monotone"
-                dataKey="mood"
-                name="Mood"
-                stroke="#EC4899"
-                strokeWidth={2}
-                dot={{ fill: "#EC4899", strokeWidth: 2, r: 4 }}
-                connectNulls
-              />
-            </LineChart>
-          ) : chartType === "vitals" ? (
-            <LineChart data={chartData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-              <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12}>
-                <Label
-                  value="Date"
-                  offset={-5}
-                  position="insideBottom"
-                  fill="#9CA3AF"
-                  fontSize={11}
-                />
-              </XAxis>
-              <YAxis stroke="#9CA3AF" fontSize={12}>
-                <Label
-                  value="Value"
-                  angle={-90}
-                  position="insideLeft"
-                  fill="#9CA3AF"
-                  fontSize={11}
-                  style={{ textAnchor: "middle" }}
-                />
-              </YAxis>
-              <Tooltip content={<CustomTooltip />} />
-              <Legend />
-              <Line
-                type="monotone"
-                dataKey="bloodPressureSys"
-                name="BP Systolic"
-                stroke="#EF4444"
-                strokeWidth={2}
-                dot={{ fill: "#EF4444", strokeWidth: 2, r: 4 }}
-                connectNulls
-              />
-              <Line
-                type="monotone"
-                dataKey="bloodPressureDia"
-                name="BP Diastolic"
-                stroke="#F97316"
-                strokeWidth={2}
-                dot={{ fill: "#F97316", strokeWidth: 2, r: 4 }}
-                connectNulls
-              />
-              <Line
-                type="monotone"
-                dataKey="glucose"
-                name="Glucose"
-                stroke="#06B6D4"
-                strokeWidth={2}
-                dot={{ fill: "#06B6D4", strokeWidth: 2, r: 4 }}
-                connectNulls
-              />
-              <Line
-                type="monotone"
-                dataKey="ketones"
-                name="Ketones"
-                stroke="#A855F7"
-                strokeWidth={2}
-                dot={{ fill: "#A855F7", strokeWidth: 2, r: 4 }}
-                connectNulls
-              />
-            </LineChart>
-          ) : (
-            <LineChart data={chartData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-              <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12}>
-                <Label
-                  value="Date"
-                  offset={-5}
-                  position="insideBottom"
-                  fill="#9CA3AF"
-                  fontSize={11}
-                />
-              </XAxis>
-              <YAxis stroke="#9CA3AF" fontSize={12}>
-                <Label
-                  value="Hours / Rating"
-                  angle={-90}
-                  position="insideLeft"
-                  fill="#9CA3AF"
-                  fontSize={11}
-                  style={{ textAnchor: "middle" }}
-                />
-              </YAxis>
-              <Tooltip content={<CustomTooltip />} />
-              <Legend />
-              <Line
-                type="monotone"
-                dataKey="sleepHours"
-                name="Sleep Hours"
-                stroke="#3B82F6"
-                strokeWidth={2}
-                dot={{ fill: "#3B82F6", strokeWidth: 2, r: 4 }}
-                connectNulls
-              />
-              <Line
-                type="monotone"
-                dataKey="sleepQuality"
-                name="Sleep Quality"
-                stroke="#8B5CF6"
-                strokeWidth={2}
-                dot={{ fill: "#8B5CF6", strokeWidth: 2, r: 4 }}
-                connectNulls
-              />
-              <Line
-                type="monotone"
-                dataKey="waterIntake"
-                name="Water (oz)"
-                stroke="#06B6D4"
-                strokeWidth={2}
-                dot={{ fill: "#06B6D4", strokeWidth: 2, r: 4 }}
+                strokeWidth={3}
+                dot={{ fill: "#8B5CF6", strokeWidth: 2, r: 6 }}
                 connectNulls
               />
             </LineChart>
@@ -401,15 +349,26 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
         </ResponsiveContainer>
       </div>
 
+      {/* Chart description */}
+      <div className="mt-2 text-center text-xs text-gray-400">
+        {chartType === "weight" && "📊 Daily weight measurements (bar chart)"}
+        {chartType === "progress" &&
+          "🎯 Weight lost vs. remaining to goal (pie chart)"}
+        {chartType === "wellness" &&
+          "💚 Daily energy & mood levels (bar chart)"}
+        {chartType === "compare" &&
+          "📈 Weight & waist trends over time (line chart)"}
+      </div>
+
       <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
         <div className="bg-white/5 rounded-lg p-2">
-          <p className="text-xs text-gray-400">First Log</p>
+          <p className="text-xs text-gray-400">Start Weight</p>
           <p className="text-sm font-bold text-white">
-            {chartData[0]?.weight ? `${chartData[0].weight} lbs` : "--"}
+            {profile.startingWeight} lbs
           </p>
         </div>
         <div className="bg-white/5 rounded-lg p-2">
-          <p className="text-xs text-gray-400">Latest</p>
+          <p className="text-xs text-gray-400">Current</p>
           <p className="text-sm font-bold text-green-400">
             {chartData[chartData.length - 1]?.weight
               ? `${chartData[chartData.length - 1].weight} lbs`
@@ -417,11 +376,12 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
           </p>
         </div>
         <div className="bg-white/5 rounded-lg p-2">
-          <p className="text-xs text-gray-400">Change</p>
+          <p className="text-xs text-gray-400">Lost So Far</p>
           <p className="text-sm font-bold text-emerald-400">
-            {chartData[0]?.weight && chartData[chartData.length - 1]?.weight
+            {chartData[chartData.length - 1]?.weight
               ? `${(
-                  chartData[0].weight - chartData[chartData.length - 1].weight
+                  profile.startingWeight -
+                  chartData[chartData.length - 1].weight
                 ).toFixed(1)} lbs`
               : "--"}
           </p>
