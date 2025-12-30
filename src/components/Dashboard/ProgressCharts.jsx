@@ -10,6 +10,9 @@ import {
   Legend,
   AreaChart,
   Area,
+  BarChart,
+  Bar,
+  Label,
 } from "recharts";
 
 const ProgressCharts = ({ dailyLogs, profile }) => {
@@ -20,6 +23,11 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
     const [year, month, day] = dateStr.split("-").map(Number);
     return new Date(year, month - 1, day);
   };
+
+  // Count only days that have actual weight data logged
+  const daysWithWeight = Object.entries(dailyLogs).filter(
+    ([_, log]) => log.weight
+  ).length;
 
   const chartData = Object.entries(dailyLogs)
     .filter(([_, log]) => log.weight || log.waist || log.energy || log.mood)
@@ -57,6 +65,24 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
     );
   }
 
+  const getUnit = (name) => {
+    const units = {
+      Weight: " lbs",
+      Waist: " inches",
+      Energy: "/10",
+      Mood: "/10",
+      "BP Systolic": " mmHg",
+      "BP Diastolic": " mmHg",
+      Glucose: " mg/dL",
+      Ketones: " mmol/L",
+      "Sleep Hours": " hrs",
+      "Sleep Quality": "/10",
+      "Water (oz)": " oz",
+      Goal: " lbs",
+    };
+    return units[name] || "";
+  };
+
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
@@ -65,11 +91,7 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
           {payload.map((entry, index) => (
             <p key={index} style={{ color: entry.color }} className="text-sm">
               {entry.name}: {entry.value}
-              {entry.name === "Weight"
-                ? " lbs"
-                : entry.name === "Waist"
-                ? '"'
-                : "/10"}
+              {getUnit(entry.name)}
             </p>
           ))}
         </div>
@@ -118,13 +140,30 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-              <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12} />
+              <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12}>
+                <Label
+                  value="Date"
+                  offset={-5}
+                  position="insideBottom"
+                  fill="#9CA3AF"
+                  fontSize={11}
+                />
+              </XAxis>
               <YAxis
                 stroke="#9CA3AF"
                 fontSize={12}
                 domain={[profile.goalWeight - 10, "dataMax + 5"]}
                 tickFormatter={(val) => `${val}`}
-              />
+              >
+                <Label
+                  value="Weight (lbs)"
+                  angle={-90}
+                  position="insideLeft"
+                  fill="#9CA3AF"
+                  fontSize={11}
+                  style={{ textAnchor: "middle" }}
+                />
+              </YAxis>
               <Tooltip content={<CustomTooltip />} />
               <Area
                 type="monotone"
@@ -157,12 +196,29 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-              <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12} />
+              <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12}>
+                <Label
+                  value="Date"
+                  offset={-5}
+                  position="insideBottom"
+                  fill="#9CA3AF"
+                  fontSize={11}
+                />
+              </XAxis>
               <YAxis
                 stroke="#9CA3AF"
                 fontSize={12}
                 domain={[profile.goalWaist - 2, "dataMax + 2"]}
-              />
+              >
+                <Label
+                  value="Waist (inches)"
+                  angle={-90}
+                  position="insideLeft"
+                  fill="#9CA3AF"
+                  fontSize={11}
+                  style={{ textAnchor: "middle" }}
+                />
+              </YAxis>
               <Tooltip content={<CustomTooltip />} />
               <Area
                 type="monotone"
@@ -188,8 +244,25 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
           ) : chartType === "wellness" ? (
             <LineChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-              <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12} />
-              <YAxis stroke="#9CA3AF" fontSize={12} domain={[0, 10]} />
+              <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12}>
+                <Label
+                  value="Date"
+                  offset={-5}
+                  position="insideBottom"
+                  fill="#9CA3AF"
+                  fontSize={11}
+                />
+              </XAxis>
+              <YAxis stroke="#9CA3AF" fontSize={12} domain={[0, 10]}>
+                <Label
+                  value="Rating (1-10)"
+                  angle={-90}
+                  position="insideLeft"
+                  fill="#9CA3AF"
+                  fontSize={11}
+                  style={{ textAnchor: "middle" }}
+                />
+              </YAxis>
               <Tooltip content={<CustomTooltip />} />
               <Legend />
               <Line
@@ -214,8 +287,25 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
           ) : chartType === "vitals" ? (
             <LineChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-              <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12} />
-              <YAxis stroke="#9CA3AF" fontSize={12} />
+              <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12}>
+                <Label
+                  value="Date"
+                  offset={-5}
+                  position="insideBottom"
+                  fill="#9CA3AF"
+                  fontSize={11}
+                />
+              </XAxis>
+              <YAxis stroke="#9CA3AF" fontSize={12}>
+                <Label
+                  value="Value"
+                  angle={-90}
+                  position="insideLeft"
+                  fill="#9CA3AF"
+                  fontSize={11}
+                  style={{ textAnchor: "middle" }}
+                />
+              </YAxis>
               <Tooltip content={<CustomTooltip />} />
               <Legend />
               <Line
@@ -258,8 +348,25 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
           ) : (
             <LineChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-              <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12} />
-              <YAxis stroke="#9CA3AF" fontSize={12} />
+              <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12}>
+                <Label
+                  value="Date"
+                  offset={-5}
+                  position="insideBottom"
+                  fill="#9CA3AF"
+                  fontSize={11}
+                />
+              </XAxis>
+              <YAxis stroke="#9CA3AF" fontSize={12}>
+                <Label
+                  value="Hours / Rating"
+                  angle={-90}
+                  position="insideLeft"
+                  fill="#9CA3AF"
+                  fontSize={11}
+                  style={{ textAnchor: "middle" }}
+                />
+              </YAxis>
               <Tooltip content={<CustomTooltip />} />
               <Legend />
               <Line
@@ -321,7 +428,7 @@ const ProgressCharts = ({ dailyLogs, profile }) => {
         </div>
         <div className="bg-white/5 rounded-lg p-2">
           <p className="text-xs text-gray-400">Days Logged</p>
-          <p className="text-sm font-bold text-amber-400">{chartData.length}</p>
+          <p className="text-sm font-bold text-amber-400">{daysWithWeight}</p>
         </div>
       </div>
     </div>

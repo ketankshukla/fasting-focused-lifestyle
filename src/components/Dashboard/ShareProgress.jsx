@@ -35,32 +35,61 @@ ${stats.bmi ? `📐 BMI: ${stats.bmi}` : ""}
 
     const ctx = canvas.getContext("2d");
     canvas.width = 600;
-    canvas.height = 400;
+    canvas.height = 500;
 
-    const gradient = ctx.createLinearGradient(0, 0, 600, 400);
+    const gradient = ctx.createLinearGradient(0, 0, 600, 500);
     gradient.addColorStop(0, "#1e1b4b");
     gradient.addColorStop(0.5, "#581c87");
     gradient.addColorStop(1, "#1e1b4b");
     ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, 600, 400);
+    ctx.fillRect(0, 0, 600, 500);
 
     ctx.fillStyle = "#fbbf24";
-    ctx.font = "bold 32px system-ui";
+    ctx.font = "bold 36px system-ui";
     ctx.textAlign = "center";
-    ctx.fillText("🔥 Fasting Journey 🔥", 300, 50);
+    ctx.fillText("🔥 Fasting Journey Update 🔥", 300, 50);
 
     ctx.fillStyle = "white";
-    ctx.font = "bold 48px system-ui";
-    ctx.fillText(`${stats.lostSoFar.toFixed(1)} lbs LOST`, 300, 120);
+    ctx.font = "bold 24px system-ui";
+    ctx.fillText("📊 Progress Report", 300, 100);
 
+    ctx.textAlign = "left";
+    ctx.font = "22px system-ui";
+    let y = 150;
+    const lineHeight = 40;
+
+    ctx.fillStyle = "#10b981";
+    ctx.fillText(`⚖️ Current: ${stats.currentWeight} lbs`, 80, y);
+    y += lineHeight;
+
+    ctx.fillStyle = "#f59e0b";
+    ctx.fillText(`📉 Lost: ${stats.lostSoFar.toFixed(1)} lbs`, 80, y);
+    y += lineHeight;
+
+    ctx.fillStyle = "#ec4899";
+    ctx.fillText(`🎯 Progress: ${stats.progressPercent.toFixed(1)}%`, 80, y);
+    y += lineHeight;
+
+    if (stats.bmi) {
+      ctx.fillStyle = "#a78bfa";
+      ctx.fillText(`📐 BMI: ${stats.bmi}`, 80, y);
+      y += lineHeight;
+    }
+
+    y += 20;
+    ctx.fillStyle = "#22c55e";
+    ctx.font = "bold 26px system-ui";
+    ctx.textAlign = "center";
+    ctx.fillText(`💪 On my way to ${profile.goalWeight} lbs!`, 300, y);
+
+    y += 50;
     const barX = 50;
-    const barY = 160;
     const barWidth = 500;
     const barHeight = 30;
 
     ctx.fillStyle = "#374151";
     ctx.beginPath();
-    ctx.roundRect(barX, barY, barWidth, barHeight, 15);
+    ctx.roundRect(barX, y, barWidth, barHeight, 15);
     ctx.fill();
 
     const progressGradient = ctx.createLinearGradient(
@@ -75,7 +104,7 @@ ${stats.bmi ? `📐 BMI: ${stats.bmi}` : ""}
     ctx.beginPath();
     ctx.roundRect(
       barX,
-      barY,
+      y,
       barWidth * (stats.progressPercent / 100),
       barHeight,
       15
@@ -83,26 +112,26 @@ ${stats.bmi ? `📐 BMI: ${stats.bmi}` : ""}
     ctx.fill();
 
     ctx.fillStyle = "white";
-    ctx.font = "bold 20px system-ui";
-    ctx.fillText(`${stats.progressPercent.toFixed(1)}% to goal`, 300, 230);
-
-    ctx.fillStyle = "#9ca3af";
-    ctx.font = "18px system-ui";
+    ctx.font = "bold 14px system-ui";
+    ctx.textAlign = "center";
     ctx.fillText(
-      `${profile.startingWeight} → ${stats.currentWeight} → ${profile.goalWeight} lbs`,
-      300,
-      270
+      `${stats.progressPercent.toFixed(1)}%`,
+      barX + (barWidth * (stats.progressPercent / 100)) / 2,
+      y + 21
     );
 
-    if (stats.bmi) {
-      ctx.fillStyle = "#a78bfa";
-      ctx.font = "bold 24px system-ui";
-      ctx.fillText(`BMI: ${stats.bmi}`, 300, 320);
-    }
+    y += 60;
+    ctx.fillStyle = "#9ca3af";
+    ctx.font = "16px system-ui";
+    ctx.fillText(
+      `${profile.startingWeight} lbs → ${stats.currentWeight} lbs → ${profile.goalWeight} lbs (goal)`,
+      300,
+      y
+    );
 
     ctx.fillStyle = "#6b7280";
     ctx.font = "14px system-ui";
-    ctx.fillText("fasting.ketanshukla.com", 300, 380);
+    ctx.fillText("#FastingJourney #HealthGoals #WeightLoss", 300, 470);
 
     return canvas.toDataURL("image/png");
   };
