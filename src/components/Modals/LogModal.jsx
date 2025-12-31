@@ -43,12 +43,12 @@ const LogModal = ({ selectedDay, dailyLogs, onSave, onClose }) => {
       energy: logForm.energy,
       mood: logForm.mood,
       bloodPressureSys: logForm.bloodPressureSys
-        ? parseInt(logForm.bloodPressureSys)
+        ? parseFloat(logForm.bloodPressureSys)
         : null,
       bloodPressureDia: logForm.bloodPressureDia
-        ? parseInt(logForm.bloodPressureDia)
+        ? parseFloat(logForm.bloodPressureDia)
         : null,
-      glucose: logForm.glucose ? parseInt(logForm.glucose) : null,
+      glucose: logForm.glucose ? parseFloat(logForm.glucose) : null,
       sleepHours: logForm.sleepHours ? parseFloat(logForm.sleepHours) : null,
       sleepQuality: logForm.sleepQuality,
       ketones: logForm.ketones ? parseFloat(logForm.ketones) : null,
@@ -139,13 +139,13 @@ const LogModal = ({ selectedDay, dailyLogs, onSave, onClose }) => {
                   </label>
                   <input
                     type="number"
-                    step="0.1"
+                    step="0.01"
                     value={logForm.weight}
                     onChange={(e) =>
                       setLogForm({ ...logForm, weight: e.target.value })
                     }
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-                    placeholder="215.5"
+                    placeholder="215.50"
                   />
                 </div>
                 <div>
@@ -154,13 +154,13 @@ const LogModal = ({ selectedDay, dailyLogs, onSave, onClose }) => {
                   </label>
                   <input
                     type="number"
-                    step="0.1"
+                    step="0.01"
                     value={logForm.waist}
                     onChange={(e) =>
                       setLogForm({ ...logForm, waist: e.target.value })
                     }
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-                    placeholder="40.5"
+                    placeholder="40.50"
                   />
                 </div>
               </div>
@@ -172,6 +172,7 @@ const LogModal = ({ selectedDay, dailyLogs, onSave, onClose }) => {
                   </label>
                   <input
                     type="number"
+                    step="0.01"
                     value={logForm.bloodPressureSys}
                     onChange={(e) =>
                       setLogForm({
@@ -180,7 +181,7 @@ const LogModal = ({ selectedDay, dailyLogs, onSave, onClose }) => {
                       })
                     }
                     className="w-full px-2 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-                    placeholder="120"
+                    placeholder="120.00"
                   />
                 </div>
                 <div>
@@ -189,6 +190,7 @@ const LogModal = ({ selectedDay, dailyLogs, onSave, onClose }) => {
                   </label>
                   <input
                     type="number"
+                    step="0.01"
                     value={logForm.bloodPressureDia}
                     onChange={(e) =>
                       setLogForm({
@@ -197,7 +199,7 @@ const LogModal = ({ selectedDay, dailyLogs, onSave, onClose }) => {
                       })
                     }
                     className="w-full px-2 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-                    placeholder="80"
+                    placeholder="80.00"
                   />
                 </div>
                 <div>
@@ -206,12 +208,13 @@ const LogModal = ({ selectedDay, dailyLogs, onSave, onClose }) => {
                   </label>
                   <input
                     type="number"
+                    step="0.01"
                     value={logForm.glucose}
                     onChange={(e) =>
                       setLogForm({ ...logForm, glucose: e.target.value })
                     }
                     className="w-full px-2 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-                    placeholder="95"
+                    placeholder="95.00"
                   />
                 </div>
               </div>
@@ -223,14 +226,14 @@ const LogModal = ({ selectedDay, dailyLogs, onSave, onClose }) => {
                   </label>
                   <input
                     type="number"
-                    step="0.1"
+                    step="0.01"
                     min="0"
                     value={logForm.ketones}
                     onChange={(e) =>
                       setLogForm({ ...logForm, ketones: e.target.value })
                     }
                     className="w-full px-2 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-                    placeholder="1.5"
+                    placeholder="1.50"
                   />
                 </div>
                 <div>
@@ -239,14 +242,14 @@ const LogModal = ({ selectedDay, dailyLogs, onSave, onClose }) => {
                   </label>
                   <input
                     type="number"
-                    step="1"
+                    step="0.01"
                     min="0"
                     value={logForm.waterIntake}
                     onChange={(e) =>
                       setLogForm({ ...logForm, waterIntake: e.target.value })
                     }
                     className="w-full px-2 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-                    placeholder="64"
+                    placeholder="64.00"
                   />
                 </div>
               </div>
@@ -258,7 +261,7 @@ const LogModal = ({ selectedDay, dailyLogs, onSave, onClose }) => {
                   </label>
                   <input
                     type="number"
-                    step="0.5"
+                    step="0.01"
                     min="0"
                     max="24"
                     value={logForm.sleepHours}
@@ -266,7 +269,7 @@ const LogModal = ({ selectedDay, dailyLogs, onSave, onClose }) => {
                       setLogForm({ ...logForm, sleepHours: e.target.value })
                     }
                     className="w-full px-2 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-                    placeholder="7.5"
+                    placeholder="7.50"
                   />
                 </div>
                 <div>

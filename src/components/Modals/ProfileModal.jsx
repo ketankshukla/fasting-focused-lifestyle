@@ -28,11 +28,12 @@ const ProfileModal = ({ profile, onSave, onClose }) => {
             </label>
             <input
               type="number"
+              step="0.01"
               value={tempProfile.height}
               onChange={(e) =>
                 setTempProfile({
                   ...tempProfile,
-                  height: parseInt(e.target.value) || 0,
+                  height: parseFloat(e.target.value) || 0,
                 })
               }
               className="w-full px-3 py-2 border border-gray-300 rounded-lg"
@@ -49,11 +50,12 @@ const ProfileModal = ({ profile, onSave, onClose }) => {
               </label>
               <input
                 type="number"
+                step="0.01"
                 value={tempProfile.startingWeight}
                 onChange={(e) =>
                   setTempProfile({
                     ...tempProfile,
-                    startingWeight: parseInt(e.target.value) || 0,
+                    startingWeight: parseFloat(e.target.value) || 0,
                   })
                 }
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg"
@@ -65,11 +67,12 @@ const ProfileModal = ({ profile, onSave, onClose }) => {
               </label>
               <input
                 type="number"
+                step="0.01"
                 value={tempProfile.goalWeight}
                 onChange={(e) =>
                   setTempProfile({
                     ...tempProfile,
-                    goalWeight: parseInt(e.target.value) || 0,
+                    goalWeight: parseFloat(e.target.value) || 0,
                   })
                 }
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg"
@@ -84,11 +87,12 @@ const ProfileModal = ({ profile, onSave, onClose }) => {
               </label>
               <input
                 type="number"
+                step="0.01"
                 value={tempProfile.startingWaist}
                 onChange={(e) =>
                   setTempProfile({
                     ...tempProfile,
-                    startingWaist: parseInt(e.target.value) || 0,
+                    startingWaist: parseFloat(e.target.value) || 0,
                   })
                 }
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg"
@@ -100,11 +104,12 @@ const ProfileModal = ({ profile, onSave, onClose }) => {
               </label>
               <input
                 type="number"
+                step="0.01"
                 value={tempProfile.goalWaist}
                 onChange={(e) =>
                   setTempProfile({
                     ...tempProfile,
-                    goalWaist: parseInt(e.target.value) || 0,
+                    goalWaist: parseFloat(e.target.value) || 0,
                   })
                 }
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg"
