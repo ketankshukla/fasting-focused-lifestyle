@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 
 const JournalDiary = ({ dailyLogs }) => {
-  const [showModal, setShowModal] = useState(false);
-  const [selectedEntry, setSelectedEntry] = useState(null);
   const [filterTag, setFilterTag] = useState("all");
 
   const journalEntries = Object.entries(dailyLogs)
@@ -89,96 +87,45 @@ const JournalDiary = ({ dailyLogs }) => {
             ))}
           </div>
 
-          <div className="space-y-3 max-h-64 overflow-y-auto pr-2">
-            {filteredEntries.slice(0, 10).map((entry) => (
-              <div
-                key={entry.date}
-                onClick={() => {
-                  setSelectedEntry(entry);
-                  setShowModal(true);
-                }}
-                className="bg-white/5 rounded-lg p-3 cursor-pointer hover:bg-white/10 transition-all"
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs text-gray-400">
-                    {formatDate(entry.date)}
+          <div className="space-y-4">
+            {filteredEntries.map((entry) => (
+              <div key={entry.date} className="bg-white/5 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-sm font-medium text-white">
+                    📅 {formatDate(entry.date)}
                   </span>
-                  <div className="flex items-center gap-2">
-                    <span title={`Mood: ${entry.mood}/10`}>
-                      {getMoodEmoji(entry.mood)}
-                    </span>
-                    <span title={`Energy: ${entry.energy}/10`}>
-                      {getEnergyEmoji(entry.energy)}
-                    </span>
+                </div>
+
+                <div className="grid grid-cols-3 gap-2 mb-3">
+                  <div className="bg-white/10 rounded-lg p-2 text-center">
+                    <p className="text-xl">{getMoodEmoji(entry.mood)}</p>
+                    <p className="text-xs text-gray-400">
+                      Mood {entry.mood}/10
+                    </p>
+                  </div>
+                  <div className="bg-white/10 rounded-lg p-2 text-center">
+                    <p className="text-xl">{getEnergyEmoji(entry.energy)}</p>
+                    <p className="text-xs text-gray-400">
+                      Energy {entry.energy}/10
+                    </p>
+                  </div>
+                  <div className="bg-white/10 rounded-lg p-2 text-center">
+                    <p className="text-base font-bold text-white">
+                      {entry.weight ? `${entry.weight}` : "--"}
+                    </p>
+                    <p className="text-xs text-gray-400">Weight (lbs)</p>
                   </div>
                 </div>
-                <p className="text-sm text-gray-200 line-clamp-2">
-                  {entry.notes}
-                </p>
+
+                <div className="bg-white/5 rounded-lg p-3">
+                  <p className="text-sm text-gray-200 whitespace-pre-wrap">
+                    {entry.notes}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
-
-          {filteredEntries.length > 10 && (
-            <p className="text-xs text-gray-500 text-center mt-3">
-              Showing 10 of {filteredEntries.length} entries
-            </p>
-          )}
         </>
-      )}
-
-      {/* Entry Detail Modal */}
-      {showModal && selectedEntry && (
-        <div
-          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4"
-          onClick={() => setShowModal(false)}
-        >
-          <div
-            className="bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-white">
-                📔 {formatDate(selectedEntry.date)}
-              </h3>
-              <button
-                onClick={() => setShowModal(false)}
-                className="text-gray-400 hover:text-white text-xl"
-              >
-                ×
-              </button>
-            </div>
-
-            <div className="grid grid-cols-3 gap-3 mb-4">
-              <div className="bg-white/10 rounded-lg p-2 text-center">
-                <p className="text-2xl">{getMoodEmoji(selectedEntry.mood)}</p>
-                <p className="text-xs text-gray-400">
-                  Mood {selectedEntry.mood}/10
-                </p>
-              </div>
-              <div className="bg-white/10 rounded-lg p-2 text-center">
-                <p className="text-2xl">
-                  {getEnergyEmoji(selectedEntry.energy)}
-                </p>
-                <p className="text-xs text-gray-400">
-                  Energy {selectedEntry.energy}/10
-                </p>
-              </div>
-              <div className="bg-white/10 rounded-lg p-2 text-center">
-                <p className="text-lg font-bold text-white">
-                  {selectedEntry.weight ? `${selectedEntry.weight}` : "--"}
-                </p>
-                <p className="text-xs text-gray-400">Weight (lbs)</p>
-              </div>
-            </div>
-
-            <div className="bg-white/5 rounded-lg p-4">
-              <p className="text-gray-200 whitespace-pre-wrap">
-                {selectedEntry.notes}
-              </p>
-            </div>
-          </div>
-        </div>
       )}
     </div>
   );
